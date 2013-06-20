@@ -4,12 +4,12 @@ try
     load calciumdxprefs
 end
 if exist('pathname','var')
-    [filename, pathname] = uigetfile({'*.tif'}, 'Choose image to open',pathname);
+    [filename, pathname] = uigetfile({'*.tif'; '*.lsm'}, 'Choose image to open',pathname);
     if ~ischar(filename)
         return
     end
 else
-    [filename, pathname] = uigetfile({'*.tif'}, 'Choose image to open');
+    [filename, pathname] = uigetfile({'*.tif'; '*.lsm'}, 'Choose image to open');
     if ~ischar(filename)
         return
     end
