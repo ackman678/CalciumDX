@@ -58,7 +58,7 @@ implay(mat2gray(d2))
 %---------------------------------
 
 
-%----Now duplicate the region .mat file for /100913/Tseries_040 and perform trace reading on median filtered array, then rerun calciumdxevents4
+%----Now duplicate the region .mat file for /100913/Tseries_040 and perform trace reading on median filtered array, then rerun calciumdxevents
 %dupl necessary data and settings from old region file, and clear the trace and event data
 region_dupl=region;
 clear region;

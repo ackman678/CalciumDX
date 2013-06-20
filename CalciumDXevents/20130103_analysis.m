@@ -1,6 +1,6 @@
 %---------------Plot centroids of activations for segmented movie-------------------------
 figure; imshow(zeros(size(region.image)));  
-num=1;  %placeholder from calciumdxCalciumDextran gui code    
+num=1;  %placeholder from calciumdx gui code    
 handlCoord{num} = [];    
 hold on  
 % for numcoords = 1:length(region.coords)

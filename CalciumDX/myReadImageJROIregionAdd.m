@@ -4,7 +4,7 @@ function region = myReadImageJROIregionAdd(region, overwriteCoords, scalingFacto
 %region-- set to 'true' or 'false' for whether you want to delete the current(if existing) coords
 %overwriteCoords-- set to 'true' or 'false' for whether you want to delete the current(if existing) coords
 %scalingFactor-- needed in case your ImageJ ROI coords were set on a half size working image, not the full resolution of the raw data
-%After running this function and saving your 'region' data structure it is best to use the Import Contours function in calciumdxcalciumdextran to import your new region.coords, especially if you want to use existing ROIs.  This function does not currently match your region.contours to your region.coords and assign them the region.location index. That is why running the Import Contours (contourarraysetup.m) is best
+%After running this function and saving your 'region' data structure it is best to use the Import Contours function in calciumdx to import your new region.coords, especially if you want to use existing ROIs.  This function does not currently match your region.contours to your region.coords and assign them the region.location index. That is why running the Import Contours (contourarraysetup.m) is best
 %James B. Ackman 2012-08-28
 if nargin < 1 || isempty(region)
     try

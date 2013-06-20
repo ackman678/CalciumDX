@@ -194,7 +194,7 @@ region = region_bkup; clear region_bkup;
 %then run the following line at the contour filtering screen
 uicontrol(fig,'Style','pushbutton','Units','normalized','String','Next >>','Position',[.93 .02 .05 0.03],'FontSize',9,'Callback','calciumdxReadTraceParam','enable','on');
 
-%under calciumdxevents4 
+%under calciumdxevents 
 region_bkup=region;
 clear region
 %load each backwards file

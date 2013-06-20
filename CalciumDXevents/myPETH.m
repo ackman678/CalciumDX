@@ -1,5 +1,5 @@
 function [Hist_all,xout,meanLatencies,nSpikes,responseArray,latencyArray]=myPETH(region,stimuliToPlot,bn,nstimuli,name,makePlots)
-%myPETH - Calls getPETH after formatting and passing along a list of spike times from a 'calciumdx' or 'calciumdxcalciumdextran' formatted 'region' data structure
+%myPETH - Calls getPETH after formatting and passing along a list of spike times from a 'calciumdx' or 'calciumdx' formatted 'region' data structure
 %region = region file.
 %stimuliToPlot, stimuli numbers to plot from 'region.stimuli'
 %bn = time surrounding stimuli onsets to plot for the histograms

@@ -30,7 +30,7 @@ function [data, responseArray, latencyArray, results2] = batchFetchStimResponseP
 %Right now this function will automatically write to two tab-delimited txt file outputs, a 'cell' based dataset 'dResponseFreq.txt' and an event based dataset 'dResponseFreqEvents.txt'.
 %And these outputs will be appended if the file already exists. But there will be an extra copy of the column names in this case, so the file will have to be cleaned up in a text editor afterwards.
 %
-% See also myMakeMultiPETHplot, myPETH, getPETH, myFrameTriggerDetect, getStimParams, batchmakeStimParamsWaveonsets, calciumdxcalciumdextran, calciumdxevents4, calciumdxDetectWaves
+% See also myMakeMultiPETHplot, myPETH, getPETH, myFrameTriggerDetect, getStimParams, batchmakeStimParamsWaveonsets, calciumdx, calciumdxevents, calciumdxDetectWaves
 
 %% When finished, convert 'data' table to string with the following code-- because matlab won't copy the contents of a mixed cell array correctly to other programs in the OS.
 %{

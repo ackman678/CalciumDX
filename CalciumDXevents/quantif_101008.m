@@ -166,12 +166,12 @@ hold;
 plot(sig_pks1,data(1,sig_pks1),'or');
 %----------------------------------------------------------------------------------------
 
-%calciumdxevents4 help-- move artifact onset-------
+%calciumdxevents help-- move artifact onset-------
 fr=240; newfr=238;
 [r,c]=find(region.artifactFrames == fr)
 region.artifactFrames(r,c)=newfr;
 
-%calciumdxevents4 help-- fuzzy delete all-----------------------------------------------------
+%calciumdxevents help-- fuzzy delete all-----------------------------------------------------
 region.artifactFrames=[76 90; region.artifactFrames]
 region.artifactFrames=[790 810; region.artifactFrames]
 
