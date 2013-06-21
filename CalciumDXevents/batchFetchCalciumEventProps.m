@@ -137,7 +137,7 @@ for j=1:numel(fnms)
 	%----END fix files------------------------------------------------------------------ 
 
     disp('--------------------------------------------------------------------')
-	myEventProps(region,rowinfo);
+	myEventProps(region,rowinfo,datafilename);
     h = waitbar(j/numel(fnms));
 end
 %data=results;
@@ -147,7 +147,7 @@ end
 
 
 %-----------------------------------------------------------------------------------------
-function output = myEventProps(region,rowinfo)
+function output = myEventProps(region,rowinfo,datafilename)
 output= {};
 %number of ROIs-- single value repeat for ea wave in data.frame------------
 nCells=length(region.contours);
