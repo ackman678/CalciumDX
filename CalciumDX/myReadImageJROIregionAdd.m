@@ -16,14 +16,14 @@ if nargin < 1 || isempty(region)
             delete(gcf)
             clear
         end
-        save('calciumdxprefs.mat', 'pathname')
+        save(calciumdxprefs,'pathname','filename')
     else
         [filename, pathname] = uigetfile({'*.mat'}, 'Choose data file to open');
         if ~isstr(filename)
             delete(gcf)
             clear
         end
-        save('calciumdxprefs.mat', 'pathname')
+        save(calciumdxprefs,'pathname','filename')
     end
     
     fnm = [pathname filename];

@@ -1,4 +1,4 @@
 clear
-load('calciumdxbackup.mat')
-delete('calciumdxbackup.mat')
+load(calciumdxbackupLocation)
+delete(calciumdxbackupLocation)
 delete(gcf)

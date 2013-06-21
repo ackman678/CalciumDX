@@ -13,7 +13,7 @@ calciumdx
 calciumdxevents
 : A gui for data visualization and event detection
 
-There are also a number of other functions for analysis, data fetching, and plotting some of which are documented below.
+There are also a number of miscellaneous functions for data analysis, fetching of data tables, and plotting-- some of which are documented below.
 
 #Image processing, ROI detection, and calcium trace reading
 
@@ -25,7 +25,7 @@ These are the instructions on how to use `calciumdx.m` to perform the initial re
 3. Select the anterior medial reference point in the image. Try to select the medial point just anterior to your dye labeled hemispheres (usually around lambda for superior colliculus imaging for example). This value will be stored in `region.orientation.value` in your data file and used later when matching normalized spatial measurements (ROI locations, directions) between hemispheres when fetching data.
 3. Observe the spatial resolution and temporal resolution values to make sure they are correct. If the imaging was saved with an OME tiff standard (like for Prairie 2P tiffs) these values should be automatically fetched and populated in the fields. For CCD recording you must manually enter the values (e.g. 2.27275 um/px for 5x obj, or 4.5455 um/px for 2.5x obj and 0.2 sec/frame).
 4. You can now adjust brightness and contrast so you can see edges of your labeled region in your image.
-5. Click 'Add' button to add each region to the image using polygon outline. (i.e outline each labeled hemisphere or brain region independently). Then 'left click' to add points to surrount the structure, when complete 'right click' to complete outline. Repeat 'Add' button for each structure (i.e. 1 for ea hemisphere).
+5. Click 'Add' button to add each region to the image using polygon outline. (i.e outline each labeled hemisphere or brain region independently). Then 'left click' to add points to surround the structure, when complete 'right click' to complete outline. Repeat 'Add' button for each structure (i.e. 1 for ea hemisphere).
 6. Click 'Next'
 7. Enter names for each region ('SC.R', 'SC.L', 'V1.R', etc). Region 1 will be everything outside your labeled regions, this could be simply named 'craniotomy'.
 8. Click 'Next'
@@ -35,7 +35,7 @@ These are the instructions on how to use `calciumdx.m` to perform the initial re
 12. When asked to draw rectangular grid, select 'Yes'.
 13. When asked to draw rectanglar ROI grid for the 1st region (probably the 'craniotomy' background region), select 'No'.
 14. When asked to draw rectangular ROI grid for each labele d region, select 'Yes'.
-15. Enter a ROI size. Can use 20x20px for CCD recordings. Can leave at the default value for 2Pphoton based recordings. Close the resulting figure image windows.
+15. Enter a ROI size. Can use 10x10px for CCD recordings. Can leave at the default value for 2Pphoton based recordings. Close the resulting figure image windows.
 16. On the main application window select 'ReadTracesPrTIFF' and click 'Next>>'
 17. Select '_None_' from the Signal detector drop down menu and click 'Detect!'.
 18. Click 'Finish' and save the resulting .mat file.
@@ -103,10 +103,31 @@ Save .mat file and the resulting multiwaveplots:
 
 ## Rasterplots ##
 
+Plot a default histogram with raw event data:
+
+	myPlotRasterHist([],region);
+
+Same but also automatically save the figure if `fnm` is defined in workspace:
+
+	myPlotRasterHist([],region);
+	fname2 = [fnm(1:end-4) 'rastHist' '.eps']; 
+	printfig('epsc',fname2)
+
+Plot a smoothened histogram if you have wave data:
+
 	myPlotRasterHist([],region,[],[],[],'true','true'); fname2 = [fnm(1:end-4) 'rastHistSmooth' '.eps']; printfig('epsc',fname2)
-	myPlotRasterHist([],region,[],[],[],'false','true'); fname2 = [fnm(1:end-4) 'rastHist' '.eps']; printfig('epsc',fname2)
-	calciumdxprintout.m
-	myPrintTrace(fnm,num,nt,region,1,120,[],[],[],1)  %use in conjunction with calciumdxevents opened to view different ROI traces ('num')
+
+Plot a more complex report with raster, hist, example, traces, measurements:
+ 
+	calciumdxprintout
+
+Plot single a trace from a single ROI:
+
+	myPrintTrace(fnm,num,nt,region)  %can be used in conjunction with calciumdxevents opened to view different ROI traces (for automatically specifying cell 'num')
+
+Same but plot a specific segment of time, e.g. only between frame 1 to frame 120:
+
+	myPrintTrace(fnm,num,nt,region,1,120)
 
 ##Wave direction plot
 

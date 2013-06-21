@@ -1,30 +1,33 @@
 %calciumdx.m
-%for analysis of calcium imaging movies (either 2P or CCD based), first used for in vivo retinal wave recordings
-save('calciumdxbackup.mat')
-clear;
-%2013-06-20 10:35:50 started fork and reorganization by James Ackman for
-%upload to github as shared project editing. Many TODOs are needed
-%including reworking as object oriented.
+%for analysis of calcium imaging movies (either 2P or CCD based)
+%2013-06-21 miscellaneous bug fixes
+%2013-06-20 10:35:50 started fork and reorganization by James Ackman for upload to github as shared project editing. Many TODOs are needed including reworking as object oriented.
 % JBA edited from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
 %Added bug fixes at v4.1 by James Ackman from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
-%reworked by James Ackman at v4.0 between October 2010 - October 2011 in
-%Crair lab at Yale as hippocalciumdextran for analysis of retinal wave
-%movies (Ackman et al., Nature 2012)
-%clear all contours, import contours, align all contours, align single
-%contours added by James Ackman July 19, 2009
-%capability for opening open microscopy environment tiff formats
-%(http://www.loci.wisc.edu/ome/ome-tiff.html) added by James Ackman July 17, 2009.
+%reworked by James Ackman at v4.0 between October 2010 - October 2011 in Crair lab at Yale as hippocalciumdextran for analysis of retinal wave movies (Ackman et al., Nature 2012)
+%clear all contours, import contours, align all contours, align single contours added by James Ackman July 19, 2009
+%capability for opening open microscopy environment tiff formats (http://www.loci.wisc.edu/ome/ome-tiff.html) added by James Ackman July 17, 2009.
 %repeat delete added to calciumdxManualDelete.m by James Ackman 17/01/2007
 %Default spatial and temporal values edited 17/01/2007
-%2006-2007 forked from a earlier version of a shared project named hippo first created by D.Aronov and R. Cossart for use by the Cossart lab at INMED.
+%2006-2007 forked from an earlier project version named hippo first created by D.Aronov and R. Cossart at INMED.
 
-versionnum = 4.1;
-calciumdxpath = pwd;
+calciumdxFullfilename = mfilename('fullpath');
+[calciumdxpath, ~, ~] = fileparts(calciumdxFullfilename)
+matlabUserPath = userpath;
+matlabUserPath = matlabUserPath(1:end-1);
+calciumdxbackupLocation = fullfile(matlabUserPath,'calciumdxbackup.mat');
+calciumdxprefs = fullfile(matlabUserPath,'calciumdxprefs.mat');
+
+
+save(calciumdxbackupLocation)
+clear;
+
+versionnum = '4.1.1';
 
 if isdir('TraceReaders')
     
     %opengl neverselect;
-    fig = figure('Name',['calciumdx ' num2str(versionnum,'%6.1f')],'NumberTitle','off','MenuBar','none','doublebuffer','on',...
+    fig = figure('Name',['calciumdx ' versionnum],'NumberTitle','off','MenuBar','none','doublebuffer','on',...
         'units','normalized','CloseRequestFcn','calciumdxFigClose','position',[0 .08/3 1 2.86/3]);
     
     %Image functions

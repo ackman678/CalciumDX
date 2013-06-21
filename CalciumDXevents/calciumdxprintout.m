@@ -2,9 +2,13 @@
 %function calciumdxprintout(fname)
 % calciumdxprintout(fname)
 
+matlabUserPath = userpath;
+matlabUserPath = matlabUserPath(1:end-1);
+calciumdxprefs = fullfile(matlabUserPath,'calciumdxprefs.mat');
+
 if ~exist('region','var')
-    if exist('calciumdxprefs.mat','file') == 2
-        load('calciumdxprefs')
+    if exist(calciumdxprefs,'file') == 2
+        load(calciumdxprefs)
     else
         pathname = pwd;
     end
@@ -12,7 +16,7 @@ if ~exist('region','var')
     [filename pathname] = uigetfile('*.mat','Select calciumdx .mat file',pathname);
     fname = fullfile(pathname,filename);
     load(fname);
-    save('calciumdxprefs.mat', 'pathname','filename');
+    save(calciumdxprefs, 'pathname','filename');
     
 end
 fname = [pathname filename];

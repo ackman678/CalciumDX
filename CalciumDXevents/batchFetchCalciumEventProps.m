@@ -29,6 +29,9 @@ function batchFetchCalciumEventProps(filelist,region,limitToWaves)
 %
 % See also batchFetchStimResponseProps, myMakeMultiPETHplot, myPETH, getPETH, myFrameTriggerDetect, getStimParams, batchmakeStimParamsWaveonsets, calciumdx, calciumdxevents, calciumdxDetectWaves
 
+%Versions
+%2013-06-21 14:34:09 updated new default dEventProps.txt file location to default matlab userpath folder
+
 %-----------------------------------------------------------------------------------------
 %- Set up options and default parameters
 %-----------------------------------------------------------------------------------------
@@ -42,9 +45,10 @@ end
 
 if nargin<3 || isempty(limitToWaves); limitToWaves = 'false'; end
 
-datafilename = 'dEventProps.txt';
-localpath_datafilename = ['./' datafilename];
-setupHeaders = exist(localpath_datafilename,'file');
+matlabUserPath = userpath;
+matlabUserPath = matlabUserPath(1:end-1);
+datafilename = fullfile(matlabUserPath,'dEventProps.txt');
+setupHeaders = exist(datafilename,'file');
 
 if setupHeaders < 1
 %setup headers for data set---------------------------------------------------------------

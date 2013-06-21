@@ -19,6 +19,10 @@ sz = get(0,'screensize');
 % fig = figure('Name','calciumdxEvents','NumberTitle','off','MenuBar','none','position',[1 0.15*sz(4) sz(3) 0.7*sz(4)],'doublebuffer','on');
 fig = figure('Name','calciumdxEvents','NumberTitle','off','MenuBar','none','position',[1 sz(4) sz(3) sz(4)],'doublebuffer','on');
 
+matlabUserPath = userpath;
+matlabUserPath = matlabUserPath(1:end-1);
+calciumdxprefs = fullfile(matlabUserPath,'calciumdxprefs.mat');
+
 if ~exist('region','var')
     try
         load calciumdxprefs
@@ -29,14 +33,14 @@ if ~exist('region','var')
             delete(gcf)
             clear
         end
-        save('calciumdxprefs.mat', 'pathname')
+        save(calciumdxprefs, 'pathname')
     else
         [filename, pathname] = uigetfile({'*.mat'}, 'Choose data file to open');
         if ~isstr(filename)
             delete(gcf)
             clear
         end
-        save('calciumdxprefs.mat', 'pathname')
+        save(calciumdxprefs, 'pathname')
     end
     
     fnm = [pathname filename];

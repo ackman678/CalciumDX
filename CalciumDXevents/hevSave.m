@@ -1,3 +1,7 @@
+matlabUserPath = userpath;
+matlabUserPath = matlabUserPath(1:end-1);
+calciumdxprefs = fullfile(matlabUserPath,'calciumdxprefs.mat');
+
 if exist('pathname','var')
     fnm = [pathname filename];
     [filename, pathname] = uiputfile('*.mat', 'Save file as',fnm(1:end-4));
@@ -6,7 +10,7 @@ if exist('pathname','var')
 %         clear
         disp('no filename given...')
     end
-    save('calciumdxprefs.mat', 'pathname','filename')
+    save(calciumdxprefs, 'pathname','filename')
 else
     [filename, pathname] = uiputfile({'*.mat'}, 'Save file as');
     if ~ischar(filename)
@@ -14,7 +18,7 @@ else
 %         clear
         disp('no filename given...')
     end
-    save('calciumdxprefs.mat', 'pathname','filename')
+    save(calciumdxprefs, 'pathname','filename')
 end
 
 fnm = [pathname filename];

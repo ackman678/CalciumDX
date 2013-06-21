@@ -13,16 +13,16 @@ delete temp.mat
 save(fnm,'region');
 clear fnm
 
-load('calciumdxbackup.mat')
-delete('calciumdxbackup.mat')
+load(calciumdxbackupLocation)
+delete(calciumdxbackupLocation)
 
 
 load calciumdxprefs
-if isdir('../CalciumDXevents')
-    cd ../CalciumDXevents
+if isdir(fullfile('..','CalciumDXevents'))
+    cd(fullfile('..','CalciumDXevents'))
     calciumdxevents
-elseif isdir('./CalciumDXevents')
-    cd ../CalciumDXevents
+elseif isdir(fullfile('.','CalciumDXevents'))
+    cd(fullfile('.','CalciumDXevents'))
     calciumdxevents
 else
     error('calciumdxevents folder not found')
