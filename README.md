@@ -86,13 +86,14 @@ Save .mat file and the resulting multiwaveplots:
 
 
 
-# Summary Plots
+# Summary Plots and cell traces
 
 ## Rasterplots ##
 
 	myPlotRasterHist([],region,[],[],[],'true','true'); fname2 = [fnm(1:end-4) 'rastHistSmooth' '.eps']; printfig('epsc',fname2)
 	myPlotRasterHist([],region,[],[],[],'false','true'); fname2 = [fnm(1:end-4) 'rastHist' '.eps']; printfig('epsc',fname2)
 	calciumdxprintout.m
+	myPrintTrace(fnm,num,nt,region,1,120,[],[],[],1)  %use in conjunction with calciumdxevents opened to view different ROI traces ('num')
 
 ##Wave direction plot
 
