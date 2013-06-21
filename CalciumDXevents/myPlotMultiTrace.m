@@ -113,7 +113,7 @@ xlim([0 size(region.traces,2)]);
 % box on
 % linkaxes(ax,'x');
 % set(gca,'UserData',[0 size(region.traces,2)])
-% set(gca,'buttondownfcn','hevZoom2')
+% set(gca,'buttondownfcn','hevZoom')
 
 hold off
 

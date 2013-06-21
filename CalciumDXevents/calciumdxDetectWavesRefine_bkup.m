@@ -333,6 +333,6 @@ disp(xdata)
 % 
 % spk(num,f(selev)) = 0;
 % spk(num,x) = 1;
-% hev2PlotTrace
+% hevPlotTrace
 end
 %}

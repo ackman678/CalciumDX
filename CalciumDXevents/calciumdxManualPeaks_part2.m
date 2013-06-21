@@ -129,7 +129,7 @@ axes(h(1))
 %}
 
 %{
-%from hevZoom2.m
+%from hevZoom.m
 point1 = get(gca,'CurrentPoint');
 finalRect = rbbox;
 point2 = get(gca,'CurrentPoint');

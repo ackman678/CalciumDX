@@ -12,4 +12,4 @@ dec(num,d) = 1;
 if region.transients(1,num) == 1 && sum(spk(num,:)) > 0
     region.transients(1,num) = 4;
 end
-hev2PlotTrace
+hevPlotTrace

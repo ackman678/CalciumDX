@@ -1,7 +1,12 @@
-%updated by J. Ackman 2010.
+%updated by James Ackman 2010-2012.
 %Updated by James Ackman 22/08/07.
-%hevPlotTrace changed to hev2PlotTrace 05/04/07 JBA
+%hevPlotTrace updated 05/04/07 JBA
 %clear;
+
+%TODO: change to function based code
+%TODO: update, add flexibility for using external plugins for detection routines (like ICA/PCA)
+%TODO: add user preferences for gui
+%TODO: add user preferences for detection routine argin (like filter order, pass band, window)
 
 %If detecting a positive signal (like with OGB1AM, Fluo4AM, etc) set the
 %following line to '-1' to invert the raw traces just for detection purposes. Otherwise leave at '+1' since the autodetect
@@ -134,7 +139,7 @@ box on
 % set(gca,'buttondownfcn','hevZoom')
 % set(fig,'KeyPressFcn','hevButtonDown')
 
-numslider = uicontrol('Style','slider','Units','normalized','Position',[0.1 0.1 0.74 0.03],'Callback','hev2PlotTrace',...
+numslider = uicontrol('Style','slider','Units','normalized','Position',[0.1 0.1 0.74 0.03],'Callback','hevPlotTrace',...
     'Min',1,'Max',length(region.contours),'Sliderstep',[1/length(region.contours) 10/length(region.contours)],'Value',1);
 
 
@@ -142,9 +147,9 @@ numslider = uicontrol('Style','slider','Units','normalized','Position',[0.1 0.1 
 uicontrol('Style','text','Units','normalized','String','Cell #','Position',[.05 .05 .05 0.04],'FontSize',12,'FontWeight','Bold',...
     'HorizontalAlignment','right','BackgroundColor',[.8 .8 .8]);
 txcellnum = uicontrol('Style','edit','Units','normalized','String','1','Position',[.11 .05 .05 0.04],'FontSize',12,'FontWeight','Bold',...
-    'BackgroundColor',[1 1 1],'HorizontalAlignment','left','Callback','hev2PlotTrace');
+    'BackgroundColor',[1 1 1],'HorizontalAlignment','left','Callback','hevPlotTrace');
 bgoto = uicontrol('Style','pushbutton','Units','normalized','String','Go','Position',[.17 .05 .05 0.04],'FontSize',12,...
-    'Callback','hev2PlotTrace');
+    'Callback','hevPlotTrace');
 
 % progtx = uicontrol('Style','text','Units','normalized','String','','Position',[.70 .05 .25 0.04],'FontSize',12,'FontWeight','Bold',...
 %     'HorizontalAlignment','left','BackgroundColor',[.8 .8 .8]);
@@ -167,7 +172,7 @@ bdetect1 = uicontrol('Style','pushbutton','Units','normalized','String','Detect 
     'Callback','calciumdxeventDetectAll');
 
 bdeleteall = uicontrol('Style','pushbutton','Units','normalized','String','Delete events','Position',[.60 .05 .07 0.03],'FontSize',9,...
-    'Callback','spk(num,:) = 0; dec(num,:) = 0; region.transients(1,num) = 1; hev2PlotTrace;');
+    'Callback','spk(num,:) = 0; dec(num,:) = 0; region.transients(1,num) = 1; hevPlotTrace;');
 
 %popupmenu replacement for region.transient radio buttons, JBA 07/20/09
 st = cell(1,5);
@@ -201,17 +206,17 @@ btStimImport=uicontrol('Style','togglebutton','Units','normalized','String','Sho
 %{
 %This following one is the good one
 bdetect2 = uicontrol('Style','pushbutton','Units','normalized','String','Detect current Filt','Position',[.30 .01 .14 0.03],'FontSize',9,...
-    'Callback','spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP(trSign*region.traces,num,''no''); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hev2PlotTrace;');
+    'Callback','spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP(trSign*region.traces,num,''no''); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hevPlotTrace;');
     
 %------------- 
 %The following is the good one, but for all traces
 bdetect3 = uicontrol('Style','pushbutton','Units','normalized','String','Detect all Filt','Position',[.50 .01 .14 0.03],'FontSize',9,...
-    'Callback','for c = 1:size(tr,1); [s d] = calciumdxEvent_DetSingTrHP(trSign*region.traces,c,''no''); set(progtx,''String'',[''Detecting '' num2str(c) '' of '' num2str(size(nt,1))]); spk(c,:) = 0; dec(c,:) = 0; spk(c,s) = 1; dec(c,d) = 1; if region.transients(1,c) == 1 && sum(spk(c,:)) > 0; region.transients(1,c) = 4; end; end; set(progtx,''String'',''''); hev2PlotTrace;');
+    'Callback','for c = 1:size(tr,1); [s d] = calciumdxEvent_DetSingTrHP(trSign*region.traces,c,''no''); set(progtx,''String'',[''Detecting '' num2str(c) '' of '' num2str(size(nt,1))]); spk(c,:) = 0; dec(c,:) = 0; spk(c,s) = 1; dec(c,d) = 1; if region.transients(1,c) == 1 && sum(spk(c,:)) > 0; region.transients(1,c) = 4; end; end; set(progtx,''String'',''''); hevPlotTrace;');
 
 %---------------
  %This following one is the good one for high frequency signals
 bdetect4 = uicontrol('Style','pushbutton','Units','normalized','String','Detect high freq','Position',[.70 .01 .14 0.03],'FontSize',9,...
-    'Callback','spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP_HF(trSign*region.traces,num,''no'',trNew); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hev2PlotTrace;');
+    'Callback','spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP_HF(trSign*region.traces,num,''no'',trNew); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hevPlotTrace;');
 %}
 
 
@@ -231,5 +236,5 @@ bsave = uicontrol('Style','pushbutton','Units','normalized','String','Save','Pos
     'Callback','hevSave');
 
 num = 1;
-hev2PlotTrace
+hevPlotTrace
 figure(fig)

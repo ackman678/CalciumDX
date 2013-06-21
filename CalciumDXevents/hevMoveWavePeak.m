@@ -55,5 +55,5 @@ set(chi(4),'XData',xdata{4},'YData',ydata{4})
 % 
 % spk(num,f(selev)) = 0;
 % spk(num,x) = 1;
-% hev2PlotTrace
+% hevPlotTrace
 end

@@ -1,5 +1,5 @@
 figure();
-spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP_HF(trSign*region.traces,num,'no',trNew); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hev2PlotTrace;
+spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP_HF(trSign*region.traces,num,'no',trNew); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hevPlotTrace;
 
 
 figure();
@@ -9,8 +9,8 @@ dx=diff(region.traces(num,:));
 % plot(tr);
 plot([dx mean(dx)]);
 ax(2)=subplot(2,1,2)
-% spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP_HF(trSign*region.traces,num,'no',trNew); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hev2PlotTrace;
-spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxdettrial(trSign*region.traces(num,:)); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hev2PlotTrace;
+% spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxEvent_DetSingTrHP_HF(trSign*region.traces,num,'no',trNew); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hevPlotTrace;
+spk(num,:) = 0; dec(num,:) = 0; [s d] = calciumdxdettrial(trSign*region.traces(num,:)); spk(num,s) = 1; dec(num,d) = 1; if region.transients(1,num) == 1 && sum(spk(num,:)) > 0; region.transients(1,num) = 4; end; hevPlotTrace;
 linkaxes(ax,'x');
 
 
@@ -31,11 +31,11 @@ ax(3)=subplot(3,1,3);
 plot(bkgrd)
 linkaxes(ax,'x');
 set(gca,'UserData',[0 size(tmp1,2)])
-set(gca,'buttondownfcn','hevZoom2')
+set(gca,'buttondownfcn','hevZoom')
 
 
 profile on
-calciumdxevents3
+calciumdxevents
 profile viewer
 p = profile('info');
 profsave(p,'profile_results')

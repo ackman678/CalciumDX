@@ -1,6 +1,19 @@
-Date: 2013-06-20 12:56:27  
+Date: 2013-06-21 09:11:34 
 Author: James B. Ackman
 
+# CalciumDX #
+
+A suite of functions for performing image processing, ROI detection, calcium trace reading, and event detection for calcium imaging movies in matlab.
+
+Includes two core gui functions `calciumdx` and `calciumdxevents`
+
+calciumdx
+: A gui for image processing, ROI detection, and calcium trace reading
+
+calciumdxevents
+: A gui for data visualization and event detection
+
+There are also a number of other functions for analysis, data fetching, and plotting some of which are documented below.
 
 #Image processing, ROI detection, and calcium trace reading
 

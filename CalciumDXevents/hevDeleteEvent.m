@@ -6,4 +6,4 @@ dec(num,g(selev)) = 0;
 if sum(spk(num,:)) == 0
     region.transients(1,num) = 1;
 end
-hev2PlotTrace;
+hevPlotTrace;

@@ -19,4 +19,4 @@ for i=1:length(region.contours)
         region.transients(1,i) = 1;
     end
 end
-hev2PlotTrace;
+hevPlotTrace;

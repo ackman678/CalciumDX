@@ -20,4 +20,4 @@ end
 
 dec(num,g(selev)) = 0;
 dec(num,x) = 1;
-hev2PlotTrace
+hevPlotTrace

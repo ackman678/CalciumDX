@@ -19,4 +19,4 @@ for c = 1:sz(1)
 end
 region.detectorname=['unsupervised calciumdxdettrial, sd=' num2str(sd) ', sd2=' num2str(sd2) ', sd3=' num2str(sd3) ', nonfilt=' num2str(nonfilt) ', HannOrder=' num2str(hannfilterorder)];
 close(hbar)
-hev2PlotTrace
+hevPlotTrace

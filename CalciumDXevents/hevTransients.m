@@ -25,4 +25,4 @@ end
 % region.transients(1,num) = 4
 % end
 
-hev2PlotTrace;
+hevPlotTrace;

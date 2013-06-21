@@ -12,7 +12,7 @@
 % else
 %     xlimits = [0 size(nt,2)+1];
 % end
-% hev2PlotTrace
+% hevPlotTrace
 
 function hevZoom(figHandle,axHandle)
 % Allow a line to have its own 'ButtonDownFcn' callback.

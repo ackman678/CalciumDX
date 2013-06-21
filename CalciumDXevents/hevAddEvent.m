@@ -41,4 +41,4 @@ end
 
 % delete(h1); delete(h2); delete(h3); delete(h4); delete(h5); delete(h6); delete(h7); delete(h8); delete(h9); delete(h10);
 % clear trmenu cmenu coffmenu h1 h2 h3 h4 h5 h6 h7 h8 h9 h10
-hev2PlotTrace
+hevPlotTrace
