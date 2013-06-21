@@ -19,7 +19,7 @@ There are also a number of other functions for analysis, data fetching, and plot
 
 These are the instructions on how to use `calciumdx.m` to perform the initial reading in of your image time-series, make ROIs, and read raw fluorescence trace data.
 
-1. At matlab command prompt change into the calciumdx folder then type `calciumdx`
+1. At the matlab command prompt you first need to change into the calciumdx folder (`cd CalciumDX/calciumdx`) then type `calciumdx`
 1. Click 'Open'. For CCD recording select your .tif file. For 2P, select first .tif image in your series. Wait for image series to open, may take up to a minute to complete.
 2. Select to average frames together for base image. Default is to do all frames. But if there is a lot of xy or z movement artifacts (like for 2P imaging movies), you will want to instead do at least 5-10 consecutive frames that are stable (no xyz movements) and are largely non-active (not much activity). May need to open series as virtual stack in imageJ to know which frame range to select
 3. Select the anterior medial reference point in the image. Try to select the medial point just anterior to your dye labeled hemispheres (usually around lambda for superior colliculus imaging for example). This value will be stored in `region.orientation.value` in your data file and used later when matching normalized spatial measurements (ROI locations, directions) between hemispheres when fetching data.
