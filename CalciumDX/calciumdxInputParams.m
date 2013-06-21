@@ -91,7 +91,7 @@ if strcmp(get(det_view,'enable'),'off')
             'Callback','calciumdxManualDelete','enable','off');
         
         btnextscr = uicontrol(fig,'Style','pushbutton','Units','normalized','String','Next >>','Position',[.93 .02 .05 0.03],'FontSize',9,...
-            'Callback','calciumdxReadTraceParam','enable','off');
+            'Callback','calciumdxReadTraceParam','enable','on');
         islocal = 1;
     end    
 end

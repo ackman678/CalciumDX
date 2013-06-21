@@ -219,3 +219,15 @@ For doing peri-stimulus time histogram analysis, as in `batchFetchStimResponsePr
 * data=batchFetchStimResponseProps({filename},region,[],[-20
 	  00 5000],[]);  %this is all you need, it is a wrapper for myMakeMultiPETHplot with automatically table writing to file
 
+
+
+
+TODO: fig close request function fix
+TODO: greyed out next button fix
+
+TODO:  in fig close request
+% clear
+% load(calciumdxbackupLocation)
+% delete(calciumdxbackupLocation)
+delete(gcf)
+TODO: change auto file path save default in dxevents after dx has been run

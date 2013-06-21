@@ -19,8 +19,10 @@ calciumdxbackupLocation = fullfile(matlabUserPath,'calciumdxbackup.mat');
 calciumdxprefs = fullfile(matlabUserPath,'calciumdxprefs.mat');
 
 
-save(calciumdxbackupLocation)
-clear;
+save(calciumdxbackupLocation, 'matlabUserPath')
+%clear;
+cd(calciumdxpath)
+
 
 versionnum = '4.1.1';
 

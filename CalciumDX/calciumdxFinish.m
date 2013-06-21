@@ -4,20 +4,20 @@ if ~ischar(filename)
 end
 fnm = [pathname filename];
 
-save temp.mat region fnm pathname filename
-set(gcf,'CloseRequestFcn','');
-delete(gcf)
-clear
-load temp.mat region fnm pathname filename
-delete temp.mat
+%save temp.mat region fnm pathname filename
+%set(gcf,'CloseRequestFcn','');
+%delete(gcf)
+%clear
+%load temp.mat region fnm pathname filename
+%delete temp.mat
 save(fnm,'region');
 clear fnm
 
-load(calciumdxbackupLocation)
-delete(calciumdxbackupLocation)
+%load(calciumdxbackupLocation)
+%delete(calciumdxbackupLocation)
 
 
-load calciumdxprefs
+load(calciumdxprefs)
 if isdir(fullfile('..','CalciumDXevents'))
     cd(fullfile('..','CalciumDXevents'))
     calciumdxevents
