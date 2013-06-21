@@ -182,7 +182,7 @@ for c = 1:nCells
 end
 ROIsize = mean(strel_sz,1) + 1;
 
-fid = fopen('dEventProps.txt','a');
+fid = fopen(datafilename,'a');
 
 %loop through all rois, to get the following values-----------------------
 for roiIND = 1:nCells
@@ -241,7 +241,7 @@ for roiIND = 1:nCells
 	end
 	h2 = waitbar(roiIND/nCells);
 end
-%fid = fopen('dEventProps.txt','a');
+%fid = fopen(datafilename,'a');
 %for i=1:numel(output); output{i} = num2str(output{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
 %tmp2=output';
 %fprintf(fid,[repmat('%s\t',1,size(tmp2,1)-1),'%s\n'],tmp2{:});
