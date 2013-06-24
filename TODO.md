@@ -1,6 +1,7 @@
 #TODO:
 
 ## calciumdx
+
 * ~~update gui fig size setup based on screen size~~ 2013-06-24 15:41:33
 * ~~fix parameter dlg windows on small Windows laptops~~ 2013-06-24 15:42:12
 * ~~fix first need to change into the calciumdx folder~~ 2013-06-21
@@ -24,8 +25,11 @@
 * fix zoom in dxevents
 * fix cell nav for scroll vs number
 * integrate component det
+* add user preferences for gui
+* add user preferences for detection routine argin (like filter order, pass band, window)
 
 ## other
+
 * update try/load(calciumdxprefs) and save(calciumdxprefs) statements on various funcs
 * add table fetch for corrPairs, pval
 * by region type for fetchCorrPairs
