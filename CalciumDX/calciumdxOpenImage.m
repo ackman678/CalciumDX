@@ -1,7 +1,7 @@
 %removed OME-TIFF selector menu, 2013-06-19 17:00:35 JBA
 
 try
-    load calciumdxprefs
+    load(calciumdxprefs)
 end
 if exist('pathname','var')
     [filename, pathname] = uigetfile({'*.tif'; '*.lsm'}, 'Choose image to open',pathname);

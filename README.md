@@ -1,4 +1,4 @@
-Date: 2013-06-21 09:11:34 
+Date: 2013-06-24 10:26:33 
 Author: James B. Ackman
 
 # CalciumDX #
@@ -50,28 +50,36 @@ These are the instructions on how to use `calciumdx.m` to perform the initial re
 4. You can now adjust brightness and contrast so you can see edges of your labeled region in your image.
 5. Click 'Add' button to add each region to the image using polygon outline. (i.e outline each labeled hemisphere or brain region independently). Then 'left click' to add points to surround the structure, when complete 'right click' to complete outline. Repeat 'Add' button for each structure (i.e. 1 for ea hemisphere).
 6. Click 'Next'
-7. Enter names for each region ('SC.R', 'SC.L', 'V1.R', etc). Region 1 will be everything outside your labeled regions, this could be simply named 'craniotomy'.
+7. Enter names for each region ('SC.R', 'SC.L', 'V1.R' or 'VZ', 'SVZ', 'CP' etc). Region 1 will be everything outside your labeled regions, this could be simply named 'craniotomy'.
 8. Click 'Next'
-9. Select 'calciumdxIF_none_' from drop down menu and click 'Filter'
-10. Click and reclick the 'Hide' button.
-11. Click the bottom'Next' to continue on (unless performing automatic cell detection and manual ROI drawing inside labeled regions).
-12. When asked to draw rectangular grid, select 'Yes'.
-13. When asked to draw rectanglar ROI grid for the 1st region (probably the 'craniotomy' background region), select 'No'.
-14. When asked to draw rectangular ROI grid for each labele d region, select 'Yes'.
-15. Enter a ROI size. Can use 10x10px for CCD recordings. Can leave at the default value for 2Pphoton based recordings. Close the resulting figure image windows.
-16. On the main application window select 'ReadTracesPrTIFF' and click 'Next>>'
-17. Select '_None_' from the Signal detector drop down menu and click 'Detect!'.
-18. Click 'Finish' and save the resulting .mat file.
+9. Options:
+	* *For grid based roi analysis:* Select 'calciumdxIF_none_' from drop down menu and click 'Filter' 
+	* *For cell based roi analysis:* Select 'calciumdxIF_Localize' and click 'Filter' for automatic cell detection.
+10. Options: 
+	* *For grid based roi analysis:* Click the bottom 'Next' to continue on 
+	* *For cell based roi analysis:* Use the parameters to perform automatic cell detection or manual ROI drawing inside labeled regions TODO: document this.
+11. Options: 
+	* *For grid based roi analysis:* When asked to draw rectangular grid, select 'Yes'.
+		* when asked to draw rectanglar ROI grid for the 1st region (probably the 'craniotomy' background region), select 'No'.
+		* When asked to draw rectangular ROI grid for each labeled region, select 'Yes'.
+		* Enter a ROI size. Can use 10x10px for CCD recordings. Can leave at the default value for 2Pphoton based recordings. Close the resulting figure image windows.
+	* *For cell based roi analysis:* When asked to draw rectangular grid, select 'No'.
+12. On the main application window select 'ReadTracesPrTIFF' and click 'Next>>'
+13. Select '_None_' from the Signal detector drop down menu and click 'Detect!'.
+14. Click 'Finish' and save the resulting .mat file.
 
 #Calcium event detection
 
 For this we will use `calciumdxevents.m`
 
-1. Optional. Click 'Artifact rem w/FFT' button.
-2. Click 'Detect Artifacts' button.
+1. Start `calciumdxevents`
+	* If you've just performed calcium trace reading using `calciumdx`, then `calciumdxevents` should automatically open with your new data.
+	* Otherwise at the matlab command prompt type `calciumdxevents` and open your *region* based .mat file saved using calciumdx.
+1. *Optional:* Click 'Artifact rem w/FFT' button.
+2. *Optional:* Click 'Detect Artifacts' button.
 3. Click 'Detect all' button. This will automatically detect calcium events.  Use `calciumdxdettrial.m` or `calciumdxdettrialWaves.m`
 4. Click 'Save' to save file.
-5. Click 'Manual Peaks'. Follow instructions using the brush tool and export variable either called 'waveframes' or 'artifactframes'. This is more important for 2P recorded movies where movement artifacts may be more evident, or movies with low frequency of real activity where peaks of artifacts could be picked up as waves in downstream analysis. If the detected transients are largely true-positive, then just click 'Continue' without brushing and exporting any variables. This will just accept all frames as possible frames containing real activity. Then the next couple scripts will be used for detecting waves among the events .
+5. *Optional:* Click 'Manual Peaks'. Follow instructions using the brush tool and export variable either called 'waveframes' or 'artifactframes'. This is more important for 2P recorded movies where movement artifacts may be more evident, or movies with low frequency of real activity where peaks of artifacts could be picked up as waves in downstream analysis. If the detected transients are largely true-positive, then just click 'Continue' without brushing and exporting any variables. This will just accept all frames as possible frames containing real activity. Then the next couple scripts will be used for detecting waves among the events.
 6. Click 'Save' to save file again.
 
 

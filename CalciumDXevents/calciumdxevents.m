@@ -25,26 +25,25 @@ calciumdxprefs = fullfile(matlabUserPath,'calciumdxprefs.mat');
 
 if ~exist('region','var')
     try
-        load calciumdxprefs
+        load(calciumdxprefs)
     end
     if exist('pathname','var')
         [filename, pathname] = uigetfile({'*.mat'}, 'Choose data file to open',pathname);
-        if ~isstr(filename)
-            delete(gcf)
-            clear
-        end
-        save(calciumdxprefs, 'pathname')
+%        if ~isstr(filename)
+%            delete(gcf)
+%            clear
+%        end
     else
         [filename, pathname] = uigetfile({'*.mat'}, 'Choose data file to open');
-        if ~isstr(filename)
-            delete(gcf)
-            clear
-        end
-        save(calciumdxprefs, 'pathname')
+%        if ~isstr(filename)
+%            delete(gcf)
+%            clear
+%        end
     end
     
     fnm = [pathname filename];
     load(fnm)
+    save(calciumdxprefs, 'pathname')
 end
 
 tr = region.traces;

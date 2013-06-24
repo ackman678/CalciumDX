@@ -1,5 +1,6 @@
 %calciumdx.m
 %for analysis of calcium imaging movies (either 2P or CCD based)
+%2013-06-24 miscellaneous bug fixes
 %2013-06-21 miscellaneous bug fixes
 %2013-06-20 10:35:50 started fork and reorganization by James Ackman for upload to github as shared project editing. Many TODOs are needed including reworking as object oriented.
 % JBA edited from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
@@ -12,7 +13,7 @@
 %2006-2007 forked from an earlier project version named hippo first created by D.Aronov and R. Cossart at INMED.
 
 calciumdxFullfilename = mfilename('fullpath');
-[calciumdxpath, ~, ~] = fileparts(calciumdxFullfilename)
+[calciumdxpath, ~, ~] = fileparts(calciumdxFullfilename);
 matlabUserPath = userpath;
 matlabUserPath = matlabUserPath(1:end-1);
 calciumdxbackupLocation = fullfile(matlabUserPath,'calciumdxbackup.mat');
@@ -24,13 +25,16 @@ save(calciumdxbackupLocation, 'matlabUserPath')
 cd(calciumdxpath)
 
 
-versionnum = '4.1.1';
+versionnum = '4.1.2';
 
 if isdir('TraceReaders')
     
     %opengl neverselect;
-    fig = figure('Name',['calciumdx ' versionnum],'NumberTitle','off','MenuBar','none','doublebuffer','on',...
-        'units','normalized','CloseRequestFcn','calciumdxFigClose','position',[0 .08/3 1 2.86/3]);
+	%fig = figure('Name',['calciumdx ' versionnum],'NumberTitle','off','MenuBar','none','doublebuffer','on','units','normalized','CloseRequestFcn','calciumdxFigClose','position',[0 .08/3 1 2.86/3]);
+    sz = get(0,'screensize');
+    fig = figure('Name','calciumdx ','NumberTitle','off','MenuBar','none','CloseRequestFcn','calciumdxFigClose','position',[1 sz(4) sz(3) sz(4)],'doublebuffer','on');
+	old_units = get(fig,'Units');
+	set(fig,'Units','normalized');
     
     %Image functions
     uicontrol('Style','text','Units','normalized','String','Image','Position',[.87 .955 .11 0.03],'FontSize',12,'FontWeight','Bold','BackgroundColor',[.8 .8 .8]);
@@ -55,7 +59,7 @@ if isdir('TraceReaders')
     inpttr = uicontrol('Style','edit','Units','normalized','String','','Position',[.87 .715-2*0.0275-0.025 .11 0.025],'FontSize',9,...
         'BackgroundColor',[1 1 1],'HorizontalAlignment','left','enable','off');
     
-    bnext = uicontrol('Style','pushbutton','Units','normalized','String','Next >>','Position',[.02 .02 .05 .03],'FontSize',9, ...
+    bnext = uicontrol('Style','pushbutton','Units','normalized','String','Next >>','Position',[.87 .05 .05 .03],'FontSize',9, ...
         'Enable','off','Callback','calciumdxDefineBorders');
     
 else

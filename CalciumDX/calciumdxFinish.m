@@ -3,28 +3,31 @@ if ~ischar(filename)
     return
 end
 fnm = [pathname filename];
-
-%save temp.mat region fnm pathname filename
-%set(gcf,'CloseRequestFcn','');
-%delete(gcf)
-%clear
-%load temp.mat region fnm pathname filename
-%delete temp.mat
 save(fnm,'region');
-clear fnm
+save(calciumdxprefs,'pathname', 'filename')
 
-%load(calciumdxbackupLocation)
-%delete(calciumdxbackupLocation)
+save(calciumdxbackupLocation, 'region', 'fnm', 'pathname', 'filename')
+set(gcf,'CloseRequestFcn','');
+delete(gcf)
+clear
 
+matlabUserPath = userpath;
+matlabUserPath = matlabUserPath(1:end-1);
+calciumdxbackupLocation = fullfile(matlabUserPath,'calciumdxbackup.mat');
 
-load(calciumdxprefs)
-if isdir(fullfile('..','CalciumDXevents'))
-    cd(fullfile('..','CalciumDXevents'))
-    calciumdxevents
-elseif isdir(fullfile('.','CalciumDXevents'))
-    cd(fullfile('.','CalciumDXevents'))
-    calciumdxevents
-else
-    error('calciumdxevents folder not found')
-end
+load(calciumdxbackupLocation)
+delete(calciumdxbackupLocation)
 
+%if isdir(fullfile('..','CalciumDXevents'))
+%    cd(fullfile('..','CalciumDXevents'))
+%    calciumdxevents
+%elseif isdir(fullfile('.','CalciumDXevents'))
+%    cd(fullfile('.','CalciumDXevents'))
+%    calciumdxevents
+%else
+%    error('calciumdxevents folder not found')
+%end
+
+cd(matlabUserPath)
+clear calciumdxbackupLocation matlabUserPath
+calciumdxevents
