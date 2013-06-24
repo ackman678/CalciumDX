@@ -1,9 +1,9 @@
 function myPrintTrace(fnm,num,nt,region,startframe,endframe,lcutoff,hipass,hipasscutoff,showStimuli)
 %print trace for particular cell with subplot of high,low pass filter
 %Subplot of contour data, with raw and filtered traces for the currently
-%selected cell, nt(num,:), in calciumdxevents2, where 'fnm' is a valid filename to save the eps figure to, 'num' is the cell number,
+%selected cell, nt(num,:), in calciumdxevents, where 'fnm' is a valid filename to save the eps figure to, 'num' is the cell number,
 %'nt' is the dfoverf normalized traces, and region is the current dataset in use by
-%calciumdxevents2 (or load 'region' independently, run dfoverf.m to generate
+%calciumdxevents (or load 'region' independently, run dfoverf.m to generate
 %'nt', and set 'num' equal to one of the cells in the dataset.
 %For the filter, 'lcutoff' is between (0,1] where 1 equals the Nyquist freq. default is 0.5
 %and where 'hipass' is a string of 'true or false', and 'hipasscutoff' is

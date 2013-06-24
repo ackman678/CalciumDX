@@ -13,7 +13,7 @@ nt = nt(:,2:end);
 plot(filter(hann(5),1,nt(num,:)),'r') %matlab hann filter
 plot(myfilter(nt(num,:),2),'g')   %rosa's hann filter
 
-%make calciumdxevents2 window active and overplot with filtered trace
+%make calciumdxevents window active and overplot with filtered trace
 plot(myfilter(nt(num,:),2),'black')   %rosa's hann filter
 
 

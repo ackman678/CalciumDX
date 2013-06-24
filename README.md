@@ -15,11 +15,20 @@ calciumdxevents
 
 There are also a number of miscellaneous functions for data analysis, fetching of data tables, and plotting-- some of which are documented below.
 
+
+# Installation #
+
+1. Clone CalciumDX into your *MATLAB* user folder. Make sure you have the signal processing and image processing toolboxes installed.
+	* tip: if you have the GitHub application or git installed on your machine you can keep your local copy in sync with this remote GitHub repository
+2. Add CalciumDX/CalciumDX to your matlab path
+3. Add CalciumDX/CalciumDXevents to your matlab path 
+
+
 #Image processing, ROI detection, and calcium trace reading
 
 These are the instructions on how to use `calciumdx.m` to perform the initial reading in of your image time-series, make ROIs, and read raw fluorescence trace data.
 
-1. At the matlab command prompt you first need to change into the calciumdx folder (`cd CalciumDX/calciumdx`) then type `calciumdx`
+1. At the matlab command prompt type `calciumdx`.
 1. Click 'Open'. For CCD recording select your .tif file. For 2P, select first .tif image in your series. Wait for image series to open, may take up to a minute to complete.
 2. Select to average frames together for base image. Default is to do all frames. But if there is a lot of xy or z movement artifacts (like for 2P imaging movies), you will want to instead do at least 5-10 consecutive frames that are stable (no xyz movements) and are largely non-active (not much activity). May need to open series as virtual stack in imageJ to know which frame range to select
 3. Select the anterior medial reference point in the image. Try to select the medial point just anterior to your dye labeled hemispheres (usually around lambda for superior colliculus imaging for example). This value will be stored in `region.orientation.value` in your data file and used later when matching normalized spatial measurements (ROI locations, directions) between hemispheres when fetching data.
@@ -54,7 +63,7 @@ For this we will use `calciumdxevents.m`
 
 #Calcium wave detection
 
-This commands in this section only need to be used if you wish to automatically detect and mark propagating calcium waves (e.g. Ackman, et al. 2012). 
+The commands in this section only need to be used if you wish to automatically detect and mark propagating calcium waves (e.g. Ackman, et al. 2012). 
 
 Copy each of the following lines in sequence and paste to the matlab command prompt:
 
@@ -89,7 +98,7 @@ Save .mat file and the resulting multiwaveplots:
 	ta_radians(i) + (pi)  %fix individual wave angles
 	save(fnm,'region')
 	data = batchFetchWaveProp({filename},region);
-	myMakeMultiWaveSummaryPlot(region,data); %copy prop to excel
+	myMakeMultiWaveSummaryPlot(region,data); %copy output table to excel or txt file
 
 Save .mat file and the resulting multiwaveplots:
 
@@ -146,7 +155,7 @@ Print out and save wave direction plots with following command sequence (copy an
 
 # Make a calcium event based dataset 
 
-For passing the resulting dataframe/database to statistical analysis environments such as R.  Automatically saves a space delimited .txt file with all data.
+For passing the resulting dataframe/database to statistical analysis environments such as R. Automatically saves a space delimited .txt file with all data.
 
 	batchFetchCalciumEventProps({filename},region);
 
@@ -160,7 +169,7 @@ This workflow is optional. Can be used to make stimulus triggers (e.g. visual, t
 
 * sigTOOL.m  %eeg, electrophysiology matlab program from Kings College London. Opens CED Spike2 .smr files
 * File --> Import --> Batch Import .smr files into .kcl files
-* calciumdxcalciumdextran and calciumdxevents4
+* calciumdx and calciumdxevents
 * mySTopen.m
 * [sig_idx1 times] = myFrameTriggerDetect(1,2)
 		  [sig_idx1 times] =
@@ -179,8 +188,8 @@ This workflow is optional. Can be used to make stimulus triggers (e.g. visual, t
 		  fig window 1 and 1s dur
 * add event description with excel file open
 * region.stimuli = stimuli;
-* Show stimuli in calciumdxevents4
-* save file with calciumdxevents4.  or save(fnm,'region')
+* Show stimuli in calciumdxevents
+* save file with calciumdxevents.  or save(fnm,'region')
 * myPlotRasterHist([],region,region.stimuli); fname2 =
 	  [fnm(1:end-4) 'rastHist' '.eps'];
 	  printfig('epsc',fname2)
@@ -217,17 +226,5 @@ For doing peri-stimulus time histogram analysis, as in `batchFetchStimResponsePr
 	  'responseFreqContourPlot-LReyeStim_-300-3000ms' '.eps'];
 	  printfig('epsc',fname2)
 * data=batchFetchStimResponseProps({filename},region,[],[-20
-	  00 5000],[]);  %this is all you need, it is a wrapper for myMakeMultiPETHplot with automatically table writing to file
+	  00 5000],[]);  %this is all you need, it is a wrapper for myMakeMultiPETHplot with automatic writing of data table file
 
-
-
-
-TODO: fig close request function fix
-TODO: greyed out next button fix
-
-TODO:  in fig close request
-% clear
-% load(calciumdxbackupLocation)
-% delete(calciumdxbackupLocation)
-delete(gcf)
-TODO: change auto file path save default in dxevents after dx has been run
