@@ -16,13 +16,27 @@ calciumdxevents
 There are also a number of miscellaneous functions for data analysis, fetching of data tables, and plotting-- some of which are documented below.
 
 
+# Requirements #
+
+* matlab with the signal processing and image processing toolboxes
+
 # Installation #
 
-1. Clone CalciumDX into your *MATLAB* user folder. Make sure you have the signal processing and image processing toolboxes installed.
-	* tip: if you have the GitHub application or git installed on your machine you can keep your local copy in sync with this remote GitHub repository
-2. Add CalciumDX/CalciumDX to your matlab path
+1. Clone CalciumDX from GitHub into your *MATLAB* user folder.
+2. Add CalciumDX/CalciumDX to your [matlab path][matlabSearchPath]
 3. Add CalciumDX/CalciumDXevents to your matlab path 
 
+## Updates ##
+
+Make sure you have the GitHub application or git installed on your local machine to keep your local copy in sync with this remote GitHub repository. A few options:
+
+* can use the *Sync* button if you haven't made changes to any files or added anything to the CalciumDX subdirectories. [Sync is equivalent to][SyncPushPull] `git pull --rebase`
+* can use *Pull* from the *Repository* dropdown menu if using GitHub for Mac OSX
+* can use the git command line client by typing `git pull` on either Windows or Mac OSX.
+	* tip: if you have uncommitted changes on your local CalciumDX repository (files you've accidentally added or changed) then you can move those files or just run `git stash` from command line before doing `git pull`. This will save and hide the changes and those files (which you can always retrieve later if needed using git).
+
+
+------------------------------------------------------------
 
 #Image processing, ROI detection, and calcium trace reading
 
@@ -228,3 +242,8 @@ For doing peri-stimulus time histogram analysis, as in `batchFetchStimResponsePr
 * data=batchFetchStimResponseProps({filename},region,[],[-20
 	  00 5000],[]);  %this is all you need, it is a wrapper for myMakeMultiPETHplot with automatic writing of data table file
 
+
+
+
+[SyncPushPull]: http://mac.github.com/help.html#faq-sync-push-pull
+[matlabSearchPath]: http://www.mathworks.com/help/matlab/matlab_env/what-is-the-matlab-search-path.html
