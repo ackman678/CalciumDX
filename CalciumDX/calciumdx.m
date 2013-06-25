@@ -1,6 +1,6 @@
 %calciumdx.m
 %for analysis of calcium imaging movies (either 2P or CCD based)
-%2013-06-24 miscellaneous bug fixes
+%2013-06-24 miscellaneous bug fixes and streamlined program flow
 %2013-06-21 miscellaneous bug fixes
 %2013-06-20 10:35:50 started fork and reorganization by James Ackman for upload to github as shared project editing. Many TODOs are needed including reworking as object oriented.
 % JBA edited from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
@@ -25,7 +25,7 @@ save(calciumdxbackupLocation, 'matlabUserPath')
 cd(calciumdxpath)
 
 
-versionnum = '4.1.2';
+versionnum = '4.1.3';
 
 if isdir('TraceReaders')
     

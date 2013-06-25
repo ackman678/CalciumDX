@@ -12,7 +12,8 @@ if get(df_check,'value') == 0
     end
     if ~isempty(region.traces)
         th(2) = plot(region.timeres*(0:size(region.traces,2)-1),region.traces(cellnum,:));
-        xlim([0 region.timeres*(size(region.traces,2)-1)])
+%        xlim([0 region.timeres*(size(region.traces,2)-1)])
+		xlim([0 region.timeres*(size(region.traces,2))])
     end
     if ~isempty(region.onsets{cellnum})
         th(3) = plot(region.timeres*(region.onsets{cellnum}-1),region.traces(cellnum,region.onsets{cellnum}),'ro');

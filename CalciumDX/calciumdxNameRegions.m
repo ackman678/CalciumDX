@@ -12,5 +12,5 @@ for c = 1:length(reg)
         'BackgroundColor',[1 1 1],'HorizontalAlignment','left');
 end
 
-bnext = uicontrol('Style','pushbutton','Units','normalized','String','Next >>','Position',[.87 .1 .05 .03],'FontSize',9, ...
+bnext = uicontrol('Style','pushbutton','Units','normalized','String','Next >>','Position',[.87 .05 .05 .03],'FontSize',9, ...
     'Enable','on','Callback','calciumdxDetectCells');

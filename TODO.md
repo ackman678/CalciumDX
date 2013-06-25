@@ -12,11 +12,13 @@
 * ~~add uniq datestr to bkup file name~~ 2013-06-24 11:32:23
 * ~~align all + coords graphics orphan at readtraceparam~~ 2013-06-24 12:13:07
 * ~~allow region overlap graphics orphan at readtraceparam~~ 2013-06-24 12:13:12
-* double image filter code location
-	* default image filter
+* ~~remov det step~~ 2013-06-24 23:32:13
+* ~~remov double image filter code location~~ 2013-06-24 23:11:39
+* edit plot trace
 * branch for obj oriented switch
 * integrate bkgnd subtr
 * integrate image reg
+
 
 ## calciumdxevents
 
