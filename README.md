@@ -18,13 +18,25 @@ There are also a number of miscellaneous functions for data analysis, fetching o
 
 # Requirements #
 
+## Core dependencies ##
 * matlab with the signal processing and image processing toolboxes
+
+## Non-core dependencies ##
+Several functions (mostly non-core gui) depend on the following freely available toolboxes:
+
+* [DIPUM toolbox][dipumToolbox] [#Gonzalez:2009]. Most of the core functionality does not depend on this, except for an fft notch artifact filter and some spatial pattern metrics for image similarity/distance measure calculations.
+* [piotrImageVideoProcessingToolbox][piotrToolbox]. A couple non-core functions make use of xcorrn from this toolbox.
+
 
 # Installation #
 
 1. Clone CalciumDX from GitHub into your *MATLAB* user folder.
 2. Add CalciumDX/CalciumDX to your [matlab path][matlabSearchPath]
 3. Add CalciumDX/CalciumDXevents to your matlab path 
+4. *Optional:* Install the non-core dependency toolboxes
+	* download from the respective sites listed above
+	* move the toolboxes into your matlab user home folder
+	* add their folders and subfolders to your matlab path.
 
 ## Updates ##
 
@@ -252,6 +264,12 @@ For doing peri-stimulus time histogram analysis, as in `batchFetchStimResponsePr
 
 
 
+[#Gonzalez:2009]: Digital Image Processing Using MATLAB, 2nd edition, by R.C. Gonzalez, R.E. Woods, and S.L. Eddins, Gatesmark Publishing, 2009.
 
 [SyncPushPull]: http://mac.github.com/help.html#faq-sync-push-pull
+
 [matlabSearchPath]: http://www.mathworks.com/help/matlab/matlab_env/what-is-the-matlab-search-path.html
+
+[piotrToolbox]: http://vision.ucsd.edu/~pdollar/toolbox/doc/
+
+[dipumToolbox]: http://www.imageprocessingplace.com/DIPUM_Toolbox_2/DIPUM_Toolbox_2.htm

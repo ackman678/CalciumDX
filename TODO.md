@@ -29,10 +29,13 @@
 * integrate component det
 * add user preferences for gui
 * add user preferences for detection routine argin (like filter order, pass band, window)
+* fix DIPUM image processing toolbox requirement?
 
 ## other
 
 * update try/load(calciumdxprefs) and save(calciumdxprefs) statements on various funcs
 * add table fetch for corrPairs, pval
 * by region type for fetchCorrPairs
+* fix DIPUM image processing toolbox requirement?
+* fix piotr image processing toolbox requirement?
 * new proj/document R stats/plotting code
