@@ -17,7 +17,8 @@ trSign = -1;
 %opengl neverselect;
 sz = get(0,'screensize');
 % fig = figure('Name','calciumdxEvents','NumberTitle','off','MenuBar','none','position',[1 0.15*sz(4) sz(3) 0.7*sz(4)],'doublebuffer','on');
-fig = figure('Name','calciumdxEvents','NumberTitle','off','MenuBar','none','position',[1 sz(4) sz(3) sz(4)],'doublebuffer','on');
+%fig = figure('Name','calciumdxEvents','NumberTitle','off','MenuBar','none','position',[1 sz(4) sz(3) sz(4)],'doublebuffer','on');
+fig = figure('Name','calciumdxEvents','NumberTitle','off','position',[1 sz(4) sz(3) sz(4)],'doublebuffer','on');
 
 matlabUserPath = userpath;
 matlabUserPath = matlabUserPath(1:end-1);
@@ -52,9 +53,11 @@ for c = 1:size(tr,1)
     nt(c,:) = dfoverf(tr(c,:))*100;
 end
 
-maxY = max(nt(:));
+nCells = size(nt,1);
+len = size(nt,2);
+
+maxY = max(nt(:));  %used for Same Yaxis button toggle to used single Y axis for all trace plots
 minY = min(nt(:));
-ylimits = [minY maxY];
 
 spk = zeros(size(nt));
 dec = zeros(size(nt));
@@ -95,7 +98,7 @@ for c = 1:length(region.contours)
 end
 axis equal
 imagesize = size(region.image);
-xlim([0 imagesize(2)])
+%xlim([0 imagesize(2)])
 ylim([0 imagesize(1)])
 set(gca,'ydir','reverse');
 box on
@@ -105,7 +108,7 @@ set(gca,'xtick',[],'ytick',[]);
 
 % colormap plot of cell fluorescence over time---------------------
 figure(fig);
-ax(2)=subplot('position',[0.03 0.70 0.94 0.10]);
+ax(1)=subplot('position',[0.03 0.70 0.94 0.10]);
 imagesc(nt); colormap(jet)
 ylabel('Cell #')
 % set(gca,'ytick',[1 (1:fix(length(region.contours)/100))*100])
@@ -131,26 +134,34 @@ set(gca,'ydir','reverse')
 
 
 %Subplot of mean trace for all cells-----------------------------------
-ax(3)=subplot('position',[0.03 0.61 0.94 0.08]);
+ax(2)=subplot('position',[0.03 0.61 0.94 0.08]);
 plot(mean(nt));
-xlim(xlimits);
+%xlim(xlimits);
 set(gca,'xtick',[]);
 %set(gca,'ytick',[]);
 
-trax = subplot('position',[0.03 0.15 0.94 0.45]);
+%Subplot skeleton cell trace--------------------------------------------
+%Plotting handled by hevPlotTrace.m
+ax(3) = subplot('position',[0.03 0.15 0.94 0.45]);
 box on
 % set(gca,'buttondownfcn','hevZoom')
 % set(fig,'KeyPressFcn','hevButtonDown')
 
-numslider = uicontrol('Style','slider','Units','normalized','Position',[0.1 0.1 0.74 0.03],'Callback','hevPlotTrace',...
+ylimits = [min(nt(1,:)) max(nt(1,:))];  %initial limits for 1st cell
+set(ax(3),'YLim',ylimits);
+set(ax(3),'XLim',xlimits)
+linkaxes(ax,'x')
+%set(ax(1),'xlim',xlimits)
+pan xon
+zoom xon
+
+
+numslider = uicontrol('Style','slider','Units','normalized','Position',[0.1 0.1 0.74 0.03],'Callback','num = round(get(numslider,''Value'')	); set(txcellnum,''string'',num2str(num)); hevPlotTrace',...
     'Min',1,'Max',length(region.contours),'Sliderstep',[1/length(region.contours) 10/length(region.contours)],'Value',1);
-
-
-
 uicontrol('Style','text','Units','normalized','String','Cell #','Position',[.05 .05 .05 0.04],'FontSize',12,'FontWeight','Bold',...
     'HorizontalAlignment','right','BackgroundColor',[.8 .8 .8]);
 txcellnum = uicontrol('Style','edit','Units','normalized','String','1','Position',[.11 .05 .05 0.04],'FontSize',12,'FontWeight','Bold',...
-    'BackgroundColor',[1 1 1],'HorizontalAlignment','left','Callback','hevPlotTrace');
+    'BackgroundColor',[1 1 1],'HorizontalAlignment','left','Callback','num = str2double(get(txcellnum,''string'')); if num < 1, num = nCells; elseif num > nCells, num = 1; end; set(txcellnum,''string'',num2str(num)); set(numslider,''Value'',num); hevPlotTrace');
 bgoto = uicontrol('Style','pushbutton','Units','normalized','String','Go','Position',[.17 .05 .05 0.04],'FontSize',12,...
     'Callback','hevPlotTrace');
 
@@ -205,6 +216,9 @@ btdetect3=uicontrol('Style','pushbutton','Units','normalized','String','Manual P
 showStimuli=0;
 btStimImport=uicontrol('Style','togglebutton','Units','normalized','String','Show stimuli','Position',[.60 .01 .07 0.03],'FontSize',9,...
     'Callback','hevShowStimulusPeriods');
+
+btSameYAxis=uicontrol('Style','togglebutton','Units','normalized','String','Same Yaxis','Position',[.03 .1 .05 0.03],'FontSize',9,...
+    'Callback','hevPlotTrace');
 
 %{
 %This following one is the good one

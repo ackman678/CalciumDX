@@ -26,7 +26,7 @@ Several functions (mostly non-core gui) depend on the following freely available
 
 * [DIPUM toolbox][dipumToolbox] [#Gonzalez:2009]. Most of the core functionality does not depend on this, except for an fft notch artifact filter and some spatial pattern metrics for image similarity/distance measure calculations.
 * [piotrImageVideoProcessingToolbox][piotrToolbox]. A couple non-core functions make use of xcorrn from this toolbox.
-
+* [sigTOOL][sigtool]. Used with the stimulus movies workflow. This program is useful if going to use simultaneously acquired electrophysiology, stimulation data stored in a a data format readable by sigtool, such as CED Spike2 .smr files. This toolbox will read those files and output a .kcl matlab data structure file format.
 
 # Installation #
 
@@ -273,3 +273,5 @@ For doing peri-stimulus time histogram analysis, as in `batchFetchStimResponsePr
 [piotrToolbox]: http://vision.ucsd.edu/~pdollar/toolbox/doc/
 
 [dipumToolbox]: http://www.imageprocessingplace.com/DIPUM_Toolbox_2/DIPUM_Toolbox_2.htm
+
+[sigtool]: http://sourceforge.net/projects/sigtool/

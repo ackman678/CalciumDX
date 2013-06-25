@@ -23,19 +23,25 @@
 ## calciumdxevents
 
 * ~~fix auto file path save default in dxevents after dx has been run~~ 2013-06-24 12:00:17
-* change autoscale in dxevents
-* fix zoom in dxevents
-* fix cell nav for scroll vs number
-* integrate component det
+* ~~change autoscale in dxevents~~ 2013-06-25 09:21:44
+* ~~fix zoom in dxevents~~ 2013-06-25 10:27:27
+* ~~fix cell nav for scroll vs number~~ 2013-06-25 09:07:34
+* ~~add Same Y axis zoom toggle button~~ 2013-06-25 11:57:39
+* ~~add option through menu to turn off zoom to use add events context menu~~ 2013-06-25 11:58:53
+* ~~add defaults for zoom and pan horizontal~~ 2013-06-25 11:58:48
+* ~~link x axis for plots for consistent zoom and scroll behavior~~ 2013-06-25 11:59:43
 * add user preferences for gui
 * add user preferences for detection routine argin (like filter order, pass band, window)
+* integrate component det
 * fix DIPUM image processing toolbox requirement?
 
 ## other
 
+* ~~add remaining stim analysis functions (getStimParams, etc)~~ 2013-06-25 09:21:02
 * update try/load(calciumdxprefs) and save(calciumdxprefs) statements on various funcs
 * add table fetch for corrPairs, pval
 * by region type for fetchCorrPairs
 * fix DIPUM image processing toolbox requirement?
 * fix piotr image processing toolbox requirement?
 * new proj/document R stats/plotting code
+

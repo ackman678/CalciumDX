@@ -2,40 +2,23 @@
 % clear trmenu cmenu coffmenu h1 h2 h3 h4 h5
 % set(ax(2),'xlim',xlimits)
 % set(ax(3),'xlim',xlimits)
-% % axes(trax)
+% % axes(ax(3))
 % 
 % hold off
 
-existFlag = exist('axHandle','var');
-if existFlag == 1
-    [xlimits, ylimits]=queryXYLimits(axHandle);
-end
-% assignin('base','xlimits',xlimits);
-% assignin('base','ylimits',ylimits);
-
-if isempty(num)
-    return
-end
-
-numSlide = round(get(numslider,'Value'));
-numTx = str2double(get(txcellnum,'string'));
-
-if num == numTx
-    num = numSlide;
-else
-    num = numTx;
+button_state = get(btSameYAxis,'Value');
+if button_state == get(btSameYAxis,'Max')
+	% Toggle button is pressed, take appropriate action
+	ylimits = [minY maxY];
+	set(ax(3),'YLim',ylimits);
+elseif button_state == get(btSameYAxis,'Min')
+	% Toggle button is not pressed, take appropriate action
+	ylimits = [min(nt(num,:)) max(nt(num,:))];
+	set(ax(3),'YLim',ylimits);
 end
 
-if num < 1
-    num = size(nt,1);
-    set(txcellnum,'string',num2str(num));
-end
-if num > size(nt,1)
-    num = 1;
-    set(txcellnum,'string',num2str(num));
-end
-set(txcellnum,'string',num2str(num));
-%}
+
+[xlimits, ~]=queryXYLimits(ax(3));
 
 set(cnt,'facecolor',[0 0 0]);
 set(cnt(num),'facecolor',1-cl(region.location(num),:));
@@ -49,10 +32,10 @@ set(rtransients,'value',idx);
 % set(radio(4),'value',0);
 % set(radio(idx),'value',1);
 
-set(ax(2),'xlim',xlimits)
-set(ax(3),'xlim',xlimits)
+%set(ax(1),'xlim',xlimits)
+%set(ax(2),'xlim',xlimits)
+%set(fig,'CurrentAxes',ax(3))
 
-axes(trax)
 hold off;
 trmenu = uicontextmenu;
 h1 = uimenu(trmenu, 'Label', 'Add event', 'Callback', 'hevAddEvent');
@@ -65,22 +48,14 @@ h1 = uimenu(trmenu, 'Label', 'Add event', 'Callback', 'hevAddEvent');
 % %-----END rmBaseline
 % 
 
-len = size(nt,2);
+
 %-------Next two lines are for overplotting with filtered trace------
 %-------added by JBA Aug 1, 2008---------------------------
 % h8 = plot(filtfilt(fir1(5,0.2,'low'),1,nt(num,:)),'k'); %overplot lowpass filtered trace in black
 % hold on
 % h9 = line([1 len],[5 5],'LineStyle','--');
 % h10 = line([1 len],[-5 -5],'LineStyle','--');
-h2 = plot(trax,nt(num,:),'color',[.75 .75 .75],'uicontextmenu',trmenu); %default with gray trace
-axHandle=gca;
-hevZoom(h2,axHandle);
-
-
-%--------------------------------------------------------------------
-% rawtrace = gca;
-
-%set(gca,'xtick',[]);
+plot(ax(3),nt(num,:),'color',[.75 .75 .75],'uicontextmenu',trmenu); %default with gray trace
 
 
 % -------Plot the onsets and offsets of events-------------------------
@@ -142,12 +117,11 @@ if showStimuli==1
     end
 end
 
-xlim(xlimits);
-ylim(ylimits);
+set(ax(3),'XLim',xlimits);
+set(ax(3),'YLim',ylimits);
+
+
 %---------------------------------------------------------------------
 % set(gcf,'KeyPressFcn','hevButtonDown')
 % set(gca,'buttondownfcn','hevZoom')
 % set(fig,'KeyPressFcn','hevButtonDown','Interruptible','off','BusyAction','cancel')
-% uiwait(fig,5)
-
-%axes(rawtrace); slows down the drawing considerably

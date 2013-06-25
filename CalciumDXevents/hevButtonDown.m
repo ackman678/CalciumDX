@@ -1,3 +1,5 @@
+%2013-06-25 10:52:15 no longer used
+
 % pause(.2)
 str = sum(get(gcf,'currentcharacter'));
 

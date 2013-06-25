@@ -1,3 +1,4 @@
+%2013-06-25 10:52:15 no longer used
 % point1 = get(gca,'CurrentPoint');
 % finalRect = rbbox;
 % point2 = get(gca,'CurrentPoint');
