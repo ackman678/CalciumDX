@@ -1,4 +1,4 @@
-Date: 2013-06-24 10:26:33 
+Date: 2013-07-02 10:18:19
 Author: James B. Ackman
 
 # CalciumDX #
@@ -77,8 +77,7 @@ These are the instructions on how to use `calciumdx.m` to perform the initial re
 		* Enter a ROI size. Can use 10x10px for CCD recordings. Can leave at the default value for 2Pphoton based recordings. Close the resulting figure image windows.
 	* *For cell based roi analysis:* When asked to draw rectangular grid, select 'No'.
 12. On the main application window select 'ReadTracesPrTIFF' and click 'Next>>'
-13. Select '_None_' from the Signal detector drop down menu and click 'Detect!'.
-14. Click 'Finish' and save the resulting .mat file.
+13. Click 'Finish' and save the resulting .mat file.
 
 #Calcium event detection
 
