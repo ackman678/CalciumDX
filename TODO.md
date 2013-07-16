@@ -38,6 +38,8 @@
 ## other
 
 * ~~add remaining stim analysis functions (getStimParams, etc)~~ 2013-06-25 09:21:02
+* ~~add automatically save pvalCorrMatrix to fetchCorrPairs~~ 2013-07-16 14:08:33
+* ~~add automatically save date timestamp to fetchCorrPairs~~ 2013-07-16 14:09:27
 * update try/load(calciumdxprefs) and save(calciumdxprefs) statements on various funcs
 * add table fetch for corrPairs, pval
 * by region type for fetchCorrPairs

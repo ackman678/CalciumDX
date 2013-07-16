@@ -1,7 +1,7 @@
 function [corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 %[corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,1,1000,0.01,'true');
 %update with additional outputs James B. Ackman 2013-01-05 23:03:38
-%2011-10-20 James B. Ackman-- added new variables for choosing whether to use Gauss events or not for spk smoothing, as well as window length defining. 
+%2011-10-20 James B. Ackman-- added new variables for choosing whether to use Gauss events or not for spk smoothing, as well as window length defining.
 %edited by jba on 30/07/2007 so that this script can still be used whether or not
 %the region.userdata.schmutzr field is defined or not
 %numres = no. of simulations
@@ -47,47 +47,47 @@ for ii = 1:length(all_s) %jba
     fprintf(str{ii});
     s = all_s{ii};
     
-%     %     s = zeros(size(region.traces));
-%     s = zeros(10,size(region.traces,2));
-% %     s(1,c1) = 1;
-% %     s(2,c2) = 1;
-% %     s(1,[150 250]) = 1;
-% %     s(2,[150 250]) = 1;
-%     
-%     
-%     s(1:10,[250]) = 1;
-% %     s(2,[250]) = 1;
-% %     s(3,[250]) = 1;
-%     desc = '';
+    %     %     s = zeros(size(region.traces));
+    %     s = zeros(10,size(region.traces,2));
+    % %     s(1,c1) = 1;
+    % %     s(2,c2) = 1;
+    % %     s(1,[150 250]) = 1;
+    % %     s(2,[150 250]) = 1;
+    %
+    %
+    %     s(1:10,[250]) = 1;
+    % %     s(2,[250]) = 1;
+    % %     s(3,[250]) = 1;
+    %     desc = '';
     
-%-------Smooth the spike matrix--------------
+    %-------Smooth the spike matrix--------------
     %smooth with gaussian
     if strcmp(useGaussEvents,'true')
-    s_thick = gauss_events(s,sig); %smooth with gaussian. For sig=1, resulting spike matrix will be [0.0001 0.0183 0.3679 1.0000 0.3679 0.0183 0.0001] surrounding the spike onset.
-    tmp = zeros(1,size(s,2));
-    tmp(round(numel(tmp)/2))=1;
-    tmpSmooth = gauss_events(tmp,sig);  %calculate spkLength, cause gauss_events is dependent on total no. of samples (frames)
-    spkLength=numel(tmpSmooth(tmpSmooth>0.01));  %below this the gaussian drops to near zero-infinity
-    win = ((spkLength-1)/2)*region.timeres;
+        s_thick = gauss_events(s,sig); %smooth with gaussian. For sig=1, resulting spike matrix will be [0.0001 0.0183 0.3679 1.0000 0.3679 0.0183 0.0001] surrounding the spike onset.
+        tmp = zeros(1,size(s,2));
+        tmp(round(numel(tmp)/2))=1;
+        tmpSmooth = gauss_events(tmp,sig);  %calculate spkLength, cause gauss_events is dependent on total no. of samples (frames)
+        spkLength=numel(tmpSmooth(tmpSmooth>0.01));  %below this the gaussian drops to near zero-infinity
+        win = ((spkLength-1)/2)*region.timeres;
     else
-    %smooth spike with +/- N frames, where N is set by winFrames
-    s_thick = s;  %or for 1fr/spk, no smoothing. For low frame rate movies
-    winFrames = round(win/region.timeres);
-%     winFrames=1;
-    for c = 1:size(s,1)
-        for f = find(s(c,:))
-            in = find(abs((1:size(s,2))-f)<=winFrames);  %e.g. for winFrames of 2, this will give a 5 frame total spk length
-            s_thick(c,in) = s_thick(c,f);
+        %smooth spike with +/- N frames, where N is set by winFrames
+        s_thick = s;  %or for 1fr/spk, no smoothing. For low frame rate movies
+        winFrames = round(win/region.timeres);
+        %     winFrames=1;
+        for c = 1:size(s,1)
+            for f = find(s(c,:))
+                in = find(abs((1:size(s,2))-f)<=winFrames);  %e.g. for winFrames of 2, this will give a 5 frame total spk length
+                s_thick(c,in) = s_thick(c,f);
+            end
         end
+        spkLength = winFrames*2+1;
     end
-    spkLength = winFrames*2+1;
-    end
-%-------Begin correlation-------------
+    %-------Begin correlation-------------
     corrs = s_thick*s_thick';  %corr distance metric for the observed spike matrix
     corrs_obs = corrs;
     count = zeros(size(corrs));
     corrs_cont = reshape(corrs,1,numel(corrs)); %reshape adjacency matrix into a vector
-%     [r,p] = corrcoef(s_thick')
+    %     [r,p] = corrcoef(s_thick')
     corrs_res = zeros(fix(p_val*numres)+1,numel(corrs));  %this line uses the pval. Less rows from smaller p_vals (probability of event in no. of simulations) or less num_reshuffles.
     %     s_res = zeros(size(s,1),size(s,2),numres);
     npairs = zeros(1,numres);
@@ -101,7 +101,7 @@ for ii = 1:length(all_s) %jba
         
         count = count + (corrs>=corrs_obs);
         corrs_res(1,:) = reshape(corrs,1,numel(corrs)); %add the reshuffled adjacency matrix corr values to the first row of probability array.
-%         pairs = (corrs_cont>corrs_res(1,:));  %jba
+        %         pairs = (corrs_cont>corrs_res(1,:));  %jba
         corrs_res = sort(corrs_res); %sort columns of probablity matrix in order of ascending corr value
         if mod(t,10) == 0
             fprintf('.');
@@ -115,7 +115,7 @@ for ii = 1:length(all_s) %jba
     end
     pvalCorrMatrix = count/numres;
     corr_pairs{ii} = pairs;
-%     myCDF(npairs,'percent pairs')
+    %     myCDF(npairs,'percent pairs')
     fprintf('\n');
     
     %     figure;
@@ -126,7 +126,7 @@ for ii = 1:length(all_s) %jba
     %     movie(F,10)
     
     
-  %{  
+    %{
     pairs_tmp = [];
     for idx = 1:size(corrs_res,1)
         pairs = (corrs_cont>corrs_res(idx,:)); %find those observed corr values exceeding the reshuffled simulation values above corrs_res(2,:)
@@ -155,26 +155,30 @@ for ii = 1:length(all_s) %jba
     fprintf(['Percent cells in correlations: ' num2str(100*length(unique(reshape(pairs,1,numel(pairs))))/size(s,1)) '\n']);
     fprintf(['        Total number of pairs: ' num2str(size(s,1)*(size(s,1)-1)/2) '\n']);
     fprintf(['     Percent pairs correlated: ' num2str(100*size(pairs,1)/(size(s,1)*((size(s,1)-1))/2)) '\n']);
-
-
-if ~isfield(region,'userdata') || ~isfield(region.userdata,'corr')
-    region.userdata.corr{1}.corr_pairs=corr_pairs;
-    region.userdata.corr{1}.params.useGaussEvents=useGaussEvents;
-    region.userdata.corr{1}.params.window_sec=win;
-    region.userdata.corr{1}.params.spkLength_frames=spkLength;
-    region.userdata.corr{1}.params.numres=numres;
-    region.userdata.corr{1}.params.p_val=p_val;
-else
-    len=length(region.userdata.corr);
-    region.userdata.corr{len+1}.corr_pairs=corr_pairs;
-    region.userdata.corr{len+1}.params.useGaussEvents=useGaussEvents;
-    region.userdata.corr{len+1}.params.window_msec=win;
-    region.userdata.corr{len+1}.params.spkLength_frames=spkLength;
-    region.userdata.corr{len+1}.params.numres=numres;
-    region.userdata.corr{len+1}.params.p_val=p_val;
-end
-
-
+    
+    
+    if ~isfield(region,'userdata') || ~isfield(region.userdata,'corr')
+        region.userdata.corr{1}.corr_pairs=corr_pairs;
+        region.userdata.corr{1}.pvalCorrMatrix = pvalCorrMatrix;
+        region.userdata.corr{1}.params.useGaussEvents=useGaussEvents;
+        region.userdata.corr{1}.params.window_sec=win;
+        region.userdata.corr{1}.params.spkLength_frames=spkLength;
+        region.userdata.corr{1}.params.numres=numres;
+        region.userdata.corr{1}.params.p_val=p_val;
+        region.userdata.corr{1}.params.date = datestr(now,'yyyymmdd-HHMMSS');
+    else
+        len=length(region.userdata.corr);
+        region.userdata.corr{len+1}.corr_pairs=corr_pairs;
+        region.userdata.corr{len+1}.pvalCorrMatrix = pvalCorrMatrix;
+        region.userdata.corr{len+1}.params.useGaussEvents=useGaussEvents;
+        region.userdata.corr{len+1}.params.window_msec=win;
+        region.userdata.corr{len+1}.params.spkLength_frames=spkLength;
+        region.userdata.corr{len+1}.params.numres=numres;
+        region.userdata.corr{len+1}.params.p_val=p_val;
+        region.userdata.corr{len+1}.params.date = datestr(now,'yyyymmdd-HHMMSS');
+    end
+    
+    
 end
 
 function s_thick = gauss_events(s,sig)
@@ -184,5 +188,5 @@ for c = 1:size(s,1)
     for d = find(s(c,:)==1)
         s_thick(c,:) = s_thick(c,:) + exp(-(((1:size(s,2))-d)/sig).^2);
     end
-%     disp(s_thick(s_thick>0))
+    %     disp(s_thick(s_thick>0))
 end

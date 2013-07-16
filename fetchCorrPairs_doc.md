@@ -21,3 +21,11 @@ Example using gaussian smoothing of the signal:
 This batch script will output a data table for downstream plotting and analysis. 
 
 	data = batchFetchCorrpairs(filelist)
+
+
+# Plot Corr Pairs Data #
+
+Plot a graph of nodes and edges based on the corr data:
+
+	plotCorrGraph(region,edgeAesthetic)
+
