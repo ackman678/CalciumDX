@@ -5,15 +5,64 @@ Tags: manual, doc, protocols, methods
 # Detect cell pairs #
 The purpose of this documentation is to demonstrate how to detect significant correlations between pairs of cells/ROIs that exhibit synchronous calcium activities.
 
-Usage:
+## Usage
 
-	function [corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
+	[region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 
 default window is `win = 0.250` (250msec) if you don't use gaussEvents for gaussian smoothing.
 
+## Example
+
 Example using gaussian smoothing of the signal:
 
-	[corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,1,1000,0.01,'true');
+	[region] = fetchCorrPairs(region,1,1000,0.01,'true');
+
+Here is an example of what will be output to the matlab command prompt:
+
+	>> [region] = fetchCorrPairs(region,1,1000,0.01,'true');
+
+	All cells ....................................................................................................
+			Total number of cells: 397
+	Percent cells in correlations: 74.3073
+			Total number of pairs: 78606
+		 Percent pairs correlated: 11.1315
+
+## Explanation of outputs
+
+The resulting returned `region` data structure will have the raw results stored at `region.userdata.corr{n}`, where *n = 1* if this is the first time you've run fetchCorrPairs, or *n = n + 1* if you've already run it *n* times.
+
+Here are the outputs and explanations of what's returned in the `region` data structure: 
+
+	>> region.userdata.corr{3}
+
+	ans = 
+
+			corr_pairs: {[8750x2 double]}	%List of cell pairs at p_val significance level
+		pvalCorrMatrix: [397x397 double]	%Correlation matrix of measured p-values for all cell pairs
+				params: [1x1 struct]	%parameter structure, see below
+
+	>> region.userdata.corr{3}.params
+
+	ans = 
+
+		  useGaussEvents: 'true'	%Whether Gaussian smoothing of spike signal was used
+			 window_sec: 1.7408		%Window in secs, approximate width of total window surrounding spike
+		spkLength_frames: 5			%Windo in frames, width of each spike
+				  numres: 1000		%No. of reshuffles of spike train for the Monte Carlo simulation
+				   p_val: 0.0100	%Significance level set by user
+					date: '20130717-083925'	%Timestamp of when the dataset was generated
+
+
+To visualize the difference between *Percentage of cells in correlations* vs *Percent pairs correlated* imagine the following 6 cell network:
+
+
+![][networkImg]
+
+
+The cell pair list at `region.userdata.corr_pairs` along with the p-values for the pairs and their physical distances can be saved separately for doing a detailed network analysis in R or Python using the iGraph or NetworkX packages.
+
+More on this together with a script to fetch this data structure to follow.
+
 
 
 # Fetch Corr Pair Data #
@@ -22,10 +71,53 @@ This batch script will output a data table for downstream plotting and analysis.
 
 	data = batchFetchCorrpairs(filelist)
 
+This essentially fetches the table of percent cells correlated, number of pairs, and percent pairs correlated that is usually output to the command line from `fetchCorrPairs` as in the [Example] above.
+
 
 # Plot Corr Pairs Data #
 
+## Usage
+
+	myPlotCorrGraphImage(data,region,plotType,numLoca,alphaLevel)
+
+## Examples
+
 Plot a graph of nodes and edges based on the corr data:
 
-	plotCorrGraph(region,edgeAesthetic)
+	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'1',[],0.1)  %connectivity of all cells with all location types
 
+![][img1]
+
+	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'2',[],0.1)  %connectivity of all cells within one location type
+
+![][img2]
+
+	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'3',358,0.9)  %connectivity of one cell (no. 358) with all contours in all location types
+
+![][img3]
+
+	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'4',[],0.03)  %raw image with connectivity overlay
+
+![][img4]
+
+
+Save a png image of the plot (assuming you have pathname and filename defined in your workspace):
+
+	fnm = [pathname filename];
+	print('-dpng', [fnm(1:end-4) datestr(now,'yyyymmdd-HHMMSS') '.png'])
+
+
+Plot edge aesthetic color coded by pvalue instead of distance
+
+	myPlotCorrGraphImage([],region,'2',[],0.1,'pvalue',3)
+
+![][img5]
+
+
+
+[networkImg]: assets/img/network_regular_vs_random.png "Random vs Regular networks" width="800px"
+[img1]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-115851.jpg
+[img2]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-114721.jpg
+[img3]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-121446.jpg
+[img4]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-122440.jpg
+[img5]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-145510.jpg

@@ -1,4 +1,4 @@
-function [corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
+function [region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 %[corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,1,1000,0.01,'true');
 %update with additional outputs James B. Ackman 2013-01-05 23:03:38
 %2011-10-20 James B. Ackman-- added new variables for choosing whether to use Gauss events or not for spk smoothing, as well as window length defining.
@@ -7,9 +7,10 @@ function [corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,re
 %numres = no. of simulations
 %p_val = significance level
 %sig = signal for spike occurence, 1 for a spike matrix
-%win = +/- spike time window for determining correlations
+%useGaussEvents; Whether or not to use spike signal smoothing with a gaussian. If false or empty, then a square wave/block signal will be used surrounding the spike at +/- win.
+%win = +/- spike time window for determining correlations.  Only used if useGaussEvents = false;   
 
-if nargin < 5 || isempty(useGaussEvents); useGaussEvents = 'false'; end  %smooth spk with Gaussian. Not very different results than just using 7fr spk smoothing for datasets with low background spontaneous activity frequencies.
+if nargin < 5 || isempty(useGaussEvents); useGaussEvents = 'false'; end  %smooth spk with Gaussian. Not very different results than just using ~7fr spk smoothing for datasets with low background spontaneous activity frequencies.
 if nargin < 6 || isempty(win); win = 0.250; end  %250msec spk corr window
 
 %all_s = cell(1,2); %jba
@@ -67,7 +68,7 @@ for ii = 1:length(all_s) %jba
         tmp = zeros(1,size(s,2));
         tmp(round(numel(tmp)/2))=1;
         tmpSmooth = gauss_events(tmp,sig);  %calculate spkLength, cause gauss_events is dependent on total no. of samples (frames)
-        spkLength=numel(tmpSmooth(tmpSmooth>0.01));  %below this the gaussian drops to near zero-infinity
+        spkLength=numel(tmpSmooth(tmpSmooth>0.01));  %below this the gaussian drops to near zero-infinity, here it would be number of frames within the 99% confidence interval for the gaussian smoothed spike shape
         win = ((spkLength-1)/2)*region.timeres;
     else
         %smooth spike with +/- N frames, where N is set by winFrames
@@ -161,7 +162,7 @@ for ii = 1:length(all_s) %jba
         region.userdata.corr{1}.corr_pairs=corr_pairs;
         region.userdata.corr{1}.pvalCorrMatrix = pvalCorrMatrix;
         region.userdata.corr{1}.params.useGaussEvents=useGaussEvents;
-        region.userdata.corr{1}.params.window_sec=win;
+        region.userdata.corr{1}.params.window_sec=win;  % The user defined spike window for useGaussEvents = False. %For useGaussEvents = True it is number of frames within the 99% confidence interval for the gaussian smoothed spike shape
         region.userdata.corr{1}.params.spkLength_frames=spkLength;
         region.userdata.corr{1}.params.numres=numres;
         region.userdata.corr{1}.params.p_val=p_val;
@@ -171,7 +172,7 @@ for ii = 1:length(all_s) %jba
         region.userdata.corr{len+1}.corr_pairs=corr_pairs;
         region.userdata.corr{len+1}.pvalCorrMatrix = pvalCorrMatrix;
         region.userdata.corr{len+1}.params.useGaussEvents=useGaussEvents;
-        region.userdata.corr{len+1}.params.window_msec=win;
+        region.userdata.corr{len+1}.params.window_sec=win;
         region.userdata.corr{len+1}.params.spkLength_frames=spkLength;
         region.userdata.corr{len+1}.params.numres=numres;
         region.userdata.corr{len+1}.params.p_val=p_val;
