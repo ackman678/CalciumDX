@@ -1,14 +1,29 @@
 function [region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
-%[corr_pairs,useGaussEvents,win,spkLength,numres,p_val,pvalCorrMatrix,region] = fetchCorrPairs(region,1,1000,0.01,'true');
-%update with additional outputs James B. Ackman 2013-01-05 23:03:38
-%2011-10-20 James B. Ackman-- added new variables for choosing whether to use Gauss events or not for spk smoothing, as well as window length defining.
-%edited by jba on 30/07/2007 so that this script can still be used whether or not
-%the region.userdata.schmutzr field is defined or not
+%fetchCorrPairs Find temporally correlated cell pairs using Monte Carlo simulations
+%[region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
+%
+%Examples:
+%[region] = fetchCorrPairs(region,1,1000,0.01,'true');
+%[region] = fetchCorrPairs(region,1,1000,0.01,'false',0.1);
+%
+%Options:
+%sig = signal for spike occurence, 1 for a spike matrix
 %numres = no. of simulations
 %p_val = significance level
-%sig = signal for spike occurence, 1 for a spike matrix
 %useGaussEvents; Whether or not to use spike signal smoothing with a gaussian. If false or empty, then a square wave/block signal will be used surrounding the spike at +/- win.
-%win = +/- spike time window for determining correlations.  Only used if useGaussEvents = false;   
+%win = +/- spike time window in seconds for determining correlations.  Only used if useGaussEvents = false;   
+%
+%Output:
+% Will pass the region data structure that was input back to workspace with the new corr data at region.userdata.corr
+%
+%Versions:
+%updated 2013-07-18 13:22:09 by jba with consolidated outputs inside the region.userdata.corr data structure
+%%update with additional outputs James B. Ackman 2013-01-05 23:03:38
+%2011-10-20 James B. Ackman-- added new variables for choosing whether to use Gauss events or not for spk smoothing, as well as window length defining.
+%edited by jba on 30/07/2007 so that this script can still be used whether or not the region.userdata.schmutzr field is defined or not
+%
+%See also:
+% batchFetchCorrPairs, myPlotCorrGraphImage, myPlotPvalueCorrMatrix
 
 if nargin < 5 || isempty(useGaussEvents); useGaussEvents = 'false'; end  %smooth spk with Gaussian. Not very different results than just using ~7fr spk smoothing for datasets with low background spontaneous activity frequencies.
 if nargin < 6 || isempty(win); win = 0.250; end  %250msec spk corr window

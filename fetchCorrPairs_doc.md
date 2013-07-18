@@ -3,6 +3,9 @@ Date: 2013-06-20 14:49:49
 Tags: manual, doc, protocols, methods  
 
 # Detect cell pairs #
+
+[fetchCorrPairs](CalciumDXevents/fetchCorrPairs.m)
+
 The purpose of this documentation is to demonstrate how to detect significant correlations between pairs of cells/ROIs that exhibit synchronous calcium activities.
 
 ## Usage
@@ -67,6 +70,8 @@ More on this together with a script to fetch this data structure to follow.
 
 # Fetch Corr Pair Data #
 
+[batchFetchCorrpairs](CalciumDXevents/batchFetchCorrpairs.m)
+
 This batch script will output a data table for downstream plotting and analysis. 
 
 	data = batchFetchCorrpairs(filelist)
@@ -88,6 +93,8 @@ This assumes that you've already run fetchCorrPairs.m and saved your region data
 
 
 ### Plot graph of corr pairs
+
+[myPlotCorrGraphImage](CalciumDXevents/myPlotCorrGraphImage.m)
 
 Plot a graph of nodes and edges based on the corr data:
 
@@ -123,6 +130,8 @@ Plot edge aesthetic color coded by pvalue instead of distance:
 
 ### Plot corr matrix
 
+[myPlotPvalueCorrMatrix](CalciumDXevents/myPlotPvalueCorrMatrix.m)
+
 Plot a correlation matrix of the pvalues for all node pairs in your network.  With plotType = '1', the figure will have 4 plots of different min/max values for the color scale.
 
 	myPlotPvalueCorrMatrix(region, [], '1')
@@ -134,6 +143,7 @@ With plotType = '1', the figure will have 4 plots of different min/max values fo
 	myPlotPvalueCorrMatrix(region, [0 0.01], '2')
 	
 ![][img7]
+
 
 [networkImg]: assets/img/network_regular_vs_random.png "Random vs Regular networks" width="500px"
 [img1]: assets/img/20130717-115851.jpg "graph distance" width="500px"

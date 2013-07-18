@@ -1,28 +1,36 @@
-%28.09.2007-- James Ackman
-% Batch Fetch Correlated pairs data
+function data = batchFetchCorrpairs(filelist)
+%batchFetchCorrpairs Batch Fetch Correlated pairs data
+%
+%Examples:
+%data = batchFetchCorrpairs(filelist)
+% 
+%**USE**
 %If you have run find_calciumdxcorrpairs.m  on your mat files and you have the 
 %corr pairs data stored at region.userdata.corr_pairs,  then this script is
 %very useful for calculating the no. of cells, percent cells correlated, 
 %no. of pairs, and percent pairs correlated.  
-
+%
 %The final output is a cell array titled
 %'data' that will contain these values alongside factors for each set of 
 %values (age, condition, cell correlation type (all cells, non-SCH cells, or SCH cells),etc)  
-
+%
 %Must provide one input:
 %(1) table with desired filenames (space delimited txt file, with full filenames in first column)
-
+%
+%Output:
 %% When finished, convert 'data' table to string-- matlab won't copy the contents of a mixed cell array correctly.
 %for i=1:numel(data); data{i} = num2str(data{i}); end
-
-
 %data=data';
 %txt=sprintf([repmat('%s\t',1,size(data,1)),'\n'],data{:})  %copy this output
 %%dlmwrite('data.txt',txt,'');  %don't need this just copy output to console from above
 %%type('data.txt');
-
 %filelist = readtext('files.txt',' ');
-function data = batchFetchCorrpairs(filelist)
+%
+%Versions:
+%2007.09.28-- James Ackman
+%See also:
+% fetchCorrPairs, batchFetchCalciumEventProps
+
 global region;
 results={};
     fnms=filelist(:,1);

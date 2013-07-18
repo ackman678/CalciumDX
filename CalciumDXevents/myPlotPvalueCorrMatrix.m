@@ -1,23 +1,25 @@
 function myPlotPvalueCorrMatrix(region, minMax, plotType, datasetSelector)
-%myPlotCorrGraphImage(data,region,plotType,numLoca)
-%Make a graph with cell outlines and physical positions as nodes and connect significant pairs with lines.
-%Lines can be colorized based on cell pair distances or the actual calculated pvalues for the cell pairs.
-%region must be a region data structure returned from calciumdx.m and calciumdxevents.m with corrpairs returned from fetchCorrPairs.m
-%edgeAesthetic can be one of two strings: 'distance' or 'pvalue'
-%EXAMPLE: myPlotCorrGraphImage([],region,'1',[],0.3, 'pvalue')  %see all connectivity with plotType 1, alpha 0.3, 'pvalue'
-%EXAMPLE2: myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'1',[],0.3)  %see all connectivity
-%EXAMPLE3: myPlotCorrGraphImage(data,region,'3',100,0.1)  %see connectivity of just cell 100
-%region--
-%	region data structure returned from calciumdx and calciumdxevents
-%minMax-- an optional 1x2 double vector for the min and max values you want to the colormap to represent or the text string 'Auto'.  Will default to the min and max calculated pvalues for significant cell pairs.
-%	[minValue maxValue]
+%myPlotPvalueCorrMatrix Plot pvalue correlation matrix.
+%myPlotPvalueCorrMatrix(region, minMax, plotType, datasetSelector)
+%
+%Examples:
+%myPlotPvalueCorrMatrix(region, [], '1')  %use default minMax which will be the range of pvalues for **significant** cell pairs, use 1st plot type which provides 4 variations. Default dataset will be used at region.userdata.corr{1}
+%myPlotPvalueCorrMatrix(region, [0 0.01], '2', 3)  %manually set minMax, use 2nd plot type, and used 3rd dataset at region.userdata.corr{3}
+%
+%**USE**
+%%region must be a region data structure returned from calciumdx.m and calciumdxevents.m with corrpairs returned from fetchCorrPairs.m
+%Options:
+%region-- region data structure returned from calciumdx and calciumdxevents and fetchCorrPairs
+%minMax-- an optional 1x2 double vector for the min and max values [minValue maxValue] you want to the colormap to represent or the text string 'Auto'.  Will default to the min and max calculated pvalues for significant cell pairs.
 %plotType--
 %'1' = Make 4 plots with different max/min color scaling for caxis variable of colormap representing the pvalues. Auto, [minMax], [0 0.05], [0 0.01]. 
 %'2' = Make single plot with the colormapping dictated by minMax
-%datasetSelector--
+%datasetSelector-- A single number n, representing what region.userdata.corr{n} dataset you want to plot. Defaults to 1.
 %	
-
+%Versions:
 %James B. Ackman 2013-07-18 09:41:17
+%See also:
+%fetchCorrPairs, myPlotPvalueCorrMatrix, batchFetchCorrPairs
 
 if nargin < 4 || isempty(datasetSelector), datasetSelector = 1; end
 

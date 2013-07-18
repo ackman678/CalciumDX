@@ -1,28 +1,31 @@
 function myPlotCorrGraphImage(region,plotType,numLoca,alphaLevel,edgeAesthetic,datasetSelector)
+%myPlotCorrGraphImage Make a graph with cell outlines and physical positions as nodes and connect significant pairs with lines.
 %myPlotCorrGraphImage(data,region,plotType,numLoca)
-%Make a graph with cell outlines and physical positions as nodes and connect significant pairs with lines.
-%Lines can be colorized based on cell pair distances or the actual calculated pvalues for the cell pairs.
+%
+%Examples: 
+%myPlotCorrGraphImage(region,'1',[],0.3, 'pvalue')  %see all connectivity with plotType 1, alpha 0.3, 'pvalue'
+%myPlotCorrGraphImage(region,'1',[],0.3)  %see all connectivity
+%myPlotCorrGraphImage(region,'3',100,0.1)  %see connectivity of just cell 100
+%
+%**USE**
 %region must be a region data structure returned from calciumdx.m and calciumdxevents.m with corrpairs returned from fetchCorrPairs.m
-%EXAMPLE: myPlotCorrGraphImage(region,'1',[],0.3, 'pvalue')  %see all connectivity with plotType 1, alpha 0.3, 'pvalue'
-%EXAMPLE2: myPlotCorrGraphImage(region,'1',[],0.3)  %see all connectivity
-%EXAMPLE3: myPlotCorrGraphImage(region,'3',100,0.1)  %see connectivity of just cell 100
-%region--
-%	region data structure returned from calciumdx and calciumdxevents.  The relevant data should be stored within this structure at 'region.userdata.corr{n}.corr_pairs', where n is 1 or the datasetSelector value.
+%Lines can be colorized based on cell pair distances or the actual calculated pvalues for the cell pairs.
+%
+%Options:
+%region-- region data structure returned from calciumdx and calciumdxevents.  The relevant data should be stored within this structure at 'region.userdata.corr{n}.corr_pairs', where n is 1 or the datasetSelector value.
 %plotType--
 %'1' = plot all connectivity between all contours in all locations,
 %'2' = plot connectivity between all contours within one location, uses numLoca to determine the region.location
 %'3' = plot connectivity between one contour with all contours in all locations, uses numLoca to determine the contour
 %'4' = plot region.image with all connections
-%numLoca--
-%	region.location number to plot for plot type '2' or a cell number (that gives a unique region.location number) for plot type '3'.  Defaults to 2, (assumes your first region.location 1 is nothing, like craniotomy, neuropil, or areas in slice with no labeled cells)
-%alphaLevel--
-%	alpha transparency level for plotting the edges. Defaults to 0.5.
-%edgeAesthetic--
-%	%edgeAesthetic can be one of two strings: 'distance' or 'pvalue'. What you want the edge coloring to represent. Defaults to 'distance'
-%datasetSelector--
-%	A single number n, representing what region.userdata.corr{n} dataset you want to plot. Defaults to 1.
+%numLoca-- region.location number to plot for plot type '2' or a cell number (that gives a unique region.location number) for plot type '3'.  Defaults to 2, (assumes your first region.location 1 is nothing, like craniotomy, neuropil, or areas in slice with no labeled cells)
+%alphaLevel-- alpha transparency level for plotting the edges. Defaults to 0.5.
+%edgeAesthetic-- edgeAesthetic can be one of two strings: 'distance' or 'pvalue'. What you want the edge coloring to represent. Defaults to 'distance'
+%datasetSelector-- A single number n, representing what region.userdata.corr{n} dataset you want to plot. Defaults to 1.
+%
 %James B. Ackman 2013-01-05 14:46
-
+%See also:
+% fetchCorrPairs, myPlotPvalueCorrMatrix, batchFetchCorrPairs
 
 %=====Setup default parameters=========
 
