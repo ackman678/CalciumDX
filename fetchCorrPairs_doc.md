@@ -1,5 +1,5 @@
 Author: James B. Ackman  
-Date: 2013-06-20 14:49:49  
+Date: 2013-07-18 13:38:22  
 Tags: manual, doc, protocols, methods  
 
 # Detect cell pairs #
