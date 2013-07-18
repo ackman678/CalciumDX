@@ -1,26 +1,26 @@
-function myPlotCorrGraphImage(data,region,plotType,numLoca,alphaLevel,edgeAesthetic,datasetSelector)
+function myPlotCorrGraphImage(region,plotType,numLoca,alphaLevel,edgeAesthetic,datasetSelector)
 %myPlotCorrGraphImage(data,region,plotType,numLoca)
 %Make a graph with cell outlines and physical positions as nodes and connect significant pairs with lines.
 %Lines can be colorized based on cell pair distances or the actual calculated pvalues for the cell pairs.
 %region must be a region data structure returned from calciumdx.m and calciumdxevents.m with corrpairs returned from fetchCorrPairs.m
-%edgeAesthetic can be one of two strings: 'distance' or 'pvalue'
-%EXAMPLE: myPlotCorrGraphImage(data,region,'1',[],0.3)  %see all connectivity
-%EXAMPLE2: myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'1',[],0.3)  %see all connectivity
-%EXAMPLE3: myPlotCorrGraphImage(data,region,'3',100,0.1)  %see connectivity of just cell 100
-%data--
-%	Nx2 pair list of cell indices, e.g. 'region.userdata.corr{1}.corr_pairs'
+%EXAMPLE: myPlotCorrGraphImage(region,'1',[],0.3, 'pvalue')  %see all connectivity with plotType 1, alpha 0.3, 'pvalue'
+%EXAMPLE2: myPlotCorrGraphImage(region,'1',[],0.3)  %see all connectivity
+%EXAMPLE3: myPlotCorrGraphImage(region,'3',100,0.1)  %see connectivity of just cell 100
 %region--
-%	region data structure returned from calciumdx and calciumdxevents
+%	region data structure returned from calciumdx and calciumdxevents.  The relevant data should be stored within this structure at 'region.userdata.corr{n}.corr_pairs', where n is 1 or the datasetSelector value.
 %plotType--
 %'1' = plot all connectivity between all contours in all locations,
 %'2' = plot connectivity between all contours within one location, uses numLoca to determine the region.location
 %'3' = plot connectivity between one contour with all contours in all locations, uses numLoca to determine the contour
 %'4' = plot region.image with all connections
 %numLoca--
-%	region.location number to plot for plot type '2' or a cell number (that gives a unique region.location number) for plot type '3'
+%	region.location number to plot for plot type '2' or a cell number (that gives a unique region.location number) for plot type '3'.  Defaults to 2, (assumes your first region.location 1 is nothing, like craniotomy, neuropil, or areas in slice with no labeled cells)
 %alphaLevel--
-%	alpha transparency level for plotting the edges
-%
+%	alpha transparency level for plotting the edges. Defaults to 0.5.
+%edgeAesthetic--
+%	%edgeAesthetic can be one of two strings: 'distance' or 'pvalue'. What you want the edge coloring to represent. Defaults to 'distance'
+%datasetSelector--
+%	A single number n, representing what region.userdata.corr{n} dataset you want to plot. Defaults to 1.
 %James B. Ackman 2013-01-05 14:46
 
 
@@ -36,7 +36,8 @@ if nargin < 4 || isempty(numLoca), numLoca = 2; end
 
 if nargin < 3 || isempty(plotType), plotType = '1'; end
 
-if nargin < 1 || isempty(data), data = region.userdata.corr{datasetSelector}.corr_pairs{1}; end
+%if nargin < 1 || isempty(data), data = region.userdata.corr{datasetSelector}.corr_pairs{1}; end
+data = region.userdata.corr{datasetSelector}.corr_pairs{1};
 
 %The following is important for getting the distances right if the data pixel dimensions are not equivalent
 %And below the scripts will assume wherever 'rXY' is used, that it is szX (m dimension) which must be scaled up.
@@ -68,8 +69,10 @@ end
 mycolors = jet(numel(dist));  %make colormap based on number of pairs to plot returned from the plot commands above
 if strcmp(edgeAesthetic, 'distance')
 	edgeData = [edgeList dist];  %make Nx3 list of pairs and their edgeAesthetic (physical distance or p-value)
+	mx = max(dist); mn = min(dist);
 elseif strcmp(edgeAesthetic, 'pvalue')
 	edgeData = [edgeList pvalues];  %make Nx3 list of pairs and their edgeAesthetic (physical distance or p-value)
+	mx = max(pvalues); mn = min(pvalues);
 end
 
 edgeData = sortrows(edgeData,3);   %sort the Nx3 list of pairs based on their edgeAesthetic
@@ -82,7 +85,11 @@ for i = 1:size(edgeData,1)  %Plot the pairs in order based on their sorted edgeA
     %     set(h2(i),'EdgeColor','k')
     set(h2(i),'FaceAlpha',alphaLevel,'EdgeAlpha',alphaLevel)
 end
+colorbar
+caxis([mn mx])
+title(['plotType' num2str(plotType) ',alpha' num2str(alphaLevel) ';' edgeAesthetic ',[min,max]=[' num2str(mn) ',' num2str(mx) ']'])
 %printfig('png',[fname2base datestr(now,'yyyymmdd-HHMMSS') '.png'])
+
 
 
 

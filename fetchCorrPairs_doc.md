@@ -78,25 +78,32 @@ This essentially fetches the table of percent cells correlated, number of pairs,
 
 ## Usage
 
-	myPlotCorrGraphImage(data,region,plotType,numLoca,alphaLevel)
+* `myPlotCorrGraphImage(region,plotType,numLoca,alphaLevel,edgeAesthetic,datasetSelector)`
+* `myPlotPvalueCorrMatrix(region, minMax, plotType, datasetSelector)`
+
+This assumes that you've already run fetchCorrPairs.m and saved your region data file. 
+
 
 ## Examples
 
+
+### Plot graph of corr pairs
+
 Plot a graph of nodes and edges based on the corr data:
 
-	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'1',[],0.1)  %connectivity of all cells with all location types
+	myPlotCorrGraphImage(region,'1',[],0.1)  %connectivity of all cells with all location types
 
 ![][img1]
 
-	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'2',[],0.1)  %connectivity of all cells within one location type
+	myPlotCorrGraphImage(region,'2',[],0.1)  %connectivity of all cells within one location type
 
 ![][img2]
 
-	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'3',358,0.9)  %connectivity of one cell (no. 358) with all contours in all location types
+	myPlotCorrGraphImage(region,'3',358,0.9)  %connectivity of one cell (no. 358) with all contours in all location types
 
 ![][img3]
 
-	myPlotCorrGraphImage(region.userdata.corr{1}.corr_pairs{1},region,'4',[],0.03)  %raw image with connectivity overlay
+	myPlotCorrGraphImage(region,'4',[],0.03)  %raw image with connectivity overlay
 
 ![][img4]
 
@@ -107,17 +114,32 @@ Save a png image of the plot (assuming you have pathname and filename defined in
 	print('-dpng', [fnm(1:end-4) datestr(now,'yyyymmdd-HHMMSS') '.png'])
 
 
-Plot edge aesthetic color coded by pvalue instead of distance
+Plot edge aesthetic color coded by pvalue instead of distance:
 
-	myPlotCorrGraphImage([],region,'2',[],0.1,'pvalue',3)
+	myPlotCorrGraphImage(region,'2',[],0.1,'pvalue',3)
 
 ![][img5]
 
 
+### Plot corr matrix
 
-[networkImg]: assets/img/network_regular_vs_random.png "Random vs Regular networks" width="800px"
-[img1]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-115851.jpg
-[img2]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-114721.jpg
-[img3]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-121446.jpg
-[img4]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-122440.jpg
-[img5]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-145510.jpg
+Plot a correlation matrix of the pvalues for all node pairs in your network.  With plotType = '1', the figure will have 4 plots of different min/max values for the color scale.
+
+	myPlotPvalueCorrMatrix(region, [], '1')
+
+![][img6]
+
+With plotType = '1', the figure will have 4 plots of different min/max values for the color scale.  In this example the minMax values have been explicitly set to [0 0.01] instead of the default.
+
+	myPlotPvalueCorrMatrix(region, [0 0.01], '2')
+	
+![][img7]
+
+[networkImg]: assets/img/network_regular_vs_random.png "Random vs Regular networks" width="500px"
+[img1]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-115851.jpg width="500px"
+[img2]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-114721.jpg width="500px"
+[img3]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-121446.jpg width="500px"
+[img4]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-122440.jpg width="500px"
+[img5]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-170425.jpg width="500px"
+[img6]: assets/img/20130718-093211_figure2.png width="500px"
+[img7]: assets/img/20130718-103109_figure2.png width="500px"

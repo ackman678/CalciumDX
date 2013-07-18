@@ -28,22 +28,31 @@
 * ~~fix cell nav for scroll vs number~~ 2013-06-25 09:07:34
 * ~~add Same Y axis zoom toggle button~~ 2013-06-25 11:57:39
 * ~~add option through menu to turn off zoom to use add events context menu~~ 2013-06-25 11:58:53
-* ~~add defaults for zoom and pan horizontal~~ 2013-06-25 11:58:48
+* ~~add defaults for zoom and pan horizontal~~ 2013-06-25 	11:58:48
 * ~~link x axis for plots for consistent zoom and scroll behavior~~ 2013-06-25 11:59:43
+* ~~Fix click cell contour bug for updating of traces plot in dxevents~~ 2013-07-18 12:25:37
 * add user preferences for gui
 * add user preferences for detection routine argin (like filter order, pass band, window)
 * integrate component det
 * fix DIPUM image processing toolbox requirement?
 
-## other
 
-* ~~add remaining stim analysis functions (getStimParams, etc)~~ 2013-06-25 09:21:02
+## fetch corr pairs
+
 * ~~add automatically save pvalCorrMatrix to fetchCorrPairs~~ 2013-07-16 14:08:33
 * ~~add automatically save date timestamp to fetchCorrPairs~~ 2013-07-16 14:09:27
 * ~~Fix region.userdata.corr _sec label~~ 2013-07-17 09:00:40
+* ~~Add colorbar scaling to plotCorrPairsGraph~~ 2013-07-17 23:46:30
+* ~~Scaled pval corr matrix plot~~ 2013-07-17 23:32:30
+* Directionality of physically connected edges 
+* By region type for fetchCorrPairs or batchFetchCorrPairs?  Can be used for making location based data set.
+* Add additional outputs to batchFetchCorrPairs or make new function for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python
+
+## other
+
+* ~~add remaining stim analysis functions (getStimParams, etc)~~ 2013-06-25 09:21:02
+* ~~add back in printfig function and fix default homedir save location to be OS agnostic/PC compatible.~~ 2013-07-17 17:16:48
 * update try/load(calciumdxprefs) and save(calciumdxprefs) statements on various funcs
-* add table fetch for corrPairs, pval
-* by region type for fetchCorrPairs
 * fix DIPUM image processing toolbox requirement?
 * fix piotr image processing toolbox requirement?
 * new proj/document R stats/plotting code

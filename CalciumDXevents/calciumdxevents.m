@@ -89,11 +89,12 @@ imagesc(region.image); colormap(gray)
 hold on;
 cl = hsv(length(region.name));
 cnt = zeros(1,length(region.contours));
-for c = 1:length(region.contours)
-    cnt(c) = patch(region.contours{c}([1:end 1],1),region.contours{c}([1:end 1],2),[0 0 0]);
-    set(cnt(c),'edgecolor',cl(region.location(c),:));
+for cntNum = 1:length(region.contours)
+    cnt(cntNum) = patch(region.contours{cntNum}([1:end 1],1),region.contours{cntNum}([1:end 1],2),[0 0 0]);
+    set(cnt(cntNum),'edgecolor',cl(region.location(cntNum),:));
 %     set(cnt(c),'ButtonDownFcn','str = num2str(c); hevButtonDownContours;');
-    set(cnt(c),'ButtonDownFcn',['set(txcellnum,''string'',' num2str(c) '); hevButtonDownContours;']);
+set(cnt(cntNum),'ButtonDownFcn',['set(txcellnum,''string'',' num2str(cntNum) '); hevButtonDownContours;']);
+%    set(cnt(cntNum),'ButtonDownFcn','set(txcellnum,''string'',num2str(cntNum)); hevButtonDownContours;');    
 %     set(cnt(c),'ButtonDownFcn',['set(numslider,''value'',' num2str(c) '); calciumdxPlotTrace;']);
 end
 axis equal
