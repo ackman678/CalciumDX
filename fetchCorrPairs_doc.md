@@ -136,10 +136,10 @@ With plotType = '1', the figure will have 4 plots of different min/max values fo
 ![][img7]
 
 [networkImg]: assets/img/network_regular_vs_random.png "Random vs Regular networks" width="500px"
-[img1]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-115851.jpg width="500px"
-[img2]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-114721.jpg width="500px"
-[img3]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-121446.jpg width="500px"
-[img4]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-122440.jpg width="500px"
-[img5]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-170425.jpg width="500px"
-[img6]: assets/img/20130718-093211_figure2.png width="500px"
-[img7]: assets/img/20130718-103109_figure2.png width="500px"
+[img1]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-115851.jpg "graph distance" width="500px"
+[img2]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-114721.jpg "graph distance" width="500px"
+[img3]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-121446.jpg "graph distance" width="500px"
+[img4]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-122440.jpg "graph distance" width="500px"
+[img5]: assets/img/TSeries-03082011-1222-005_crop_motioncorrect4scanlinesFix2_wavedet20130717-170425.jpg "graph pvalue" width="500px"
+[img6]: assets/img/20130718-093211_figure2.png "CorrMatrix image" width="500px"
+[img7]: assets/img/20130718-103109_figure2.png "CorrMatrix image" width="500px"
