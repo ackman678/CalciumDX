@@ -1,43 +1,40 @@
-%batchFetchWaveProperties
-%James Ackman, 1/19/2011
-%updated to work by location, 5/12/2011
-%Examples--
+function data = batchFetchWaveProp(filelist,region)
+%batchFetchWaveProperties Fetch calcium wave properties
+%data = batchFetchWaveProp(filelist,region)
+%
+%Examples:
 %data=batchFetchWaveProp({filename},region);
 %data=batchFetchWaveProp(filelist);
-
+%
 %**USE**
+%This function assumes that you have performed Calcium wave detection and the data is saved in all your region data structures that are being passed as filenames to this script.
+%Options:
 %Must provide one input:
-
 %(1) table with desired filenames (space delimited txt file, with full filenames in first column)
 %files.txt should have filenames in first column.
 %can have extra columns with descriptor/factor information for the file. This will be the rowinfo that is attached to each measure observation in the following script.
 %filelist = readtext('files.txt',' '); %grab readtext.m file script from matlab central
 %or
 %(2) a single filename (filename of your region .mat file) as a cell array, i.e.  {filename}
-
-%% When finished, convert 'data' table to string with the following code-- because matlab won't copy the contents of a mixed cell array correctly to other programs in the OS.
-
-%{
-tmp=data;
-for i=1:numel(tmp); tmp{i} = num2str(tmp{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
-tmp2=tmp';
-txt=sprintf([repmat('%s\t',1,size(tmp2,1)),'\n'],tmp2{:})  %copy this output. **There will always be an extra column of tabs at end.
-%Change to the desired file name in the following line...
-dlmwrite('dWaveProps.txt',txt,'delimiter','','newline','unix');  %don't need this just copy output to console from above
-
-type('dWaveProps.txt');
-
-%}
-
-%{
-sprintf(['filename' '\t' 'ncells' '\t' 'pact' '\t' 'psynch' '\t' 'pgdp' '\t' 'psch' '\t' 'pother' '\t' 'psink' '\t' 'm_freq(Hz)' '\t' 'se_freq' '\t' 'm_dur(s)' '\t' 'se_dur' '\t' 'p.corr' '\t' 'n.pairs' '\t' 'pp.corr'...
-        '\r' filename '\t' num2str(ncells) '\t' num2str(pact) '\t' num2str(psynch) '\t' num2str(pgdp) '\t' num2str(psch) '\t' num2str(pother) '\t' num2str(psink) '\t' num2str(m_freq) '\t' num2str(se_freq) '\t' num2str(m_dur) '\t' num2str(se_dur) '\t' p_corr '\t' n_pairs '\t' p_pairs_corr])
-%}
-%--------------------------------------------------------------------------
 %filelist={filename}; %can pass just a single filename and a single already loaded region structure, if only getting values for a single file.
-%data=batchFetchWaveProp({filename},region);
-%data=batchFetchWaveProp({fnm},region);
-function data = batchFetchWaveProp(filelist,region)
+%Output:
+%% When finished, convert 'data' table to string with the following code-- because matlab won't copy the contents of a mixed cell array correctly to other programs in the OS.
+%tmp=data;
+%for i=1:numel(tmp); tmp{i} = num2str(tmp{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
+%tmp2=tmp';
+%txt=sprintf([repmat('%s\t',1,size(tmp2,1)),'\n'],tmp2{:})  %copy this output. **There will always be an extra column of tabs at end.
+%%Change to the desired file name in the following line...
+%dlmwrite('dWaveProps.txt',txt,'delimiter','','newline','unix');  %don't need this just copy output to console from above
+%type('dWaveProps.txt');
+%sprintf(['filename' '\t' 'ncells' '\t' 'pact' '\t' 'psynch' '\t' 'pgdp' '\t' 'psch' '\t' 'pother' '\t' 'psink' '\t' 'm_freq(Hz)' '\t' 'se_freq' '\t' 'm_dur(s)' '\t' 'se_dur' '\t' 'p.corr' '\t' 'n.pairs' '\t' 'pp.corr'...
+%        '\r' filename '\t' num2str(ncells) '\t' num2str(pact) '\t' num2str(psynch) '\t' num2str(pgdp) '\t' num2str(psch) '\t' num2str(pother) '\t' num2str(psink) '\t' num2str(m_freq) '\t' num2str(se_freq) '\t' num2str(m_dur) '\t' num2str(se_dur) '\t' p_corr '\t' n_pairs '\t' p_pairs_corr])
+%--------------------------------------------------------------------------
+%Versions:
+%James Ackman, 1/19/2011
+%updated to work by location, 5/12/2011
+%See also:
+% batchFetchCalciumEventProps, calciumdxDetectWaves, calciumdxDetectWavesRefine, getWaveCentroids, getWaveSizeDistance, getActiveFraction, getWaveSpeeds, getWaveDirections
+
 loadfile = 1;
 if nargin > 1, loadfile = 0; end
 % global region;

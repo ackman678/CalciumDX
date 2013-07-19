@@ -27,11 +27,11 @@ function batchFetchCalciumEventProps(filelist,region,limitToWaves)
 %Right now this function will automatically write to a tab-delimited txt file outputs, a 'cell' based dataset 'dResponseFreq.txt' and an event based dataset 'dEvents.txt'.
 %And these outputs will be appended if the file already exists. But there will be an extra copy of the column names in this case, so the file will have to be cleaned up in a text editor afterwards.
 %
+%%Versions
+%2013-06-21 14:34:09 updated new default dEventProps.txt file location to default matlab userpath folder
 % See also:
 % batchFetchStimResponseProps, myMakeMultiPETHplot, myPETH, getPETH, myFrameTriggerDetect, getStimParams, batchmakeStimParamsWaveonsets, calciumdx, calciumdxevents, calciumdxDetectWaves
 
-%Versions
-%2013-06-21 14:34:09 updated new default dEventProps.txt file location to default matlab userpath folder
 
 %-----------------------------------------------------------------------------------------
 %- Set up options and default parameters

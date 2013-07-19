@@ -1,4 +1,4 @@
-function [region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
+function [region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win,overWrite)
 %fetchCorrPairs Find temporally correlated cell pairs using Monte Carlo simulations
 %[region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 %
@@ -7,11 +7,12 @@ function [region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 %[region] = fetchCorrPairs(region,1,1000,0.01,'false',0.1);
 %
 %Options:
-%sig = signal for spike occurence, 1 for a spike matrix
+%sig = signal for spike occurrence, 1 for a spike matrix
 %numres = no. of simulations
 %p_val = significance level
 %useGaussEvents; Whether or not to use spike signal smoothing with a gaussian. If false or empty, then a square wave/block signal will be used surrounding the spike at +/- win.
 %win = +/- spike time window in seconds for determining correlations.  Only used if useGaussEvents = false;   
+%overWrite-- whether or write over existing corrdata datasets in the file or append the new data set. Defaults to 'false', which will append the new dataset at position n+1.
 %
 %Output:
 % Will pass the region data structure that was input back to workspace with the new corr data at region.userdata.corr
@@ -27,6 +28,11 @@ function [region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 
 if nargin < 5 || isempty(useGaussEvents); useGaussEvents = 'false'; end  %smooth spk with Gaussian. Not very different results than just using ~7fr spk smoothing for datasets with low background spontaneous activity frequencies.
 if nargin < 6 || isempty(win); win = 0.250; end  %250msec spk corr window
+if nargin < 7 || isempty(overWrite); overWrite = 'false'; end
+
+if strcmp(overWrite,'true')
+	region.userdata.corr = {};  %to remove any existing corrdata datasets in the file and write over with the new one.
+end
 
 %all_s = cell(1,2); %jba
 all_s ={}; %jba
@@ -51,12 +57,13 @@ for i = 1:length(region.userdata.schmutzon)
     all_s{3}(i,region.userdata.schmutzon{i})=1;
 end
 end %jba
+str = {'All cells ','Non-SCH cells ','SCH cells '};
 end %jba
 end %jba
 %--------------------------------------------------------------------------
 %}
 
-str = {'All cells ','Non-SCH cells ','SCH cells '};
+str = {'All cells '};
 % ii=1; %testing purposes
 for ii = 1:length(all_s) %jba
     fprintf('\n');

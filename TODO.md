@@ -44,16 +44,18 @@
 * ~~Fix region.userdata.corr _sec label~~ 2013-07-17 09:00:40
 * ~~Add colorbar scaling to plotCorrPairsGraph~~ 2013-07-17 23:46:30
 * ~~Scaled pval corr matrix plot~~ 2013-07-17 23:32:30
+* ~~Add 'myPlotPvalueCorrMatrix' function~~ 2013-07-18 13:49:51
+* ~~Make new function batchFetchCorrProps. Output the movie based dataset formerly taken care of by batchFetchCorrPairs~~ 2013-07-18 23:18:07
+* Make new functionality for batchFetchCorrPairs for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python
+* Add by region type functionality batchFetchCorrProps?  Can be used for making location based data set.
 * Directionality of physically connected edges 
-* By region type for fetchCorrPairs or batchFetchCorrPairs?  Can be used for making location based data set.
-* Add additional outputs to batchFetchCorrPairs or make new function for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python
 
 ## other
 
 * ~~add remaining stim analysis functions (getStimParams, etc)~~ 2013-06-25 09:21:02
 * ~~add back in printfig function and fix default homedir save location to be OS agnostic/PC compatible.~~ 2013-07-17 17:16:48
 * update try/load(calciumdxprefs) and save(calciumdxprefs) statements on various funcs
+* new proj/document R stats/plotting code
 * fix DIPUM image processing toolbox requirement?
 * fix piotr image processing toolbox requirement?
-* new proj/document R stats/plotting code
 
