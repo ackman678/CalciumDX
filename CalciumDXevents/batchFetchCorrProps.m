@@ -1,9 +1,10 @@
-function batchFetchCorrProps(filelist,region,datasetSelector)
+function batchFetchCorrProps(filelist,region,datasetSelector,locationMarkers)
 %batchFetchCorrProps Batch Fetch Correlated pairs properties for each movie
 %
 %Examples:
-%batchFetchCorrProps(filelist)
-%batchFetchCorrProps({filename},region)
+%batchFetchCorrProps(filelist)  %batch over files
+%batchFetchCorrProps({filename},region)  %single file
+%batchFetchCorrProps({filename},region,[],[2 3]) %fetch props just for region.location markers 2 & 3 in addition to all
 % 
 %**USE**
 %If you have run fetchCorrPairs.m  on your mat files and you have the 
@@ -24,6 +25,11 @@ function batchFetchCorrProps(filelist,region,datasetSelector)
 
 if nargin < 3 || isempty(datasetSelector), datasetSelector = 1; end
 
+if nargin < 4 || isempty(locationMarkers), 
+%TODO: make secondary script for adding region.location and name and coords for additional cellType markers in addition to region type with interactive marking.
+locationMarkers = unique(region.location);  %TODO: for intersection of location indices with pairs indices.  
+end
+
 if nargin< 2 || isempty(region); region = []; end
 if isempty(region)
     loadfile = 1;
@@ -39,9 +45,9 @@ setupHeaders = exist(datafilename,'file');
 if setupHeaders < 1
 %setup headers for data set---------------------------------------------------------------
 	if size(filelist,1) > 1 && size(filelist,2) > 1
-	results2={'filename' 'matlab.filename' 'nCells' 'pCorr' 'nPairs' 'pPairsCorr'};
+	results2={'filename' 'matlab.filename' 'region.name' 'nCells' 'pCorr' 'nPairs' 'pPairsCorr'};
 	else
-	results2={'matlab.filename' 'nCells' 'pCorr' 'nPairs' 'pPairsCorr'};
+	results2={'matlab.filename' 'region.name' 'nCells' 'pCorr' 'nPairs' 'pPairsCorr'};
 	end
 	%filename %roi no. %region.name %roi size %normalized xloca %normalized yloca %region.stimuli{numStim}.description %normalized responseFreq %absolutefiringFreq(dFreq) %meanLatency %meanAmpl %meanDur
 
@@ -84,58 +90,67 @@ for j=1:numel(fnms)
 
 
     disp('--------------------------------------------------------------------')
-    myCorrProps(region,rowinfo,datafilename);
+    myCorrProps(region,rowinfo,datafilename,datasetSelector,locationMarkers);
     h = waitbar(j/numel(fnms));
 end
 close(h)
 
 
 
-
-
-
 %---------------------------------
-function myCorrProps(region,rowinfo,datafilename)
+function myCorrProps(region,rowinfo,datafilename,datasetSelector,locationMarkers)
+%Get corr properties for all cell pairs (default from fetchCorrPairs) as well as broken down by region.name
+%---Do all----------------
+output= {}; 
+str = {'all'};
+nCellsAll = size(region.traces,1);  
+pairs = region.userdata.corr{datasetSelector}.corr_pairs{1};
+nCells = nCellsAll;
+[p_corr,n_pairs,p_pairs_corr] = getCorrPairMetrics(nCells,pairs);
+output = [output; [rowinfo str {nCells p_corr n_pairs p_pairs_corr}];];
+printTable(str,nCells,p_corr,n_pairs,p_pairs_corr)
 
-%locationMarkers = unique(region.location);  %TODO: for intersection of location indices with pairs indices
-%all_s ={}; %jba
+%---Do each locationMarker----------------
+for locationIndex = locationMarkers
+	str = {region.name{locationIndex}};
+	cellIndices = find(region.location == locationIndex)';
+	nCells = numel(cellIndices);
+	%Now use ismember() to reshape the pairs listing based on the intersection with the cellIndices for the current locationMarker.
+	%TODO: add combinations of all region.locations for printing of corr props
+	Lia = ismember(pairs(:,1),cellIndices);  %intersect with 1st column of pairs indices
+	pairs1 = pairs(Lia,:);
+	Lia = ismember(pairs1(:,2),cellIndices); %intersect with 2nd column of pairs indices
+	pairs1 = pairs1(Lia,:);
+	[p_corr,n_pairs,p_pairs_corr] = getCorrPairMetrics(nCells,pairs1);
+	output = [output; [rowinfo str {nCells p_corr n_pairs p_pairs_corr}];];
+	printTable(str,nCells,p_corr,n_pairs,p_pairs_corr)
+end
 
-nCellsAll = size(region.traces,1);
-
-%{
-%--------------------------------------------------------------------------
-%This section is for setting up all_s if you wanna do corr on the gdp, sch
-%subsets of cells. Comment or uncomment if you wanna do these corrs.
-if isfield(region,'userdata') %jba
-	if isfield(region.userdata,'schmutzon') %jba
-		%if isfield(region.userdata,'schmutzr') %added by jba
-		all_s{2} = all_s{1}; % non-SCH cells
-		all_s{2}(region.userdata.schmutzr,:) = [];
-		all_s{3} = zeros(length(region.userdata.schmutzon),size(region.traces,2)); % SCH cells
-		for i = 1:length(region.userdata.schmutzon)
-			all_s{3}(i,region.userdata.schmutzon{i})=1;
-		end
-		str = {'all','non_sch','sch'};
-	end %jba
-else
-	str = {'all'};
-end %jba
-%--------------------------------------------------------------------------
-%}
-
-output= {};   
-%for ii = 1:length(all_s) %jba
-    pairs = region.userdata.corr_pairs{1};
-	%TODO: insert intersect location area indices with unique pairs indices here to give unique reshaped pair listing. May have to do combinations? Or just focus on inter regional values for now.
-	nCells = nCellsAll;
-    n_cells = nCells;
-    p_corr = 100*length(unique(reshape(pairs,1,prod(size(pairs)))))/nCells;
-    n_pairs = nCells*(nCells-1)/2;
-    p_pairs_corr = 100*size(pairs,1)/n_pairs;
-    output = [output; [rowinfo {n_cells p_corr n_pairs p_pairs_corr}];];
-%end
+%---Now print output data to file----------
 fid = fopen(datafilename,'a');
 for i=1:numel(output); output{i} = num2str(output{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
 tmp2=output';
 fprintf(fid,[repmat('%s\t',1,size(tmp2,1)-1),'%s\n'],tmp2{:});
 fclose(fid);
+
+
+
+function [p_corr,n_pairs,p_pairs_corr] = getCorrPairMetrics(nCells,pairs)
+p_corr = 100*length(unique(reshape(pairs,1,prod(size(pairs)))))/nCells;
+n_pairs = nCells*(nCells-1)/2;
+p_pairs_corr = 100*size(pairs,1)/n_pairs;
+
+
+
+function printTable(str,nCells,p_corr,n_pairs,p_pairs_corr)
+fprintf('\n');
+fprintf(str{1});
+fprintf('\n');
+fprintf(['        Total number of cells: ' num2str(nCells) '\n']);
+fprintf(['Percent cells in correlations: ' num2str(p_corr) '\n']);
+fprintf(['        Total number of pairs: ' num2str(n_pairs) '\n']);
+fprintf(['     Percent pairs correlated: ' num2str(p_pairs_corr) '\n']);
+
+
+
+

@@ -41,28 +41,6 @@ for i = 1:size(region.traces,1)
     all_s{1}(i,region.onsets{i})=1;
 end
 
-
-%{
-%--------------------------------------------------------------------------
-%This section is for setting up all_s if you wanna do corr on the gdp, sch
-%subsets of cells. Comment or uncomment if you wanna do these corrs.
-if isfield(region,'userdata') %jba
-if isfield(region.userdata,'schmutzon') %jba
-%if isfield(region.userdata,'schmutzr') %added by jba
-all_s{2} = all_s{1}; % non-SCH cells
-all_s{2}(region.userdata.schmutzr,:) = [];
-if isfield(region.userdata,'schmutzon') %added by jba
-all_s{3} = zeros(length(region.userdata.schmutzon),size(region.traces,2)); % SCH cells
-for i = 1:length(region.userdata.schmutzon)
-    all_s{3}(i,region.userdata.schmutzon{i})=1;
-end
-end %jba
-str = {'All cells ','Non-SCH cells ','SCH cells '};
-end %jba
-end %jba
-%--------------------------------------------------------------------------
-%}
-
 str = {'All cells '};
 % ii=1; %testing purposes
 for ii = 1:length(all_s) %jba
@@ -173,12 +151,10 @@ for ii = 1:length(all_s) %jba
         corr_pairs{ii} = pairs;
 %         fprintf(['Percent pairs correlated, corr_res ' num2str(idx) ': ' num2str(100*size(pairs,1)/(size(s,1)*(size(s,1)-1)/2)) '\n']);
     %}
-    
-    fprintf(['        Total number of cells: ' num2str(size(s,1)) '\n']);
-    fprintf(['Percent cells in correlations: ' num2str(100*length(unique(reshape(pairs,1,numel(pairs))))/size(s,1)) '\n']);
-    fprintf(['        Total number of pairs: ' num2str(size(s,1)*(size(s,1)-1)/2) '\n']);
-    fprintf(['     Percent pairs correlated: ' num2str(100*size(pairs,1)/(size(s,1)*((size(s,1)-1))/2)) '\n']);
-    
+
+	nCells = size(s,1);
+	[p_corr,n_pairs,p_pairs_corr] = getCorrPairMetrics(nCells,corr_pairs{ii}) 
+	printTable(str,nCells,p_corr,n_pairs,p_pairs_corr)
     
     if ~isfield(region,'userdata') || ~isfield(region.userdata,'corr')
         region.userdata.corr{1}.corr_pairs=corr_pairs;
@@ -204,8 +180,9 @@ for ii = 1:length(all_s) %jba
     
 end
 
-function s_thick = gauss_events(s,sig)
 
+
+function s_thick = gauss_events(s,sig)
 s_thick = zeros(size(s));
 for c = 1:size(s,1)
     for d = find(s(c,:)==1)
@@ -213,3 +190,21 @@ for c = 1:size(s,1)
     end
     %     disp(s_thick(s_thick>0))
 end
+
+
+
+function [p_corr,n_pairs,p_pairs_corr] = getCorrPairMetrics(nCells,pairs)
+p_corr = 100*length(unique(reshape(pairs,1,prod(size(pairs)))))/nCells;
+n_pairs = nCells*(nCells-1)/2;
+p_pairs_corr = 100*size(pairs,1)/n_pairs;
+
+
+
+function printTable(str,nCells,p_corr,n_pairs,p_pairs_corr)
+fprintf('\n');
+fprintf(str{1});
+fprintf('\n');
+fprintf(['        Total number of cells: ' num2str(nCells) '\n']);
+fprintf(['Percent cells in correlations: ' num2str(p_corr) '\n']);
+fprintf(['        Total number of pairs: ' num2str(n_pairs) '\n']);
+fprintf(['     Percent pairs correlated: ' num2str(p_pairs_corr) '\n']);

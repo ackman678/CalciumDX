@@ -34,6 +34,7 @@
 * add user preferences for gui
 * add user preferences for detection routine argin (like filter order, pass band, window)
 * integrate component det
+* remove cell type selector (make independent manual cell selector gui)
 * fix DIPUM image processing toolbox requirement?
 
 
@@ -47,7 +48,8 @@
 * ~~Add 'myPlotPvalueCorrMatrix' function~~ 2013-07-18 13:49:51
 * ~~Make new function batchFetchCorrProps. Output the movie based dataset formerly taken care of by batchFetchCorrPairs~~ 2013-07-18 23:18:07
 * Make new functionality for batchFetchCorrPairs for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python
-* Add by region type functionality batchFetchCorrProps? Can be used for making location based data set.
+* ~~Add by region type functionality batchFetchCorrProps? Can be used for making location based data set~~ 2013-07-26 10:19:17
+* add intersections of all region.locations for printing of corr props
 * Directionality of physically connected edges 
 
 ## other
