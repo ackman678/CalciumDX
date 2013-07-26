@@ -1,5 +1,5 @@
 function batchFetchCorrPairs(filelist,region,datasetSelector)
-%batchFetchCorrPairs Batch Fetch Correlated pairs data
+%batchFetchCorrPairs Batch Fetch Correlated pairs list and pvalues for each movie
 %
 %Examples:
 %batchFetchCorrPairs(filelist)  %batch over files

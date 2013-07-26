@@ -1,20 +1,20 @@
 Author: James B. Ackman  
-Date: 2013-07-18 13:38:22  
+Date: 2013-07-26 11:49:54  
 Tags: manual, doc, protocols, methods  
 
 # Detect cell pairs #
 
-[fetchCorrPairs](CalciumDXevents/fetchCorrPairs.m)
+## [fetchCorrPairs](CalciumDXevents/fetchCorrPairs.m)
 
 The purpose of this documentation is to demonstrate how to detect significant correlations between pairs of cells/ROIs that exhibit synchronous calcium activities.
 
-## Usage
+### Usage
 
 	[region] = fetchCorrPairs(region,sig,numres,p_val,useGaussEvents,win)
 
-default window is `win = 0.250` (250msec) if you don't use gaussEvents for gaussian smoothing.
+default window is `win = 0.250` s (250 msec) if you don't use gaussEvents for gaussian smoothing.
 
-## Example
+### Example
 
 Example using gaussian smoothing of the signal:
 
@@ -30,11 +30,11 @@ Here is an example of what will be output to the matlab command prompt:
 			Total number of pairs: 78606
 		 Percent pairs correlated: 11.1315
 
-## Explanation of outputs
+###	 Explanation of outputs
 
 The resulting returned `region` data structure will have the raw results stored at `region.userdata.corr{n}`, where *n = 1* if this is the first time you've run fetchCorrPairs, or *n = n + 1* if you've already run it *n* times.
 
-Here are the outputs and explanations of what's returned in the `region` data structure: 
+Here are the outputs and explanations of what's returned in the `region` data structure for an `n = 3` set of raw results: 
 
 	>> region.userdata.corr{3}
 
@@ -62,41 +62,61 @@ To visualize the difference between *Percentage of cells in correlations* vs *Pe
 ![][networkImg]
 
 
-The cell pair list at `region.userdata.corr_pairs` along with the p-values for the pairs and their physical distances can be saved separately for doing a detailed network analysis in R or Python using the iGraph or NetworkX packages.
-
-More on this together with a script to fetch this data structure to follow.
+The cell pair list at `region.userdata.corr{n}.corr_pairs` along with the p-values for the pairs and their physical distances can be saved separately as illustrated below at [Fetch Corr Pair Data] for doing a detailed network analysis in R or Python using the iGraph or NetworkX packages.
 
 
 
 # Fetch Corr Pair Data #
 
-[batchFetchCorrpairs](CalciumDXevents/batchFetchCorrpairs.m)
+Use the following functions to output a space-delimited txt data table to your matlab home folder for downstream plotting and analysis.
 
-This batch script will output a data table for downstream plotting and analysis. 
+## [batchFetchCorrProps](CalciumDXevents/batchFetchCorrProps.m)
 
-	data = batchFetchCorrpairs(filelist)
+This fetches the table of number of cells, percent cells correlated, number of pairs, and percent pairs correlated that is usually output to the command line from `fetchCorrPairs` as in the [Example] above. 
 
-This essentially fetches the table of percent cells correlated, number of pairs, and percent pairs correlated that is usually output to the command line from `fetchCorrPairs` as in the [Example] above.
+### Usage
 
+	batchFetchCorrProps(filelist,region,datasetSelector,locationMarkers)
+
+The output will be printed to a file named **`dCorrProps.txt`**.
+
+### Examples
+
+	batchFetchCorrProps(filelist)  %batch over files
+	batchFetchCorrProps({filename},region)  %single file
+	batchFetchCorrProps({filename},region,[],[2 3]) %fetch props just for region.location markers 2 & 3 in addition to all
+
+
+## [batchFetchCorrPairs](CalciumDXevents/batchFetchCorrPairs.m)
+
+This fetches the table of all significant cell pairs, along with their pvalues from the correlation matrix and the physical cell-cell (centroid-centroid) distances in pixels. 
+
+### Usage
+
+	batchFetchCorrPairs(filelist,region,datasetSelector)
+
+The output will be printed to a file named **`dCorrPairs.txt`**.
+
+### Examples
+
+	batchFetchCorrPairs(filelist)  %batch over files
+	batchFetchCorrPairs({filename},region) %single file
+	batchFetchCorrPairs({filename},region,2) %use 2nd corr dataset (region.userdata.corr{2})
 
 # Plot Corr Pairs Data #
 
-## Usage
+The following plotting functions require that you've already run fetchCorrPairs.m and saved your region data file. 
 
-* `myPlotCorrGraphImage(region,plotType,numLoca,alphaLevel,edgeAesthetic,datasetSelector)`
-* `myPlotPvalueCorrMatrix(region, minMax, plotType, datasetSelector)`
-
-This assumes that you've already run fetchCorrPairs.m and saved your region data file. 
-
-
-## Examples
-
-
-### Plot graph of corr pairs
-
-[myPlotCorrGraphImage](CalciumDXevents/myPlotCorrGraphImage.m)
+## [myPlotCorrGraphImage](CalciumDXevents/myPlotCorrGraphImage.m)
 
 Plot a graph of nodes and edges based on the corr data:
+
+### Usage
+
+	myPlotCorrGraphImage(region,plotType,numLoca,alphaLevel,edgeAesthetic,datasetSelector)
+
+
+### Examples
 
 	myPlotCorrGraphImage(region,'1',[],0.1)  %connectivity of all cells with all location types
 
@@ -128,17 +148,23 @@ Plot edge aesthetic color coded by pvalue instead of distance:
 ![][img5]
 
 
-### Plot corr matrix
+## [myPlotPvalueCorrMatrix](CalciumDXevents/myPlotPvalueCorrMatrix.m)
 
-[myPlotPvalueCorrMatrix](CalciumDXevents/myPlotPvalueCorrMatrix.m)
+Plot a correlation matrix of the pvalues for all node pairs in your network.  
 
-Plot a correlation matrix of the pvalues for all node pairs in your network.  With plotType = '1', the figure will have 4 plots of different min/max values for the color scale.
+### Usage
+
+	myPlotPvalueCorrMatrix(region, minMax, plotType, datasetSelector)
+
+### Examples
+
+With plotType = '1', the figure will have 4 plots of different min/max values for the color scale. In this example passing empty brackets `[]` tells the function to use the default minMax pvalues for all significant cell pairs.
 
 	myPlotPvalueCorrMatrix(region, [], '1')
 
 ![][img6]
 
-With plotType = '1', the figure will have 4 plots of different min/max values for the color scale.  In this example the minMax values have been explicitly set to [0 0.01] instead of the default.
+With plotType = '2', the figure will have a single plot with colormapping dictated by minMax.  In this example the minMax values have been explicitly set to [0 0.01] instead of the default.
 
 	myPlotPvalueCorrMatrix(region, [0 0.01], '2')
 	

@@ -47,7 +47,7 @@
 * ~~Scaled pval corr matrix plot~~ 2013-07-17 23:32:30
 * ~~Add 'myPlotPvalueCorrMatrix' function~~ 2013-07-18 13:49:51
 * ~~Make new function batchFetchCorrProps. Output the movie based dataset formerly taken care of by batchFetchCorrPairs~~ 2013-07-18 23:18:07
-* Make new functionality for batchFetchCorrPairs for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python
+* ~~Make new functionality for batchFetchCorrPairs for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python~~ 2013-07-26 11:43:41
 * ~~Add by region type functionality batchFetchCorrProps? Can be used for making location based data set~~ 2013-07-26 10:19:17
 * add intersections of all region.locations for printing of corr props
 * Directionality of physically connected edges 
