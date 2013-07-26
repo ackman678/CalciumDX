@@ -15,6 +15,14 @@ function batchFetchCorrProps(filelist,region,datasetSelector,locationMarkers)
 %Must provide one input:
 %(1) table with desired filenames (space delimited txt file, with full filenames in first column). Use 'readtext.m' from matlabcentral.
 %filelist = readtext('files.txt',' ');
+%or
+%(2) a single filename (filename of your region .mat file) as a cell array, i.e.  {filename} with your region data structure loaded in workspace
+%
+%Options:
+%region-- your region data structure loaded in workspace that you want to pass with your single {filename}
+%datasetSelector-- a numeric integer n indicated which region.userdata.corr{n} dataset you want to fetch. Defaults to 1.
+%locationMarkers-- a numeric vector of integers indicating which region.location indices/region.names you want include in the output. Defaults to all region.locations containing data (i.e. unique(region.location))
+%
 %Output:
 %%Try: type('dCorrProps.txt');
 %
@@ -99,7 +107,7 @@ close(h)
 
 %---------------------------------
 function myCorrProps(region,rowinfo,datafilename,datasetSelector,locationMarkers)
-%Get corr properties for all cell pairs (default from fetchCorrPairs) as well as broken down by region.name
+%Get corr properties for all cell pairs (default from fetchCorrPairs) as well as broken down by region.name and print table to txt file
 %---Do all----------------
 output= {}; 
 str = {'all'};

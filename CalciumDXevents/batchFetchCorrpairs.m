@@ -2,8 +2,9 @@ function batchFetchCorrPairs(filelist,region,datasetSelector)
 %batchFetchCorrPairs Batch Fetch Correlated pairs data
 %
 %Examples:
-%batchFetchCorrPairs(filelist)
-%batchFetchCorrPairs({filename},region)
+%batchFetchCorrPairs(filelist)  %batch over files
+%batchFetchCorrPairs({filename},region) %single file
+%batchFetchCorrPairs({filename},region,2) %use 2nd corr dataset (region.userdata.corr{2})
 % 
 %**USE**
 %If you have run fetchCorrPairs.m  on your mat files and you have the 
@@ -13,6 +14,12 @@ function batchFetchCorrPairs(filelist,region,datasetSelector)
 %Must provide one input:
 %(1) table with desired filenames (space delimited txt file, with full filenames in first column). Use 'readtext.m' from matlabcentral.
 %filelist = readtext('files.txt',' ');
+%or
+%(2) a single filename (filename of your region .mat file) as a cell array, i.e.  {filename} with your region data structure loaded in workspace
+%
+%Options:
+%region-- your region data structure loaded in workspace that you want to pass with your single {filename}
+%datasetSelector-- a numeric integer n indicated which region.userdata.corr{n} dataset you want to fetch. Defaults to 1.
 %
 %Output:
 %%Try: type('dCorrPairs.txt');
@@ -85,7 +92,7 @@ for j=1:numel(fnms)
 
 
     disp('--------------------------------------------------------------------')
-    myCorr(region,rowinfo,datafilename);
+    myCorr(region,rowinfo,datafilename,datasetSelector);
     h = waitbar(j/numel(fnms));
 end
 close(h)
@@ -94,21 +101,43 @@ close(h)
 
 
 %---------------------------------
-function myCorr(region,rowinfo,datafilename)
+function myCorr(region,rowinfo,datafilename,datasetSelector)
+%Get corr data (cell list, pvalues, centroid-centroid physical distance) for all cell pairs and print table to txt file
+output= {}; 
+pairs = region.userdata.corr{datasetSelector}.corr_pairs{1};
 
-nCellsAll = size(region.traces,1);
+%--setup roi height width ratio--------------
+%The following is important for getting the distances right if the data pixel dimensions are not equivalent
+%And below the scripts will assume wherever 'rXY' is used, that it is szX (m dimension) which must be scaled up.
+%the following assumes that the modulus of raster scanned data is 0 (equally divisible image size) and that for CCD images the ratio of image dimensions is either equivalent or not equally divisible
+[szX,szY] = size(region.image);  %assuming szY is the largest dimension and szX may or may not need to be scaled.
+szZ = size(region.traces,2);
+if mod(max([szY szX]),min([szY szX])) == 0
+    rXY=szY/szX;
+    szX=szY;  %to make the resulting images square, in case the data was raster scanned with less lines in one dimension--
+else
+    rXY = 1;
+end
+%-- end setup roi height width ratio---------
 
-output= {};   
-    pairs = region.userdata.corr_pairs{1};
-	nCells = nCellsAll;
-    n_cells = nCells;
-    p_corr = 100*length(unique(reshape(pairs,1,prod(size(pairs)))))/nCells;
-    n_pairs = nCells*(nCells-1)/2;
-    p_pairs_corr = 100*size(pairs,1)/n_pairs;
-    output = [output; [rowinfo {n_cells p_corr n_pairs p_pairs_corr}];];
-repat tmpinfo pvalue distance cat tp pairs for output
+
+for i = 1:size(pairs,1)
+	cellA = pairs(i,1);
+	cellB = pairs(i,2);
+	pvalue = region.userdata.corr{datasetSelector}.pvalCorrMatrix(cellA,cellB);
+	dist_px = getCellCellDistance(region,cellA,cellB,rXY);
+	output = [output; [rowinfo {cellA cellB pvalue dist_px}];];
+end
+
+%---Now print output data to file----------  21.918719 seconds outside of for loop.
 fid = fopen(datafilename,'a');
 for i=1:numel(output); output{i} = num2str(output{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
 tmp2=output';
 fprintf(fid,[repmat('%s\t',1,size(tmp2,1)-1),'%s\n'],tmp2{:});
 fclose(fid);
+
+
+function dist_px = getCellCellDistance(region,cellA,cellB,rXY)
+centr1 = centroid(region.contours{cellA});
+centr2 = centroid(region.contours{cellB});
+dist_px = sqrt((abs(centr1(1)-centr2(1)))^2+(abs(centr1(2)*rXY-centr2(2)*rXY))^2);	

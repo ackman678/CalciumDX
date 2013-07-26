@@ -42,6 +42,7 @@ if nargin < 3 || isempty(plotType), plotType = '1'; end
 %if nargin < 1 || isempty(data), data = region.userdata.corr{datasetSelector}.corr_pairs{1}; end
 data = region.userdata.corr{datasetSelector}.corr_pairs{1};
 
+%--setup roi height width ratio--------------
 %The following is important for getting the distances right if the data pixel dimensions are not equivalent
 %And below the scripts will assume wherever 'rXY' is used, that it is szX (m dimension) which must be scaled up.
 %the following assumes that the modulus of raster scanned data is 0 (equally divisible image size) and that for CCD images the ratio of image dimensions is either equivalent or not equally divisible
@@ -53,6 +54,8 @@ if mod(max([szY szX]),min([szY szX])) == 0
 else
     rXY = 1;
 end
+%-- end setup roi height width ratio---------
+
 
 %===Contour Graph plot of connectivity edges over image of cell contours as nodes=========
 
@@ -143,11 +146,6 @@ for i = 1:size(data,1)
 	centr1 = centroid(region.contours{data(i,1)});
 	centr2 = centroid(region.contours{data(i,2)});
 	distAll = [distAll; sqrt((abs(centr1(1)-centr2(1)))^2+(abs(centr1(2)*rXY-centr2(2)*rXY))^2)];
-end
-
-for i = 1:size(data,1)
-	centr1 = centroid(region.contours{data(i,1)});
-	centr2 = centroid(region.contours{data(i,2)});
 	%             if region.location(data(i,1)) == numLoca && region.location(data(i,2)) == numLoca
 	edgeList = [edgeList; data(i,:)];	
 	if isfield(region.userdata.corr{datasetSelector},'pvalCorrMatrix')
@@ -207,11 +205,6 @@ for i = 1:size(data,1)
 	centr1 = centroid(region.contours{data(i,1)});
 	centr2 = centroid(region.contours{data(i,2)});
 	distAll = [distAll; sqrt((abs(centr1(1)-centr2(1)))^2+(abs(centr1(2)*rXY-centr2(2)*rXY))^2)];
-end
-
-for i = 1:size(data,1)
-	centr1 = centroid(region.contours{data(i,1)});
-	centr2 = centroid(region.contours{data(i,2)});
 	if region.location(data(i,1)) == numLoca && region.location(data(i,2)) == numLoca
 		edgeList = [edgeList; data(i,:)];
 		if isfield(region.userdata.corr{datasetSelector},'pvalCorrMatrix')
@@ -271,11 +264,6 @@ for i = 1:size(data,1)
 	centr1 = centroid(region.contours{data(i,1)});
 	centr2 = centroid(region.contours{data(i,2)});
 	distAll = [distAll; sqrt((abs(centr1(1)-centr2(1)))^2+(abs(centr1(2)*rXY-centr2(2)*rXY))^2)];
-end
-
-for i = 1:size(data,1)
-	centr1 = centroid(region.contours{data(i,1)});
-	centr2 = centroid(region.contours{data(i,2)});
 	if data(i,1) == numLoca || data(i,2) == numLoca
 		edgeList = [edgeList; data(i,:)];
 		if isfield(region.userdata.corr{datasetSelector},'pvalCorrMatrix')
@@ -335,12 +323,7 @@ distAll =[];
 for i = 1:size(data,1)
 	centr1 = centroid(region.contours{data(i,1)});
 	centr2 = centroid(region.contours{data(i,2)});
-	distAll = [distAll; sqrt((abs(centr1(1)-centr2(1)))^2+(abs(centr1(2)*rXY-centr2(2)*rXY))^2)];
-end
-
-for i = 1:size(data,1)
-	centr1 = centroid(region.contours{data(i,1)});
-	centr2 = centroid(region.contours{data(i,2)});
+	distAll = [distAll; sqrt((abs(centr1(1)-centr2(1)))^2+(abs(centr1(2)*rXY-centr2(2)*rXY))^2)];	
 	%             if region.location(data(i,1)) == numLoca && region.location(data(i,2)) == numLoca
 	edgeList = [edgeList; data(i,:)];
 	if isfield(region.userdata.corr{datasetSelector},'pvalCorrMatrix')

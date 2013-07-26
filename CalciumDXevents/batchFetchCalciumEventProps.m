@@ -14,7 +14,7 @@ function batchFetchCalciumEventProps(filelist,region,limitToWaves)
 %can have extra columns with descriptor/factor information for the file. This will be the rowinfo that is attached to each measure observation in the following script.
 %filelist = readtext('files.txt',' '); %grab readtext.m file script from matlab central
 %or
-%(2) a single filename (filename of your region .mat file) as a cell array, i.e.  {filename}
+%(2) a single filename (filename of your region .mat file) as a cell array, i.e.  {filename} with your region data structure loaded in workspace
 %
 %Options:
 %filelist={filename}; %can pass just a single filename and a single already loaded region structure, if only getting values for a single file.
