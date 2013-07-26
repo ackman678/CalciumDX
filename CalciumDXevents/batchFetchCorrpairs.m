@@ -103,7 +103,6 @@ close(h)
 %---------------------------------
 function myCorr(region,rowinfo,datafilename,datasetSelector)
 %Get corr data (cell list, pvalues, centroid-centroid physical distance) for all cell pairs and print table to txt file
-output= {}; 
 pairs = region.userdata.corr{datasetSelector}.corr_pairs{1};
 
 %--setup roi height width ratio--------------
@@ -120,20 +119,17 @@ else
 end
 %-- end setup roi height width ratio---------
 
-
+fid = fopen(datafilename,'a');
 for i = 1:size(pairs,1)
 	cellA = pairs(i,1);
 	cellB = pairs(i,2);
 	pvalue = region.userdata.corr{datasetSelector}.pvalCorrMatrix(cellA,cellB);
 	dist_px = getCellCellDistance(region,cellA,cellB,rXY);
-	output = [output; [rowinfo {cellA cellB pvalue dist_px}];];
+	output = [rowinfo {cellA cellB pvalue dist_px}];
+	for i=1:numel(output); output{i} = num2str(output{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
+	tmp2=output';
+	fprintf(fid,[repmat('%s\t',1,size(tmp2,1)-1),'%s\n'],tmp2{:});
 end
-
-%---Now print output data to file----------  21.918719 seconds outside of for loop.
-fid = fopen(datafilename,'a');
-for i=1:numel(output); output{i} = num2str(output{i}); end  %this will be to 4 decimal points (defaut for 'format short'). Can switch to 'format long' before running this loop if need more precision.
-tmp2=output';
-fprintf(fid,[repmat('%s\t',1,size(tmp2,1)-1),'%s\n'],tmp2{:});
 fclose(fid);
 
 
