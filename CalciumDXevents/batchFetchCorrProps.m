@@ -11,21 +11,11 @@ function batchFetchCorrProps(filelist,region,datasetSelector)
 %very useful for calculating the no. of cells, percent cells correlated, 
 %no. of pairs, and percent pairs correlated.  
 %
-%The final output is a cell array titled
-%'data' that will contain these values alongside factors for each set of 
-%values (age, condition, cell correlation type (all cells, non-SCH cells, or SCH cells),etc)  
-%
 %Must provide one input:
-%(1) table with desired filenames (space delimited txt file, with full filenames in first column)
-%
-%Output:
-%% When finished, convert 'data' table to string-- matlab won't copy the contents of a mixed cell array correctly.
-%for i=1:numel(data); data{i} = num2str(data{i}); end
-%data=data';
-%txt=sprintf([repmat('%s\t',1,size(data,1)),'\n'],data{:})  %copy this output
-%%dlmwrite('data.txt',txt,'');  %don't need this just copy output to console from above
-%%type('data.txt');
+%(1) table with desired filenames (space delimited txt file, with full filenames in first column). Use 'readtext.m' from matlabcentral.
 %filelist = readtext('files.txt',' ');
+%Output:
+%%Try: type('dCorrProps.txt');
 %
 %Versions:
 %2013-07-18 15:40:37 James Ackman. Based on original batchFetchCorrPairs from 2007.09.28 by JBA.

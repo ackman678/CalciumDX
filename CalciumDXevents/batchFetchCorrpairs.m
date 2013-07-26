@@ -1,5 +1,5 @@
 function batchFetchCorrPairs(filelist,region,datasetSelector)
-%batchFetchCorrpairs Batch Fetch Correlated pairs data
+%batchFetchCorrPairs Batch Fetch Correlated pairs data
 %
 %Examples:
 %batchFetchCorrPairs(filelist)
@@ -9,17 +9,13 @@ function batchFetchCorrPairs(filelist,region,datasetSelector)
 %If you have run fetchCorrPairs.m  on your mat files and you have the 
 %corr pairs data stored at region.userdata.corr_pairs,  then this script is
 %very useful for outputting a data file with a pair list with pvalues and inter-cell centroid distances. Right now it provides an undirected pair list, useful for constructing symmetric graphs.
+%
 %Must provide one input:
-%(1) table with desired filenames (space delimited txt file, with full filenames in first column)
+%(1) table with desired filenames (space delimited txt file, with full filenames in first column). Use 'readtext.m' from matlabcentral.
+%filelist = readtext('files.txt',' ');
 %
 %Output:
-%% When finished, convert 'data' table to string-- matlab won't copy the contents of a mixed cell array correctly.
-%for i=1:numel(data); data{i} = num2str(data{i}); end
-%data=data';
-%txt=sprintf([repmat('%s\t',1,size(data,1)),'\n'],data{:})  %copy this output
-%%dlmwrite('data.txt',txt,'');  %don't need this just copy output to console from above
-%%type('data.txt');
-%filelist = readtext('files.txt',' ');
+%%Try: type('dCorrPairs.txt');
 %
 %Versions:
 %2013-07-18 15:40:37 James Ackman. Based on original batchFetchCorrPairs from 2007.09.28 by JBA.
