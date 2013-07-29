@@ -29,15 +29,15 @@ function myPlotCorrGraphImage(region,plotType,numLoca,alphaLevel,edgeAesthetic,d
 
 %=====Setup default parameters=========
 
-if nargin < 7 || isempty(datasetSelector), datasetSelector = 1; end
+if nargin < 6 || isempty(datasetSelector), datasetSelector = 1; end
 
-if nargin < 6 || isempty(edgeAesthetic), edgeAesthetic = 'distance'; end
+if nargin < 5 || isempty(edgeAesthetic), edgeAesthetic = 'distance'; end
 
-if nargin < 5 || isempty(alphaLevel), alphaLevel = 0.5; end
+if nargin < 4 || isempty(alphaLevel), alphaLevel = 0.5; end
 
-if nargin < 4 || isempty(numLoca), numLoca = 2; end
+if nargin < 3 || isempty(numLoca), numLoca = 2; end
 
-if nargin < 3 || isempty(plotType), plotType = '1'; end
+if nargin < 2 || isempty(plotType), plotType = '1'; end
 
 %if nargin < 1 || isempty(data), data = region.userdata.corr{datasetSelector}.corr_pairs{1}; end
 data = region.userdata.corr{datasetSelector}.corr_pairs{1};
