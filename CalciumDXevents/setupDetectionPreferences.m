@@ -7,7 +7,7 @@ load(calciumdxprefs)
 
 %--Make first preference set
 prefs(1).name = 'normal';
-prefs(1).params(1).name = 'hannfilterorder';
+prefs(1).params(1).name = 'Int: Hann low pass filter order.';
 prefs(1).params(1).value = 2;
 prefs(1).params(1).description = 'hannfilterorder';
 

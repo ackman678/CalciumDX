@@ -172,32 +172,46 @@ for i = 1:length(handles.prefs(idx).params)
     switch handles.prefs(idx).params(i).name
         case 'hannfilterorder'
             set(handles.hannfilterorder , 'String',handles.prefs(idx).params(i).value);
+            set(handles.hannfilterorder , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'sd'
             set(handles.sd, 'String',handles.prefs(idx).params(i).value);
+            set(handles.sd , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'sd2'
             set(handles.sd2, 'String',handles.prefs(idx).params(i).value);
+            set(handles.sd2 , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'sd3'
             set(handles.sd3, 'String',handles.prefs(idx).params(i).value);
+            set(handles.sd3 , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'nonfilt'
             set(handles.nonfilt , 'String',handles.prefs(idx).params(i).value);
+            set(handles.nonfilt , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'hipass'
             set(handles.hipass , 'String',handles.prefs(idx).params(i).value);
+            set(handles.hipass , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'slidingWinStartFrame'
             set(handles.slidingWinStartFrame , 'String',handles.prefs(idx).params(i).value);
+            set(handles.slidingWinStartFrame , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'block_size'
             set(handles.block_size , 'String',handles.prefs(idx).params(i).value);
+            set(handles.block_size , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'start_baseline'
             set(handles.start_baseline , 'String',handles.prefs(idx).params(i).value);
+            set(handles.start_baseline , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'end_baseline'
             set(handles.end_baseline , 'String',handles.prefs(idx).params(i).value);
+            set(handles.end_baseline , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'blockSizeMultiplier'
             set(handles.blockSizeMultiplier , 'String',handles.prefs(idx).params(i).value);
+            set(handles.blockSizeMultiplier , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'windowAverage'
             set(handles.windowAverage , 'String',handles.prefs(idx).params(i).value);
+            set(handles.windowAverage , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'baselineAverage'
             set(handles.baselineAverage , 'String',handles.prefs(idx).params(i).value);
+            set(handles.baselineAverage , 'TooltipString',handles.prefs(idx).params(i).description);
         case 'maxOffsetTime'
             set(handles.maxOffsetTime , 'String',handles.prefs(idx).params(i).value);
+            set(handles.maxOffsetTime , 'TooltipString',handles.prefs(idx).params(i).description);
         otherwise
             error(['Unrecognized parameter: ''' handles.prefs(idx).params(i).name '''']);
     end

@@ -17,7 +17,7 @@ sz=size(region.traces);
 for c = 1:sz(1) 
 %     [s d] = calciumdxdettrialWaves(trSign*nt(c,:),region);
 	%[s d] = feval(function_handle,trSign*nt(num,:),region,detectionType,'hannfilterorder',hannfilterorder,'sd',sd,'sd2',sd2,'sd3',sd3,'nonfilt',nonfilt,'hipass',hipass,'block_size',block_size,'start_baseline',start_baseline,'end_baseline',end_baseline,'maxOffsetTime',maxOffsetTime,'windowAverage',windowAverage,'baselineAverage',baselineAverage,'blockSizeMultiplier',blockSizeMultiplier,'slidingWinStartFrame',slidingWinStartFrame);
-	[s d] = feval(function_handle,trSign*nt(num,:),region,detectionType,'parameterArray',parameterArray);
+	[s d] = feval(function_handle,trSign*nt(c,:),region,detectionType,'parameterArray',parameterArray);
 
     if rem(c,10) == 0
         waitbar(c/sz(1),hbar); 
