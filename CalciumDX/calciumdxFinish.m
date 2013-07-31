@@ -4,7 +4,7 @@ if ~ischar(filename)
 end
 fnm = [pathname filename];
 save(fnm,'region');
-save(calciumdxprefs, 'pathname','filename','-append')
+save(calciumdxprefs,'pathname','filename','-append')
 
 save(calciumdxbackupLocation, 'region', 'fnm', 'pathname', 'filename')
 set(gcf,'CloseRequestFcn','');

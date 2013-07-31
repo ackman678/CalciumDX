@@ -44,7 +44,7 @@ if ~exist('region','var')
     
     fnm = [pathname filename];
     load(fnm)
-    save(calciumdxprefs, 'pathname','-append')
+    save(calciumdxprefs,'pathname','-append')
 end
 
 tr = region.traces;
@@ -179,17 +179,24 @@ popupDetectList{1} = 'calciumdxdettrial';
 popupDetect = uicontrol('Style','popupmenu','Units','normalized','String',popupDetectList,'Position',[.28 .05 .11 0.03],'FontSize',9,...
     'BackgroundColor',[1 1 1]);
 
+
 bdetect = uicontrol('Style','pushbutton','Units','normalized','String','Detect current','Position',[.40 .05 .07 0.03],'FontSize',9,...
     'Callback','calciumdxeventDetect');
     
 bdetect1 = uicontrol('Style','pushbutton','Units','normalized','String','Detect all','Position',[.50 .05 .07 0.03],'FontSize',9,...
     'Callback','calciumdxeventDetectAll');
 
-bdetectPrefs = uicontrol('Style','pushbutton','Units','normalized','String','Params','Position',[.50 .09 .07 0.03],'FontSize',9,...
-    'Callback','prefs = setupDetectionPreferences(region); dxeventsOptionsDialog(''prefs'',prefs);');
+if ~exist('detectionType','var'), detectionType = 'normal'; end;
 
-bdeleteall = uicontrol('Style','pushbutton','Units','normalized','String','Delete events','Position',[.60 .05 .07 0.03],'FontSize',9,...
+bdetectPrefs = uicontrol('Style','pushbutton','Units','normalized','String','Params','Position',[.40 .01 .07 0.03],'FontSize',9,...
+    'Callback', 'prefsAll = setupDetectionPreferences(region); dxeventsOptionsDialog(''prefs'',prefsAll,''detectionType'',detectionType);');
+
+bdeleteall = uicontrol('Style','pushbutton','Units','normalized','String','Delete events','Position',[.50 .01 .07 0.03],'FontSize',9,...
     'Callback','spk(num,:) = 0; dec(num,:) = 0; region.transients(1,num) = 1; hevPlotTrace;');
+
+
+btdetect3=uicontrol('Style','pushbutton','Units','normalized','String','Manual Peak Find','Position',[.60 .05 .07 0.03],'FontSize',9,...
+    'Callback','calciumdxManualPeaks');  
 
 %popupmenu replacement for region.transient radio buttons, JBA 07/20/09
 st = cell(1,5);
@@ -212,9 +219,6 @@ bdetect2 = uicontrol('Style','pushbutton','Units','normalized','String','Detect 
 showArtifacts=0;
 btoggle1 = uicontrol('Style','togglebutton','Units','normalized','String','Show Artifacts?','Position',[.30 .01 .07 0.03],'FontSize',9,...
     'Callback','hevArtifactToggle');
-
-btdetect3=uicontrol('Style','pushbutton','Units','normalized','String','Manual Peak Find','Position',[.50 .01 .07 0.03],'FontSize',9,...
-    'Callback','calciumdxManualPeaks');
 
 showStimuli=0;
 btStimImport=uicontrol('Style','togglebutton','Units','normalized','String','Show stimuli','Position',[.60 .01 .07 0.03],'FontSize',9,...

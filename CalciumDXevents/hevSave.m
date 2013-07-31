@@ -10,7 +10,7 @@ if exist('pathname','var')
 %         clear
         disp('no filename given...')
     end
-    save(calciumdxprefs, 'pathname','filename','-append')
+    save(calciumdxprefs,'pathname','filename','-append')
 else
     [filename, pathname] = uiputfile({'*.mat'}, 'Save file as');
     if ~ischar(filename)
@@ -18,7 +18,7 @@ else
 %         clear
         disp('no filename given...')
     end
-    save(calciumdxprefs, 'pathname','filename','-append')
+    save(calciumdxprefs,'pathname','filename','-append')
 end
 
 fnm = [pathname filename];

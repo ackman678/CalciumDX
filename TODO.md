@@ -31,10 +31,10 @@
 * ~~add defaults for zoom and pan horizontal~~ 2013-06-25 	11:58:48
 * ~~link x axis for plots for consistent zoom and scroll behavior~~ 2013-06-25 11:59:43
 * ~~Fix click cell contour bug for updating of traces plot in dxevents~~ 2013-07-18 12:25:37
-* add user preferences for gui
-* add user preferences for detection routine argin (like filter order, pass band, window)
+* ~~add user preferences for gui~~ 2013-07-31 08:40:50
+* ~~add user preferences for detection routine argin (like filter order, pass band, window)~~ 2013-07-31 08:40:57
 * integrate component det
-* remove cell type selector (make independent manual cell selector gui)
+* rem cell type selector (make independent manual cell selector gui)
 * fix DIPUM image processing toolbox requirement?
 
 

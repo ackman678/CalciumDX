@@ -70,7 +70,9 @@ else
     % change the value of parameter
     switch varargin{i}
      case 'prefs'
-      handles.prefs = varargin{i+1};     
+      handles.prefs = varargin{i+1};
+     case 'detectionType'   
+      detectionType = varargin{i+1};
      otherwise
       % Hmmm, something wrong with the parameter string
       error(['Unrecognized parameter: ''' varargin{i} '''']);
@@ -78,8 +80,24 @@ else
   end;
 end
 
+%if ~exist('detectionType','var')
+%	detectionType = handles.prefs(1).name;
+%end
+
 %handles.current = 'normal';
-set(handles.popupmenu1,'String',{handles.prefs.name})
+cellArr = {handles.prefs.name};
+set(handles.popupmenu1,'String',cellArr)
+
+for i = 1:length(cellArr), 
+	if strcmp(cellArr{i},detectionType);
+		set(handles.popupmenu1,'Value',i)
+		disp(detectionType);
+		disp(cellArr{i}); 
+		disp(i);
+		set(handles.popupmenu1,'String',[cellArr, 'crap'])
+	end
+end
+
 
 % Update handles structure
 guidata(hObject, handles);
@@ -201,7 +219,7 @@ function initialize_gui(fig_handle, handles, isreset)
 % if isfield(handles, 'metricdata') && ~isreset
 %     return;
 % end
-set(handles.unitgroup, 'SelectedObject', handles.popupmenu1);
+%set(handles.unitgroup, 'SelectedObject', handles.popupmenu1);
 unitgroup_SelectionChangeFcn(handles.popupmenu1, [], handles)
 % Update handles structure
 guidata(handles.figure1, handles);
@@ -239,7 +257,8 @@ function pushbutton3_Callback(hObject, eventdata, handles)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 prefs = getCurrentParams(hObject, eventdata, handles);
-assignin('base', 'prefs', prefs)
+assignin('base','prefs',prefs)
+assignin('base','detectionType',prefs.name)
 delete(handles.figure1)
 
 
@@ -280,7 +299,7 @@ if strcmp(prefs.name,'custom1')
         
     end
 end
-save(calciumdxprefs, 'dxeventsPrefs','-append')
+save(calciumdxprefs,'dxeventsPrefs','-append')
 
 
 

@@ -3,8 +3,9 @@
 if exist('prefs','var')
 	parameterArray = setupDetectionPrefs2Params(prefs);	
 else
-	prefs = setupDetectionPreferences(region);
-	parameterArray = setupDetectionPrefs2Params(prefs);
+	prefsAll = setupDetectionPreferences(region);
+	parameterArray = setupDetectionPrefs2Params(prefsAll(1));
+	detectionType = prefsAll(1).name;
 end
 
 %detectionType = 'normal';
@@ -51,9 +52,6 @@ end
 
 
 
-
-
-detectionType = prefs.name;
 NpopupDetect = get(popupDetect,'value');
 detectorName = popupDetectList{NpopupDetect};
 function_handle = str2func(detectorName);

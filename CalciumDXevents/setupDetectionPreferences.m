@@ -81,7 +81,7 @@ for i = 1:length(prefs(2).params)
 end
 
 
-%--Add custom preference sets if they exist
+%--Add custom preference sets if they exist or else set up default 'custom1'
 nPrefs = length(prefs);
 if exist('dxeventsPrefs','var')
 	for i=1:length(dxeventsPrefs.detector)
@@ -92,6 +92,30 @@ if exist('dxeventsPrefs','var')
 				prefs(nPrefs).name = dxeventsPrefs.detector(i).prefs(j).name;
 				prefs(nPrefs).params = dxeventsPrefs.detector(i).prefs(j).params;
 			end
+		end
+	end
+else	
+	nPrefs = nPrefs+1;
+	prefs(nPrefs).name = 'custom1';
+	prefs(nPrefs).params = prefs(1).params;
+	for i = 1:length(prefs(nPrefs).params)
+		switch prefs(nPrefs).params(i).name
+		 case 'hannfilterorder'
+			 prefs(nPrefs).params(i).value = 2;
+		 case 'sd'
+			 prefs(nPrefs).params(i).value = 3;
+		 case 'sd3'
+			 prefs(nPrefs).params(i).value = 2;
+		 case 'nonfilt'
+			 prefs(nPrefs).params(i).value = 0;
+		 case 'hipass'
+			 prefs(nPrefs).params(i).value = 'false';		
+		 case 'start_baseline'
+			 prefs(nPrefs).params(i).value = 25;
+		 case 'end_baseline'
+			 prefs(nPrefs).params(i).value = 5;
+		 case 'maxOffsetTime'
+			 prefs(nPrefs).params(i).value = 10;
 		end
 	end
 end
