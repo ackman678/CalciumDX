@@ -44,7 +44,7 @@ if ~exist('region','var')
     
     fnm = [pathname filename];
     load(fnm)
-    save(calciumdxprefs, 'pathname')
+    save(calciumdxprefs, 'pathname','-append')
 end
 
 tr = region.traces;
@@ -171,12 +171,11 @@ bgoto = uicontrol('Style','pushbutton','Units','normalized','String','Go','Posit
 
 %Row1 buttons
 %popupmenu replacement for detection routine selection, JBA 07/15/2010
-popupDetectList= cell(1,5);
 popupDetectList{1} = 'calciumdxdettrial'; 
-popupDetectList{2} = 'calciumdxdettrialWaves';
-popupDetectList{3} = 'calciumdxEvent_DetSingTrHannFast';
-popupDetectList{4} = 'calciumdxEvent_DetSingTrHP';
-popupDetectList{5} = 'calciumdxEvent_DetSingTrHP_HF';
+%popupDetectList{2} = 'calciumdxdettrialWaves';
+%popupDetectList{3} = 'calciumdxEvent_DetSingTrHannFast';
+%popupDetectList{4} = 'calciumdxEvent_DetSingTrHP';
+%popupDetectList{5} = 'calciumdxEvent_DetSingTrHP_HF';
 popupDetect = uicontrol('Style','popupmenu','Units','normalized','String',popupDetectList,'Position',[.28 .05 .11 0.03],'FontSize',9,...
     'BackgroundColor',[1 1 1]);
 
@@ -185,6 +184,9 @@ bdetect = uicontrol('Style','pushbutton','Units','normalized','String','Detect c
     
 bdetect1 = uicontrol('Style','pushbutton','Units','normalized','String','Detect all','Position',[.50 .05 .07 0.03],'FontSize',9,...
     'Callback','calciumdxeventDetectAll');
+
+bdetectPrefs = uicontrol('Style','pushbutton','Units','normalized','String','Params','Position',[.50 .09 .07 0.03],'FontSize',9,...
+    'Callback','prefs = setupDetectionPreferences(region); dxeventsOptionsDialog(''prefs'',prefs);');
 
 bdeleteall = uicontrol('Style','pushbutton','Units','normalized','String','Delete events','Position',[.60 .05 .07 0.03],'FontSize',9,...
     'Callback','spk(num,:) = 0; dec(num,:) = 0; region.transients(1,num) = 1; hevPlotTrace;');

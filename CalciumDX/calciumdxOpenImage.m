@@ -15,7 +15,7 @@ else
     end
 end
 fnm = [pathname filename];
-save(calciumdxprefs,'pathname', 'filename')
+save(calciumdxprefs, 'pathname','filename','-append')
 
 frameAveraging = '';
 framerate = '';

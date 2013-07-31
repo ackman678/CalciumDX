@@ -4,8 +4,8 @@ function [stn, decpt, sd, sd2, sd3, nonfilt, hannfilterorder] = calciumdxdettria
 % sign=-1; %testing
 %based on calciumdxdettrial.m calcium event detection from INMED.  Refined by James Ackman 2009-2011.
 
-disp('--------------------------------------------')
-disp(varargin)
+%disp('--------------------------------------------')
+%disp(varargin)
 
 
 % Check some basic requirements of the data
@@ -59,6 +59,24 @@ else
 	makePlots = 'false';
 end
 %----END setup defaults ---------------------------------------------------
+
+
+% Read the optional parameters
+if (rem(length(varargin),2)==1)
+  error('Optional parameters should always go by pairs');
+else
+	for i=1:2:(length(varargin)-1)
+		if ~ischar (varargin{i}),
+		  error (['Unknown type of optional parameter name (parameter' ...
+			  ' names must be strings).']);
+		end
+		switch varargin{i}
+		 case 'parameterArray'
+		  parameterArray = varargin{i+1};
+		end
+	end
+	varargin = parameterArray;
+end
 
 % Read the optional parameters
 if (rem(length(varargin),2)==1)
