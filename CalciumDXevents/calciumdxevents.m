@@ -44,7 +44,7 @@ if ~exist('region','var')
     
     fnm = [pathname filename];
     load(fnm)
-    save(calciumdxprefs,'pathname','-append')
+    if exist('calciumdxprefs','file'), save(calciumdxprefs,'pathname','-append'); else, save(calciumdxprefs,'pathname'); end
 end
 
 tr = region.traces;

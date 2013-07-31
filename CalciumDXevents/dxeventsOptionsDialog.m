@@ -91,10 +91,6 @@ set(handles.popupmenu1,'String',cellArr)
 for i = 1:length(cellArr), 
 	if strcmp(cellArr{i},detectionType);
 		set(handles.popupmenu1,'Value',i)
-		disp(detectionType);
-		disp(cellArr{i}); 
-		disp(i);
-		set(handles.popupmenu1,'String',[cellArr, 'crap'])
 	end
 end
 
@@ -299,7 +295,7 @@ if strcmp(prefs.name,'custom1')
         
     end
 end
-save(calciumdxprefs,'dxeventsPrefs','-append')
+if exist('calciumdxprefs','file'), save(calciumdxprefs,'dxeventsPrefs','-append'); else, save(calciumdxprefs,'dxeventsPrefs'); end
 
 
 
