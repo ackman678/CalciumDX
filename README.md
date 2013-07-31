@@ -86,12 +86,20 @@ For this we will use `calciumdxevents.m`
 1. Start `calciumdxevents`
 	* If you've just performed calcium trace reading using `calciumdx`, then `calciumdxevents` should automatically open with your new data.
 	* Otherwise at the matlab command prompt type `calciumdxevents` and open your *region* based .mat file saved using calciumdx.
-1. *Optional:* Click 'Artifact rem w/FFT' button.
-2. *Optional:* Click 'Detect Artifacts' button.
-3. Click 'Detect all' button. This will automatically detect calcium events.  Use `calciumdxdettrial.m` or `calciumdxdettrialWaves.m`
-4. Click 'Save' to save file.
-5. *Optional:* Click 'Manual Peaks'. Follow instructions using the brush tool and export variable either called 'waveframes' or 'artifactframes'. This is more important for 2P recorded movies where movement artifacts may be more evident, or movies with low frequency of real activity where peaks of artifacts could be picked up as waves in downstream analysis. If the detected transients are largely true-positive, then just click 'Continue' without brushing and exporting any variables. This will just accept all frames as possible frames containing real activity. Then the next couple scripts will be used for detecting waves among the events.
-6. Click 'Save' to save file again.
+	* ![](assets/img/Screen_Shot_2013-07-31_at_12.12.29_PM.png)	
+2. *Optional:* Click 'Artifact rem w/FFT' button.
+3. *Optional:* Click 'Detect Artifacts' button.
+4. Click 'Params' button to edit the default parameters in an Options Dialog box.
+	* *Hint1: The bold faced parameters are the best ones to try editing for your own detection requirements.*
+	* *Hint2: Clicking 'Save' will save your edited default parameters as 'custom1' in your calciumdxprefs.mat file in your matlab home folder and will be automatically reloaded next time calciumdxevents is run.*
+	* ![](assets/img/Screen_Shot_2013-07-31_at_12.15.45_PM.png)
+5. Click 'Finish' in the Options Dialog box to export these parameters for event detection in next step.
+6. Click 'Detect current' to detect events on the current cell no. Use `calciumdxdettrial.m`. Can repeat on several cells while assessing/changing detection parameters.
+7. Click 'Detect all' button to automatically detect calcium events for all cells.  Use `calciumdxdettrial.m`.
+	* ![](assets/img/Screen_Shot_2013-07-31_at_12.17.03_PM.png)
+8. Click 'Save' to save file.
+9. *Optional:* Click 'Manual Peaks'. Follow instructions using the brush tool and export variable either called 'waveframes' or 'artifactframes'. This is more important for 2P recorded movies where movement artifacts may be more evident, or movies with low frequency of real activity where peaks of artifacts could be picked up as waves in downstream analysis. If the detected transients are largely true-positive, then just click 'Continue' without brushing and exporting any variables. This will just accept all frames as possible frames containing real activity. Then the next couple scripts will be used for detecting waves among the events.
+10. Click 'Save' to save file again.
 
 
 #Calcium wave detection
