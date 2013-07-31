@@ -16,7 +16,7 @@ if ~exist('region','var')
     [filename pathname] = uigetfile('*.mat','Select calciumdx .mat file',pathname);
     fname = fullfile(pathname,filename);
     load(fname);
-    save(calciumdxprefs, 'pathname','filename');
+    if exist('calciumdxprefs','file'), save(calciumdxprefs,'pathname','filename','-append'); else, save(calciumdxprefs,'pathname','filename'); end
     
 end
 fname = [pathname filename];

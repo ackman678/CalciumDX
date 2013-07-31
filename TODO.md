@@ -31,10 +31,10 @@
 * ~~add defaults for zoom and pan horizontal~~ 2013-06-25 	11:58:48
 * ~~link x axis for plots for consistent zoom and scroll behavior~~ 2013-06-25 11:59:43
 * ~~Fix click cell contour bug for updating of traces plot in dxevents~~ 2013-07-18 12:25:37
-* add user preferences for gui
-* add user preferences for detection routine argin (like filter order, pass band, window)
+* ~~add user preferences for gui~~ 2013-07-31 08:40:50
+* ~~add user preferences for detection routine argin (like filter order, pass band, window)~~ 2013-07-31 08:40:57
 * integrate component det
-* remove cell type selector (make independent manual cell selector gui)
+* rem cell type selector (make independent manual cell selector gui)
 * fix DIPUM image processing toolbox requirement?
 
 
@@ -49,6 +49,7 @@
 * ~~Make new function batchFetchCorrProps. Output the movie based dataset formerly taken care of by batchFetchCorrPairs~~ 2013-07-18 23:18:07
 * ~~Make new functionality for batchFetchCorrPairs for fetching table of corrPairs, Pvalue, distance measurements for data frame passing to iGraph or NetworkX in R or Python~~ 2013-07-26 11:43:41
 * ~~Add by region type functionality batchFetchCorrProps? Can be used for making location based data set~~ 2013-07-26 10:19:17
+* add by region type for simulations
 * add intersections of all region.locations for printing of corr props
 * Directionality of physically connected edges 
 
