@@ -7,21 +7,21 @@ load(calciumdxprefs)
 
 %--Make first preference set
 prefs(1).name = 'normal';
-prefs(1).params(1).name = 'Int: Hann low pass filter order.';
+prefs(1).params(1).name = 'hannfilterorder';
 prefs(1).params(1).value = 2;
-prefs(1).params(1).description = 'hannfilterorder';
+prefs(1).params(1).description = 'Hann low pass filter order, integer';
 
 prefs(1).params(2).name = 'sd';
 prefs(1).params(2).value = 2;
-prefs(1).params(2).description = 'Int: Number of std dev to make threshold for detection above baselineAverage';
+prefs(1).params(2).description = 'Number of std dev to make threshold for detection above baselineAverage, integer';
 
 prefs(1).params(3).name = 'sd2';
 prefs(1).params(3).value = 1;
-prefs(1).params(3).description = 'Int: no. of stddev above average local trace change';
+prefs(1).params(3).description = 'No. of stddev above average local trace change, integer';
 
 prefs(1).params(4).name = 'sd3';
 prefs(1).params(4).value = 1;
-prefs(1).params(4).description = 'Int: No. of stddev above average whole trace change';
+prefs(1).params(4).description = 'No. of stddev above average whole trace change, integer';
 
 prefs(1).params(5).name = 'nonfilt';
 prefs(1).params(5).value = 1;
@@ -33,23 +33,23 @@ prefs(1).params(6).description = 'str: "true" | "false". Use high pass filter fo
 
 prefs(1).params(7).name = 'slidingWinStartFrame';
 prefs(1).params(7).value = 3;
-prefs(1).params(7).description = 'Int: starting frame location for sliding window, def 3';
+prefs(1).params(7).description = 'Starting frame location for sliding window, integer, def 3';
 
 prefs(1).params(8).name = 'block_size';
 prefs(1).params(8).value = 3;
-prefs(1).params(8).description = 'Int: length of sliding window in frames in which to look for local peaks, def 3 frames';
+prefs(1).params(8).description = 'Length of sliding window in frames in which to look for local peaks, integer, def 3 frames';
 
 prefs(1).params(9).name = 'start_baseline';
 prefs(1).params(9).value = round(22/region.timeres);
-prefs(1).params(9).description = 'Int: Baseline in frames for the sliding window from peak, def 22 sec';
+prefs(1).params(9).description = 'Baseline in frames for the sliding window from peak, integer, def 22 sec/region.timeres';
 
 prefs(1).params(10).name = 'end_baseline';
 prefs(1).params(10).value = round(4.5/region.timeres);
-prefs(1).params(10).description = 'Int: Baseline in frames for the sliding window from peak, def 4.5 sec';
+prefs(1).params(10).description = 'Baseline in frames for the sliding window from peak, integer, def 4.5 sec/region.timeres';
 
 prefs(1).params(11).name = 'blockSizeMultiplier';
 prefs(1).params(11).value = 2;
-prefs(1).params(11).description = 'Int: if next peak is inside N times the block size from last pk, then window will start from last peak';
+prefs(1).params(11).description = 'If next peak is inside N times the block size from last pk, then window will start from last peak, integer';
 
 prefs(1).params(12).name = 'windowAverage';
 prefs(1).params(12).value = 'mean';
@@ -61,7 +61,7 @@ prefs(1).params(13).description = 'str: "window" | "all". F0 baseline, either th
 
 prefs(1).params(14).name = 'maxOffsetTime';
 prefs(1).params(14).value = round(5/region.timeres);
-prefs(1).params(14).description = 'Int: Max no. frames for offset time, def 5 sec';
+prefs(1).params(14).description = 'Max no. frames for offset time, def 5 sec/region.timeres';
 
 
 %--Make second preference set

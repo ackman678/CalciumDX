@@ -15,7 +15,7 @@ else
     end
 end
 fnm = [pathname filename];
-if exist('calciumdxprefs','file'), save(calciumdxprefs,'pathname','filename','-append'); else, save(calciumdxprefs,'pathname','filename'); end
+if exist('calciumdxprefs.mat','file') == 2, save(calciumdxprefs,'pathname','filename','-append'); else, save(calciumdxprefs,'pathname','filename'); end
 
 frameAveraging = '';
 framerate = '';

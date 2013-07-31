@@ -309,7 +309,7 @@ if strcmp(prefs.name,'custom1')
         
     end
 end
-if exist('calciumdxprefs','file'), save(calciumdxprefs,'dxeventsPrefs','-append'); else, save(calciumdxprefs,'dxeventsPrefs'); end
+if exist('calciumdxprefs.mat','file') == 2, save(calciumdxprefs,'dxeventsPrefs','-append'); else, save(calciumdxprefs,'dxeventsPrefs'); end
 
 
 
