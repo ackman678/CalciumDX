@@ -36,7 +36,7 @@
 * integrate component det
 * rem cell type selector (make independent manual cell selector gui)
 * fix DIPUM image processing toolbox requirement?
-
+* add button for inverting traces for detection
 
 ## fetch corr pairs
 
