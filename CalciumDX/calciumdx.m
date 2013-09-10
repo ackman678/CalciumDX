@@ -3,14 +3,12 @@
 %2013-06-24 miscellaneous bug fixes and streamlined program flow
 %2013-06-21 miscellaneous bug fixes
 %2013-06-20 10:35:50 started fork and reorganization by James Ackman for upload to github as shared project editing. Many TODOs are needed including reworking as object oriented.
-% JBA edited from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
-%Added bug fixes at v4.1 by James Ackman from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
+%Miscellaneous bug fixes and features added from Nov 2011- Mar 2012 for importing and aligning contours and coords, and indexing/ contour out of image bounds error
 %reworked by James Ackman at v4.0 between October 2010 - October 2011 in Crair lab at Yale as hippocalciumdextran for analysis of retinal wave movies (Ackman et al., Nature 2012)
-%clear all contours, import contours, align all contours, align single contours added by James Ackman July 19, 2009
-%capability for opening open microscopy environment tiff formats (http://www.loci.wisc.edu/ome/ome-tiff.html) added by James Ackman July 17, 2009.
-%repeat delete added to calciumdxManualDelete.m by James Ackman 17/01/2007
-%Default spatial and temporal values edited 17/01/2007
-%2006-2007 forked from an earlier project version named hippo first created by D.Aronov and R. Cossart at INMED.
+%miscellaneous bug fixes and features added, including clear all contours, import contours, align all contours, align single contours added by James Ackman July 19, 2009
+%miscellaneous bug fixes and features added including loci_tools.jar integration for movie opening, adding the capability for opening open microscopy environment tiff formats (http://www.loci.wisc.edu/ome/ome-tiff.html) added by James Ackman July 17, 2009.
+%miscellaneous bug fixes and features added starting around Jan 17, 2007
+%2006-2007 James Ackman forked from an earlier project version named hippo by D.Aronov and R. Cossart at INMED, some of which was based off earlier code and algorithms implemented by D. Aronov, R. Cossart, and others in the R. Yuste lab.
 
 calciumdxFullfilename = mfilename('fullpath');
 [calciumdxpath, ~, ~] = fileparts(calciumdxFullfilename);

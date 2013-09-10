@@ -20,6 +20,9 @@ There are also a number of miscellaneous functions for data analysis, fetching o
 
 ## Core dependencies ##
 * matlab with the signal processing and image processing toolboxes
+* `loci_tools.jar` a java plugin for opening many different microscopy image/tiff file formats 
+	* included, but up-to-date version can be found at [ome website](http://www.loci.wisc.edu/ome/ome-tiff.html) or through the ImageJ plugins page.
+	* should be placed in the `CalciumDX/` folder
 
 ## Non-core dependencies ##
 Several functions (mostly non-core gui) depend on the following freely available toolboxes:
