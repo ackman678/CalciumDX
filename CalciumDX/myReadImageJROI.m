@@ -3,8 +3,8 @@ function output = myReadImageJROI
 %Uses ReadImageJROI.m from matlabcentral
 %James B. Ackman 2012-08-28
 [filename, pathname] = uigetfile({'*.zip' '*.roi'}, 'Choose data file to open');
-tempdir=pwd;
-cd ReadImageJROI;
+% tempdir=pwd;
+% cd ReadImageJROI;
 [sROI] = ReadImageJROI([pathname filename]);
-cd(tempdir);
+% cd(tempdir);
 output = sROI;
