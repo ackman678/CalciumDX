@@ -327,15 +327,7 @@ tmpres=region.timeres;
 c = roiIND;
 d=region.onsets{c};
 e=region.offsets{c};
-d1 = [d size(region.traces,2)];
-e1 = [0 e-d];
-ints=diff([0 d1]) - e1;
-if d(1) ~= 1
-	ints=ints(2:end);
-end
-if d(end) ~= size(region.traces,2)
-	ints=ints(1:end-1);
-end
+ints = (d(2:end) - e(1:end-1));
 ints=[ints*tmpres NaN];  %since no. of measured intervals will be nEvents-1, cat an 'NaN' at the end of the cell array
 intvls=num2cell(ints');
 end
