@@ -15,6 +15,7 @@ if numel(myCells) > 0
     %assignin('base', 'PxxM',PxxM)
     close(h)
     Hpsd = dspdata.psd(mean(PxxM,2),'Fs',Fs);   %mean of the Power spectrum values
+    figure;
     plot(Hpsd)  %plot the mean power spectrum
 else
     PxxM = [];
