@@ -145,14 +145,20 @@ for s = 1:numSeries
     numImages = r.getImageCount();
     imageList = cell(numImages, 2);
     colorMaps = cell(numImages);
-    h = waitbar(0,'Please wait...');
+    if ispc | ismac
+		h = waitbar(0,'Please wait...');
+	end
     for i = 1:numImages
 %         if mod(i, 72) == 1
 %             fprintf('\n    ');
 %         end
 %         fprintf('.');
         if rem(i,100) == 0
-            waitbar(i/numImages,h)
+			if ispc | ismac
+				waitbar(i/numImages,h)
+            else
+				disp(['Processing ' num2str(i) '/' num2str(numImages) ' images'])
+            end
         end
         
         plane = r.openBytes(i - 1);
@@ -280,7 +286,9 @@ for s = 1:numSeries
     result{s, 3} = colorMaps;
 %     result{s, 4} = r.getMetadataStore();  %jba  2011-06-07
     fprintf('\n');
-    close(h)
+	if ispc | ismac
+		close(h)
+    end
 end
 r.close();
 toc

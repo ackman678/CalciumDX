@@ -9,6 +9,15 @@ chi=get(gca,'Children');
 xdata=get(chi,'XData');
 ydata=get(chi,'YData');
 
+len = size(xdata{end},2);
+if x < 1
+	x = 1;
+elseif x > len
+	x = len;
+else
+	x = x;
+end
+
 set1 = sort([xdata{1} xdata{4}]);
 fidx1 = find(set1<x);
 fidx2 = find(set1>x);
