@@ -10,10 +10,10 @@ if numel(myCells) > 0
     [Pxx1, f] = pwelch(nt(myCells(i),:),[],[],1024,Fs);
     %[Cxy1,F] = mscohere(r1,nt(myCells(i),:),[],[],1024,1/region.timeres);  %coherence of signal with gaussian noise
     PxxM(:,i) = Pxx1(:,1);   %add new values to matrix
-    h = waitbar(i/numel(myCells));
+%    h = waitbar(i/numel(myCells));
     end
     %assignin('base', 'PxxM',PxxM)
-    close(h)
+%    close(h)
     Hpsd = dspdata.psd(mean(PxxM,2),'Fs',Fs);   %mean of the Power spectrum values
     figure;
     plot(Hpsd)  %plot the mean power spectrum

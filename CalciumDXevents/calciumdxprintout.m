@@ -1,6 +1,6 @@
-%Updated by James Ackman,07/08/07
 %function calciumdxprintout(fname)
 % calciumdxprintout(fname)
+%Updated by James Ackman, 2007/08/07, 2014-02-27 15:57:33
 
 matlabUserPath = userpath;
 matlabUserPath = matlabUserPath(1:end-1);
@@ -19,22 +19,21 @@ if ~exist('region','var')
     if exist('calciumdxprefs.mat','file') == 2, save(calciumdxprefs,'pathname','filename','-append'); else, save(calciumdxprefs,'pathname','filename'); end
     
 end
-fname = [pathname filename];
+fname = fullfile(pathname,filename);
+[pathstr, name, ext] = fileparts(fname);   %test whether a fullfile path was specified	
+%	if isempty(pathstr)  %if one was not specified, save the output datafilename into the users matlab home startup directory
+%		matlabUserPath = userpath;  
+%		matlabUserPath = matlabUserPath(1:end-1);  
+%		datafilename = fullfile(matlabUserPath,datafilename);		
+%	end
 
-
+str = name;
 spres = region.spaceres;
 
+figure;
 scrsize = get(0,'screensize');
 set(gcf,'position',[scrsize(3)/2-8.5/11*0.86*scrsize(4)/2 0.07*scrsize(4) 8.5/11*0.86*scrsize(4) 0.86*scrsize(4)]);
 set(gcf,'color',[1 1 1]);
-
-f = strfind(filename,'.');
-if isempty(f)
-    str = filename;
-else
-    f = f(1);
-    str = filename(1:f-1);
-end
 
 tmpres = region.timeres;
 
@@ -59,12 +58,18 @@ hold on
 nt = dfoverf(region.traces);
 s = rast2matdur(region.onsets,region.offsets,size(region.traces,2));
 actvcells=find(sum(s,2)>0);
+sz = size(region.traces);
+windowLength = 200; %frames
+if sz(2) < 200
+	windowLength = round(sz(2)/3);
+end
+
 if ~isempty(actvcells)
-if length(actvcells) > 1;
-pwelch(mean(nt(actvcells,:)),hamming(200),[],1024,1/region.timeres)
-else
-pwelch(nt(actvcells,:),hamming(200),[],1024,1/region.timeres)
-end    
+	if length(actvcells) > 1;
+		pwelch(mean(nt(actvcells,:)),hamming(windowLength),[],1024,1/region.timeres)
+	else
+		pwelch(nt(actvcells,:),hamming(windowLength),[],1024,1/region.timeres)
+	end    
 end
 
 % [S,F,T,P] = spectrogram(mean(nt),128,120,128,1/region.timeres);
