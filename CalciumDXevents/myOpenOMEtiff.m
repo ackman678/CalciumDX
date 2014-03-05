@@ -19,8 +19,8 @@ function [data, series1, filename] = myOpenOMEtiff(fnm)
 
 if nargin < 1 || isempty(fnm)
     
-    if exist('hippoprefs.mat','file') == 2
-        load('hippoprefs')
+    if exist('calciumdxprefs.mat','file') == 2
+        load('calciumdxprefs')
     else
         pathname = pwd;
     end
@@ -37,7 +37,7 @@ if nargin < 1 || isempty(fnm)
         end
     end
     fnm = [pathname filename];
-    save('hippoprefs.mat', 'pathname','filename')
+    save('calciumdxprefs.mat', 'pathname','filename')
 end
 
 %     tic
