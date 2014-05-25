@@ -1,5 +1,5 @@
 function [data, series1, filename] = myOpenOMEtiff(fnm)
-%Open 12bit time series tiff stacks
+%Open time series tiff stacks
 %uses the bfopen OME tiff matlab function from openmicroscopy.org
 %bfopen uses the loci_tools.jar OME library to open all types of microscopy data
 %returns any metadata and the image stack as a uint16 array
