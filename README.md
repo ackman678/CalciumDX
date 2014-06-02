@@ -20,9 +20,7 @@ There are also a number of miscellaneous functions for data analysis, fetching o
 
 ## Core dependencies ##
 * matlab with the signal processing and image processing toolboxes
-* `loci_tools.jar` a java plugin for opening many different microscopy image/tiff file formats 
-	* included, but up-to-date version can be found at [ome website](http://www.loci.wisc.edu/ome/ome-tiff.html) or through the ImageJ plugins page.
-	* should be placed in the `CalciumDX/` folder
+* [bfmatlab](http://www.openmicroscopy.org/site/support/bio-formats5/users/matlab/index.html), a matlab toolbox containing the bio-formats java plugin and a `bfopen.m` reader function for opening many different microscopy image/tiff file formats.
 
 ## Non-core dependencies ##
 Several functions (mostly non-core gui) depend on the following freely available toolboxes:
@@ -34,12 +32,9 @@ Several functions (mostly non-core gui) depend on the following freely available
 # Installation #
 
 1. Clone CalciumDX from GitHub into your *MATLAB* user folder.
-2. Add CalciumDX/CalciumDX to your [matlab path][matlabSearchPath]
-3. Add CalciumDX/CalciumDXevents to your matlab path 
-4. *Optional:* Install the non-core dependency toolboxes
-	* download from the respective sites listed above
-	* move the toolboxes into your matlab user home folder
-	* add their folders and subfolders to your matlab path.
+2. Add CalciumDX and subfolders to your [matlab path][matlabSearchPath]
+3. Install the core dependency toolboxes (bfmatlab). Add them your matlab search path or use the `addpath(genpath('$PATH/$MATLABHOME/toolbox'))` syntax at the command prompt when starting up matlab with each toolbox.
+4. *Optional:* Install the non-core dependency toolboxes. Same as above, add their folders and subfolders to your matlab path.
 
 ## Updates ##
 
